@@ -1,0 +1,8 @@
+apiVersion: v1
+description: helm chart for elasticSearch
+name: elasticsearch
+version: 0.0.1
+maintainers:
+  - name:
+    email:
+engine: gotpl
