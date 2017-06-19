@@ -1,16 +1,16 @@
 common:
   namespace: elk-cluster-ns
-  registry: elkimages.azurecr.io
+  registry: elkacr.azurecr.io
   secretName: azure-registry
   env:
     CLUSTER_NAME: "elk-kube-acs-cluster"
     # Uncomment this if you get the "No up-and-running site-local (private) addresses" error
     # NETWORK_HOST: "_eth0_"
-    
+
 nameOverride: elasticsearch
 elasticsearch:
   image:
-    repository: elkimages.azurecr.io/elasticsearch
+    repository: elkacr.azurecr.io/elasticsearch
     tag: 1.0.0
     pullPolicy: Always
   # Client/ingest nodes can execute pre-processing pipelines, composed of
@@ -20,7 +20,7 @@ elasticsearch:
   client:
     # It isn't common to need more than 2 client nodes.
     replicas: 2
-    
+
     env:
       NODE_DATA: "false"
       NODE_MASTER: "false"
@@ -29,11 +29,11 @@ elasticsearch:
       ES_JAVA_OPTS: "-Xms256m -Xmx256m"
 
   # Data nodes hold the shards that contain the documents you have indexed. Data
-  # nodes handle data related operations like CRUD, search, and aggregations. 
-  # These operations are I/O-, memory-, and CPU-intensive. It is important to 
+  # nodes handle data related operations like CRUD, search, and aggregations.
+  # These operations are I/O-, memory-, and CPU-intensive. It is important to
   # monitor these resources and to add more data nodes if they are overloaded.
   #
-  # The main benefit of having dedicated data nodes is the separation of the 
+  # The main benefit of having dedicated data nodes is the separation of the
   # master and data roles.
   data:
     # This count will depend on your data and computation needs.
@@ -46,10 +46,10 @@ elasticsearch:
       NODE_INGEST: "false"
       HTTP_ENABLE: "false"
       ES_JAVA_OPTS: "-Xms256m -Xmx256m"
-      
+
   # The master node is responsible for lightweight cluster-wide actions such as
-  # creating or deleting an index, tracking which nodes are part of the 
-  # cluster, and deciding which shards to allocate to which nodes. It is 
+  # creating or deleting an index, tracking which nodes are part of the
+  # cluster, and deciding which shards to allocate to which nodes. It is
   # important for cluster health to have a stable master node.
   master:
     # Master replica count should be (#clients / 2) + 1, and generally at least 3.
@@ -68,6 +68,6 @@ elasticsearch:
 
   service:
     # change it to LoadBalancer for public accessibility
-    type: ClusterIP 
+    type: ClusterIP
     httpPort: 9200
     transportPort: 9300

@@ -1,7 +1,7 @@
 common:
   namespace: elk-cluster-ns
   secretName: azure-registry
-  registry: <registry_name>.azurecr.io
+  registry: elkacr.azurecr.io
 
 elasticsearch:
   image:

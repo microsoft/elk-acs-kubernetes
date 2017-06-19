@@ -4,7 +4,7 @@
 common:
   namespace: elk-cluster-ns
   secretName: azure-registry
-  registry: elkimages.azurecr.io
+  registry: elkacr.azurecr.io
 nameOverride: kibana
 kibana:
   replicaCount: 2

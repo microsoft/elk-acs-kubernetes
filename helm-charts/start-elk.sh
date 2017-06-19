@@ -10,8 +10,8 @@ helm install -f config.yaml ns
 
 # create secret
 registry_name=azure-registry
-registry_server=<registry_name>.azurecr.io
-registry_username=<username>
+registry_server=elkacr.azurecr.io
+registry_username=elkacr
 registry_password=<password>
 registry_email=<docker_registry_email>
 
