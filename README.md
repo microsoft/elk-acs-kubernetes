@@ -48,3 +48,7 @@ This repo contains tools and helm charts to help deploy ELK stack on Kubernetes 
 * Run `helm install filebeat`
 * Go to Kibana service in browser and create index pattern.
 * Go to Discover in the left pane to find log streams.
+
+## Delete your Helm releases
+* Run `helm list | awk '$1!="NAME" { print $1 }' | xargs helm delete` to delete all your Helm releases
+Note: the command will delete All your existing Helm releases.
