@@ -5,17 +5,18 @@ This repo contains tools and helm charts to help deploy ELK stack on Kubernetes 
 * Provision a Kubernetes cluster, create storage account/container and Azure Container Service:
     * `RESOURCE_GROUP=elk-rg`
     * `LOCATION=westus`
-    * `az group create --name=$RESOURCE_GROUP --location=$LOCATION`
     * `DNS_PREFIX=elk-kube-acs`
     * `CLUSTER_NAME=elk-kube-acs-cluster`
-    * `az acs create --orchestrator-type=kubernetes --resource-group $RESOURCE_GROUP --name=$CLUSTER_NAME --dns-prefix=$DNS_PREFIX --generate-ssh-keys`
     * `STORAGE_ACCOUNT=azdisksa`
+    * `ACR_NAME=elkacr`
+    * `az group create --name=$RESOURCE_GROUP --location=$LOCATION`
+    * `az acs create --orchestrator-type=kubernetes --resource-group $RESOURCE_GROUP --name=$CLUSTER_NAME --dns-prefix=$DNS_PREFIX --generate-ssh-keys`
     * `az storage account create --name $STORAGE_ACCOUNT --resource-group $RESOURCE_GROUP --sku Standard_GRS`
     * `export AZURE_STORAGE_CONNECTION_STRING="$(az storage account show-connection-string --name $STORAGE_ACCOUNT --resource-group $RESOURCE_GROUP -o tsv)"`
     * `az storage container create -n vhds`
-    * `ACR_NAME=elkacr`
     * `az acr create --name $ACR_NAME --resource-group $RESOURCE_GROUP --sku Basic`
     * `az acr update -n $ACR_NAME --admin-enabled true`
+* If different `$RESOURCE_GROUP`, `$LOCATION`, `$DNS_PREFIX`, `$CLUSTER_NAME`, `$STORAGE_ACCOUNT` and `$ACR_NAME` have been specified, the corresponding fileds in all values.yaml as well as config.yaml need to be updated.
 
 ## Connect to Kubernetes cluster
 * Install `kubectl`
@@ -52,3 +53,8 @@ This repo contains tools and helm charts to help deploy ELK stack on Kubernetes 
 ## Delete your Helm releases
 * Run `helm list | awk '$1!="NAME" { print $1 }' | xargs helm delete` to delete all your Helm releases
 Note: the command will delete All your existing Helm releases.
+
+## Auto scaling
+* Kubernetes supports horizontal pod autoscaler with `kubectl autoscale`. For example, auto scale a deployment with the number of pods between 2 and 5, target CPU utilization 80%. Run `kubectl autoscale deployment <deployment_name> --min=2 --max=5 --cpu-percent=80`.
+* Currently, auto scaling of agent nodes in cluster in Azure Container Service is not supported. To manually change the number of agent nodes, run the command `az acs scale -g <resource_group> -n <cluster_name> --new-agent-count <number>`.
+* Kubernetes cluster created with [acs-engine](https://github.com/Azure/acs-engine) in Azure supports auto scaling.
