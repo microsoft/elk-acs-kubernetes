@@ -9,7 +9,6 @@ export PATH=/usr/local/bin/:$PATH
 # Arguments:
 #   Resource group
 #   Location
-#   Dns prefix
 #   Storage account
 #   Azure container registry name
 # Returns:
