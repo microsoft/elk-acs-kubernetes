@@ -4,9 +4,15 @@ This repo contains tools and helm charts to help deploy ELK stack on Kubernetes 
 ## Prerequesites
 * An Azure subscription. You can get a [Azure Free Trial Subscription](http://https://azure.microsoft.com/en-us/offers/ms-azr-0044p/?v=17.23h).
 * A Kubernetes cluster, a storage account/container and Azure Container Registry.
+    * [Create your service principal in Azure AD](https://docs.microsoft.com/en-us/azure/container-service/container-service-kubernetes-service-principal)
+      * `az login`
+      * `az account set --subscription "mySubscriptionID"`
+      * `az group create -n "myResourceGroupName" -l "westus"`
+      * `az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName"`
     * Update your resource group, location, dns prefix, cluster name in `./util/create-k8s-acs.sh`.
     * Update your resource group, location, storage account, acr name in `./util/create-sa-acr.sh`.
     * Update `$RESOURCE_GROUP`, `$LOCATION`, `$DNS_PREFIX`, `$CLUSTER_NAME`, `$STORAGE_ACCOUNT` and `$ACR_NAME` in all values.yaml as well as config.yaml files.
+    * Run `./util/create-k8s-acs.sh` and `./util/create-sa-acr.sh`
     * Deploy a Kubernetes cluster on Azure Container Service.
       * Run `./util/create-sa-acr.sh` and `./util/create-k8s-acs.sh`.
     * Deploy a Kubernetes cluster on Azure with [acs-engine](https://github.com/Azure/acs-engine).
@@ -23,7 +29,7 @@ This repo contains tools and helm charts to help deploy ELK stack on Kubernetes 
   * Install `kubectl`
       * `az acs kubernetes install-cli`
   * Import Kubernetes cluster credentials
-      * `az acs kubernetes get-credentials --resource-group=$RESOURCE_GROUP --name=$CLUSTER_NAME`
+      * `az acs kubernetes get-credentials --resource-group=<resource_group> --name=<cluster_name>`
   * List all the nodes in the cluster
       * `kubectl get nodes`
 * Kubernetes cluster created with acs-engine
@@ -40,8 +46,8 @@ This repo contains tools and helm charts to help deploy ELK stack on Kubernetes 
 
 ## Build and push your ELK docker images to container registry
 * Get the credential of registry you created previously e.g. `elkacr.azurecr.io`:
-    * `az acr credential show --name $ACR_NAME --resource-group $RESOURCE_GROUP`
-* Replace password in `push-images.sh` and run it.
+    * `az acr credential show --name <acr_name> --resource-group <resource_group>`
+* Replace registry_server, registry_username, registry_password in `push-images.sh` and run it.
 
 ## Deploy ELK cluster
 * Go to `helm-charts` and modify `start-elk.sh` to replace placeholders with password and email.
