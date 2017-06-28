@@ -1,7 +1,7 @@
 #! /bin/bash
-registry_server=elkacr.azurecr.io
-registry_username=elkacr
-registry_password='<password>'
+registry_server=$1.azurecr.io
+registry_username=$1
+registry_password=$2
 
 docker login --username ${registry_username} --password ${registry_password} ${registry_server}
 
