@@ -484,7 +484,6 @@
                         "label": "Agent Node Size",
                         "toolTip": "VM size of agent node.",
                         "recommendedSizes": [
-                            "Standard_D1_v2",
                             "Standard_D2_v2",
                             "Standard_D3_v2"
                         ],
@@ -588,7 +587,7 @@
                             "sshPublicKey": "SSH public key"
                         },
                         "toolTip": {
-                            "sshPublicKey": "SSH public key for Controller communicating with Kubernetes cluster."
+                            "sshPublicKey": "SSH public key for Controller communicating with Kubernetes cluster. <br>[Generate online](https://microsoft.github.io/elk-acs-kubernetes/)"
                         },
                         "type": "Microsoft.Compute.CredentialsCombo",
                         "constraints": {
@@ -603,7 +602,7 @@
                         "name": "privateKey",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Base64 encoded SSH private key",
-                        "toolTip": "SSH private key for Controller communicating with Kubernetes cluster. The key must be base64 encoded.",
+                        "toolTip": "SSH private key for Controller communicating with Kubernetes cluster. The key must be base64 encoded. <br>[Generate online](https://microsoft.github.io/elk-acs-kubernetes/)",
                         "constraints": {
                             "required": true
                         },
@@ -613,7 +612,7 @@
                         "name": "servicePrincipalClientId",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Service principal client ID",
-                        "toolTip": "The Client ID of service principal object for accessing Azure resources.",
+                        "toolTip": "The Client ID of service principal object for accessing Azure resources. <br>[Creating a Service Principal](https://go.microsoft.com/fwlink/?linkid=834427)",
                         "constraints": {
                             "required": true
                         },
@@ -623,7 +622,7 @@
                         "name": "servicePrincipalClientSecret",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Service principal client secret",
-                        "toolTip": "The Client Secret of the service principal object for accessing Azure resources.",
+                        "toolTip": "The Client Secret of the service principal object for accessing Azure resources. <br>[Creating a Service Principal](https://go.microsoft.com/fwlink/?linkid=834427)",
                         "constraints": {
                             "required": true
                         },
