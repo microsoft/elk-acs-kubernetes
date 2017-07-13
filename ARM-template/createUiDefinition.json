@@ -587,7 +587,7 @@
                             "sshPublicKey": "SSH public key"
                         },
                         "toolTip": {
-                            "sshPublicKey": "SSH public key for Controller communicating with Kubernetes cluster. <br>[Generate online](https://microsoft.github.io/elk-acs-kubernetes/)"
+                            "sshPublicKey": "SSH public key for Controller communicating with Kubernetes cluster. <br>[Generating SSH key pair online](https://microsoft.github.io/elk-acs-kubernetes/)"
                         },
                         "type": "Microsoft.Compute.CredentialsCombo",
                         "constraints": {
@@ -602,7 +602,7 @@
                         "name": "privateKey",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Base64 encoded SSH private key",
-                        "toolTip": "SSH private key for Controller communicating with Kubernetes cluster. The key must be base64 encoded. <br>[Generate online](https://microsoft.github.io/elk-acs-kubernetes/)",
+                        "toolTip": "SSH private key for Controller communicating with Kubernetes cluster. The key must be base64 encoded. <br>[Generating SSH key pair online](https://microsoft.github.io/elk-acs-kubernetes/)",
                         "constraints": {
                             "required": true
                         },
