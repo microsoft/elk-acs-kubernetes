@@ -386,7 +386,7 @@
             "autoUpgradeMinorVersion": true,
             "settings": {
               "fileUris": [
-                "https://raw.githubusercontent.com/yaweiw/elk-acs-kubernetes-template/rc/scripts/run.sh"
+                "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/scripts/run.sh"
               ]
             },
             "protectedSettings": {

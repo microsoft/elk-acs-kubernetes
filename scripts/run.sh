@@ -46,13 +46,13 @@ curl -s https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | b
 helm init
 
 # download templates
-REPO_URL='https://github.com/yaweiw/elk-acs-kubernetes-template/archive/rc.zip'
+REPO_URL='https://github.com/Microsoft/elk-acs-kubernetes/archive/rc.zip'
 
 curl -L ${REPO_URL} -o template.zip
 unzip -o template.zip -d template
 
 # expose kubectl proxy
-cd template/elk-acs-kubernetes-template-rc
+cd template/elk-acs-kubernetes-rc/
 echo ${NGINX_PASSWORD} | htpasswd -c -i /etc/nginx/.htpasswd ${MASTER_USERNAME}
 cp config/nginx-site.conf /etc/nginx/sites-available/default
 nohup kubectl proxy --port=8080 &
