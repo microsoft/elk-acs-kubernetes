@@ -1,5 +1,4 @@
 # Deploy ELK on Kubernetes in Azure Container Service (ACS)
-
 This repository contains tools and helm charts to help deploy the [ELK stack](https://www.elastic.co/products) on [Kubernetes](https://kubernetes.io/) in [Azure Container Service (ACS)](https://docs.microsoft.com/azure/container-service/).
 
 ## Prerequesites
