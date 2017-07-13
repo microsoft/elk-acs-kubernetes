@@ -14,4 +14,4 @@ kibana:
   service:
     name: kibana
     type: LoadBalancer
-    port: 5601
+    port: 80

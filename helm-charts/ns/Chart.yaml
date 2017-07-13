@@ -3,6 +3,6 @@ description: helm chart for elk cluster namespace
 name: elknamespace
 version: 0.0.1
 maintainers:
-  - name:
-    email:
+  - name: Yawei Wang
+    email: yaweiw@microsoft.com
 engine: gotpl

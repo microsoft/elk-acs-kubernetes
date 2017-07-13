@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "dnsNamePrefix": {
+      "value": "acs-dns-abcdef"
+    },
+    "agentCount": {
+      "value": 1
+    },
+    "agentVMSize": {
+      "value": "Standard_D2_v2"
+    },
+    "linuxAdminUsername": {
+      "value": "<controller-admin-username>"
+    },
+    "masterCount": {
+      "value": 1
+    },
+    "sshRSAPublicKey": {
+      "value": "<ssh-public-key>"
+    },
+    "privateKey": {
+      "value": "<ssh-private-key-base64-encoded>"
+    },
+    "servicePrincipalClientId": {
+      "value": "<service-principal-client-id>"
+    },
+    "servicePrincipalClientSecret": {
+      "value": "<service-principal-client-password>"
+    },
+    "adminPassword": {
+      "value": "<controller-admin-password>"
+    }
+  }
+}
+

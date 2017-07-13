@@ -1,7 +1,7 @@
 common:
   namespace: elk-cluster-ns
   secretName: azure-registry
-  registry: elkacr.azurecr.io
+  registry: ${REGISTRY_URL}
 
 elasticsearch:
   image:
@@ -12,8 +12,8 @@ elasticsearch:
     replicas: 3
   data:
     replicas: 2
-    storageAccount: azdisksa
-    location: westus
+    storageAccount: ${STORAGE_ACCOUNT}
+    location: ${STORAGE_LOCATION}
 
 kibana:
   image:
