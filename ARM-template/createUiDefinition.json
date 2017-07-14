@@ -28,8 +28,8 @@
                 "toolTip": "Default password for accessing Kubernetes cluster and Kibana.",
                 "constraints": {
                     "required": true,
-                    "regex": "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-\\.]).{8,}$",
-                    "validationMessage": "Password must be at least 8 characters long and contain at least one lower case, upper case, digit and special character."
+                    "regex": "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-\\.]).{12,}$",
+                    "validationMessage": "Password must be at least 12 characters long and contain at least one lower case, upper case, digit and special character."
                 },
                 "visible": true
             }
