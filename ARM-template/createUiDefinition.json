@@ -641,7 +641,8 @@
             "privateKey": "[steps('securitySettings').privateKey]",
             "servicePrincipalClientId": "[steps('securitySettings').servicePrincipalClientId]",
             "servicePrincipalClientSecret": "[steps('securitySettings').servicePrincipalClientSecret]",
-            "adminPassword": "[basics('password')]"
+            "adminPassword": "[basics('password')]",
+            "location": "[location()]"
         }
     }
 }
