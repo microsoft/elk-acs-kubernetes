@@ -134,6 +134,13 @@
       "metadata": {
         "description": "Base64 encoded private key corresbonding to the public key for ACS"
       }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "The location of all components"
+      }
     }
   },
   "variables": {
@@ -149,6 +156,7 @@
     "servicePrincipalClientSecret": "[parameters('servicePrincipalClientSecret')]",
     "controllerDNSNamePrefix": "[concat(parameters('dnsNamePrefix'), 'control')]",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'ctl')]",
+    "frontEndNSGName": "[concat(uniquestring(resourceGroup().id), 'frontEndNSG')]",
     "imagePublisher": "Canonical",
     "imageOffer": "UbuntuServer",
     "nicName": "controllernic",
@@ -166,13 +174,14 @@
     "dataStorageAccountName": "[concat(uniquestring(resourceGroup().id), 'data')]",
     "registryName": "[concat(uniquestring(resourceGroup().id), 'registry')]",
     "registryDisk": "[concat(uniquestring(resourceGroup().id), 'elkimage')]",
-    "basedPrivateKey": "[parameters('privateKey')]"
+    "basedPrivateKey": "[parameters('privateKey')]",
+    "baseUrl": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/"
   },
   "resources": [
     {
       "apiVersion": "2017-01-31",
       "type": "Microsoft.ContainerService/containerServices",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "name": "[concat('containerservice-',resourceGroup().name)]",
       "properties": {
         "orchestratorProfile": {
@@ -210,7 +219,7 @@
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('dataStorageAccountName')]",
       "apiVersion": "2017-06-01",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "sku": {
         "name": "[variables('storageAccountType')]"
       },
@@ -221,7 +230,7 @@
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('registryDisk')]",
       "apiVersion": "2017-06-01",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "sku": {
         "name": "Standard_LRS"
       },
@@ -232,7 +241,7 @@
       "name": "[variables('registryName')]",
       "type": "Microsoft.ContainerRegistry/registries",
       "apiVersion": "2017-03-01",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[variables('registryDisk')]"
       ],
@@ -251,7 +260,7 @@
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageAccountName')]",
       "apiVersion": "2017-06-01",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "sku": {
         "name": "[variables('storageAccountType')]"
       },
@@ -260,9 +269,50 @@
     },
     {
       "apiVersion": "2017-04-01",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[variables('frontEndNSGName')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "displayName": "NSG - Front End"
+      },
+      "properties": {
+        "securityRules": [
+          {
+            "name": "ssh-rule",
+            "properties": {
+              "description": "Allow SSH",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "web-rule",
+            "properties": {
+              "description": "Allow WEB",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "80",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 101,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2017-04-01",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "properties": {
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
         "dnsSettings": {
@@ -274,7 +324,10 @@
       "apiVersion": "2017-04-01",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('frontEndNSGName'))]"
+      ],
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -285,7 +338,11 @@
           {
             "name": "[variables('subnetName')]",
             "properties": {
-              "addressPrefix": "[variables('subnetPrefix')]"
+              "addressPrefix": "[variables('subnetPrefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('frontEndNSGName'))]"
+              }
+
             }
           }
         ]
@@ -295,7 +352,7 @@
       "apiVersion": "2017-04-01",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('nicName')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
@@ -321,7 +378,7 @@
       "apiVersion": "2017-03-30",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[variables('vmName')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
         "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]",
@@ -374,7 +431,7 @@
         {
           "name": "config-app",
           "type": "extensions",
-          "location": "[resourceGroup().location]",
+          "location": "[parameters('location')]",
           "apiVersion": "2015-06-15",
           "dependsOn": [
             "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
@@ -386,11 +443,11 @@
             "autoUpgradeMinorVersion": true,
             "settings": {
               "fileUris": [
-                "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/scripts/run.sh"
+                "[concat(variables('baseUrl'), 'scripts/run.sh')]"
               ]
             },
             "protectedSettings": {
-              "commandToExecute": "[concat('bash run.sh ', variables('mastersEndpointDNSNamePrefix'), ' ', resourceGroup().location, ' ', parameters('linuxAdminUsername'), ' ', parameters('adminPassword'), ' ', variables('basedPrivateKey'), ' ', variables('registryName'), ' ',  listCredentials(variables('registryName'), '2017-03-01').passwords[0].value, ' ', variables('dataStorageAccountName'))]"
+              "commandToExecute": "[concat('bash run.sh ', variables('mastersEndpointDNSNamePrefix'), ' ', parameters('location'), ' ', parameters('linuxAdminUsername'), ' ', parameters('adminPassword'), ' ', variables('basedPrivateKey'), ' ', variables('registryName'), ' ',  listCredentials(variables('registryName'), '2017-03-01').passwords[0].value, ' ', variables('dataStorageAccountName'))]"
             }
           }
         }
