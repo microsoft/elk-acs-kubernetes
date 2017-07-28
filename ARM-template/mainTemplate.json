@@ -19,21 +19,20 @@
     },
     "agentVMSize": {
       "type": "string",
-      "defaultValue": "Standard_D4_v2",
+      "defaultValue": "Standard_DS3_v2",
       "allowedValues": [
         "Standard_A0",
         "Standard_A1",
         "Standard_A2",
         "Standard_A3",
         "Standard_A4",
-        "Standard_A5",
-        "Standard_A6",
-        "Standard_A7",
-        "Standard_A8",
-        "Standard_A9",
-        "Standard_A10",
-        "Standard_A11",
-        "Standard_D1",
+        "Standard_A1_v2",
+        "Standard_A2_v2",
+        "Standard_A4_v2",
+        "Standard_A8_v2",
+        "Standard_A2m_v2",
+        "Standard_A4m_v2",
+        "Standard_A8m_v2",
         "Standard_D2",
         "Standard_D3",
         "Standard_D4",
@@ -41,7 +40,6 @@
         "Standard_D12",
         "Standard_D13",
         "Standard_D14",
-        "Standard_D1_v2",
         "Standard_D2_v2",
         "Standard_D3_v2",
         "Standard_D4_v2",
@@ -50,12 +48,6 @@
         "Standard_D12_v2",
         "Standard_D13_v2",
         "Standard_D14_v2",
-        "Standard_G1",
-        "Standard_G2",
-        "Standard_G3",
-        "Standard_G4",
-        "Standard_G5",
-        "Standard_DS1",
         "Standard_DS2",
         "Standard_DS3",
         "Standard_DS4",
@@ -63,6 +55,19 @@
         "Standard_DS12",
         "Standard_DS13",
         "Standard_DS14",
+        "Standard_DS2_v2",
+        "Standard_DS3_v2",
+        "Standard_DS4_v2",
+        "Standard_DS5_v2",
+        "Standard_DS11_v2",
+        "Standard_DS12_v2",
+        "Standard_DS13_v2",
+        "Standard_DS14_v2",
+        "Standard_G1",
+        "Standard_G2",
+        "Standard_G3",
+        "Standard_G4",
+        "Standard_G5",
         "Standard_GS1",
         "Standard_GS2",
         "Standard_GS3",
@@ -122,7 +127,6 @@
       "allowedValues": [
         "12.04.5-LTS",
         "14.04.5-LTS",
-        "15.10",
         "16.04.0-LTS"
       ],
       "metadata": {
@@ -140,6 +144,34 @@
       "defaultValue": "[resourceGroup().location]",
       "metadata": {
         "description": "The location of all components"
+      }
+    },
+    "registryUrl": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Custom registry(e.g. Docker Hub) url to be used"
+      }
+    },
+    "storageAccountSku": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Standard_ZRS",
+        "Premium_LRS"
+      ],
+      "metadata": {
+        "description": "Storage account sku to be used as Elasticsearch data node"
+      }
+    },
+    "baseTemplateUrl": {
+      "type": "string",
+      "defaultValue": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/",
+      "metadata": {
+        "description": "base URL of templates, typically a repository for configuraions"
       }
     }
   },
@@ -342,7 +374,6 @@
               "networkSecurityGroup": {
                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('frontEndNSGName'))]"
               }
-
             }
           }
         ]
