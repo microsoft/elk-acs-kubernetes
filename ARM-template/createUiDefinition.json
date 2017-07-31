@@ -54,6 +54,49 @@
                             "required": true
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "registryUrl",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Registry url",
+                        "defaultValue": "",
+                        "toolTip": "Custom image registry to be used. If you don't understand it, leave it blank.",
+                        "constraints": {
+                            "required": false
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "storageAccountSku",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Data node storage account sku",
+                        "toolTip": "Storage account sku to be used as Elasticsearch data node.<br>For detailed information about storage account sku, refer to [Azure Storage Account Replication](https://docs.microsoft.com/en-us/azure/storage/storage-introduction#replication-for-durability-and-high-availability)",
+                        "defaultValue": "Standard locally-redundant storage(Standard_LRS)",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": [
+                                {
+                                    "label": "Standard locally-redundant storage(Standard_LRS)",
+                                    "value": "Standard_LRS"
+                                },
+                                {
+                                    "label": "Standard geo-redundant storage(Standard_GRS)",
+                                    "value": "Standard_GRS"
+                                },
+                                {
+                                    "label": "Standard read-access geo-redundant storage(Standard_RAGRS)",
+                                    "value": "Standard_RAGRS"
+                                },
+                                {
+                                    "label": "Standard zone-redundant storage(Standard_ZRS)",
+                                    "value": "Standard_ZRS"
+                                },
+                                {
+                                    "label": "Premium locally-redundant storage(Premium_LRS)",
+                                    "value": "Premium_LRS"
+                                }
+                            ]
+                        }
                     }
                 ]
             },
@@ -638,6 +681,8 @@
         ],
         "outputs": {
             "dnsNamePrefix": "[steps('commonSettings').dnsNamePrefix]",
+            "registryUrl": "[steps('commonSettings').registryUrl]",
+            "storageAccountSku": "[steps('commonSettings').storageAccountSku]",
             "agentCount": "[steps('k8sSettings').agentCount]",
             "agentVMSize": "[steps('k8sSettings').agentVMSize]",
             "linuxAdminUsername": "[basics('userName')]",
