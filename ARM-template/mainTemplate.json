@@ -207,304 +207,101 @@
     "registryName": "[concat(uniquestring(resourceGroup().id), 'registry')]",
     "registryDisk": "[concat(uniquestring(resourceGroup().id), 'elkimage')]",
     "basedPrivateKey": "[parameters('privateKey')]",
-    "baseUrl": "[parameters('baseTemplateUrl')]"
+    "baseUrl": "[concat(parameters('baseTemplateUrl'), '/ARM-template/components/')]"
   },
   "resources": [
     {
-      "apiVersion": "2017-01-31",
-      "type": "Microsoft.ContainerService/containerServices",
-      "location": "[parameters('location')]",
-      "name": "[concat('containerservice-',resourceGroup().name)]",
+      "apiVersion": "2017-05-10",
+      "name": "containerService",
+      "type": "Microsoft.Resources/deployments",
       "properties": {
-        "orchestratorProfile": {
-          "orchestratorType": "[variables('orchestratorType')]"
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('baseUrl'), 'containserService.json')]",
+          "contentVersion": "1.0.0.0"
         },
-        "masterProfile": {
-          "count": "[variables('masterCount')]",
-          "dnsPrefix": "[variables('mastersEndpointDNSNamePrefix')]"
-        },
-        "agentPoolProfiles": [
-          {
-            "name": "agentpools",
-            "count": "[variables('agentCount')]",
-            "vmSize": "[variables('agentVMSize')]",
-            "dnsPrefix": "[variables('agentsEndpointDNSNamePrefix')]"
-          }
-        ],
-        "linuxProfile": {
-          "adminUsername": "[variables('adminUsername')]",
-          "ssh": {
-            "publicKeys": [
-              {
-                "keyData": "[variables('sshRSAPublicKey')]"
-              }
-            ]
-          }
-        },
-        "servicePrincipalProfile": {
-          "clientId": "[variables('servicePrincipalClientId')]",
-          "secret": "[variables('servicePrincipalClientSecret')]"
+        "parameters": {
+          "dnsNamePrefix": "[parameters('dnsNamePrefix')]",
+          "agentCount": "[parameters('agentCount')]",
+          "agentVMSize": "[parameters('agentVMSize')]",
+          "linuxAdminUsername": "[parameters('linuxAdminUsername')]",
+          "masterCount": "[parameters('masterCount')]",
+          "sshRSAPublicKey": "[parameters('sshRSAPublicKey')]",
+          "servicePrincipalClientId": "[parameters('servicePrincipalClientId')]",
+          "servicePrincipalClientSecret": "[parameters('servicePrincipalClientSecret')]",
+          "location": "[parameters('location')]"
         }
       }
     },
     {
-      "type": "Microsoft.Storage/storageAccounts",
-      "name": "[variables('dataStorageAccountName')]",
-      "apiVersion": "2017-06-01",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "[variables('storageAccountType')]"
-      },
-      "kind": "Storage",
-      "properties": {}
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "name": "[variables('registryDisk')]",
-      "apiVersion": "2017-06-01",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "Standard_LRS"
-      },
-      "kind": "Storage",
-      "properties": {}
-    },
-    {
-      "name": "[variables('registryName')]",
-      "type": "Microsoft.ContainerRegistry/registries",
-      "apiVersion": "2017-03-01",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[variables('registryDisk')]"
-      ],
-      "sku": {
-        "name": "Basic"
-      },
+      "apiVersion": "2017-05-10",
+      "name": "storageAccount",
+      "type": "Microsoft.Resources/deployments",
       "properties": {
-        "adminUserEnabled": true,
-        "storageAccount": {
-          "name": "[variables('registryDisk')]",
-          "accessKey": "[listKeys(variables('registryDisk'),'2017-06-01').keys[0].value]"
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('baseUrl'), 'storageAccount.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "storageAccountSku": "[parameters('storageAccountSku')]",
+          "location": "[parameters('location')]"
         }
       }
     },
     {
-      "type": "Microsoft.Storage/storageAccounts",
-      "name": "[variables('storageAccountName')]",
-      "apiVersion": "2017-06-01",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "[variables('storageAccountType')]"
-      },
-      "kind": "Storage",
-      "properties": {}
-    },
-    {
-      "apiVersion": "2017-04-01",
-      "type": "Microsoft.Network/networkSecurityGroups",
-      "name": "[variables('frontEndNSGName')]",
-      "location": "[parameters('location')]",
-      "tags": {
-        "displayName": "NSG - Front End"
-      },
+      "apiVersion": "2017-05-10",
+      "name": "containerRegistry",
+      "type": "Microsoft.Resources/deployments",
       "properties": {
-        "securityRules": [
-          {
-            "name": "ssh-rule",
-            "properties": {
-              "description": "Allow SSH",
-              "protocol": "Tcp",
-              "sourcePortRange": "*",
-              "destinationPortRange": "22",
-              "sourceAddressPrefix": "Internet",
-              "destinationAddressPrefix": "*",
-              "access": "Allow",
-              "priority": 100,
-              "direction": "Inbound"
-            }
-          },
-          {
-            "name": "web-rule",
-            "properties": {
-              "description": "Allow WEB",
-              "protocol": "Tcp",
-              "sourcePortRange": "*",
-              "destinationPortRange": "80",
-              "sourceAddressPrefix": "Internet",
-              "destinationAddressPrefix": "*",
-              "access": "Allow",
-              "priority": 101,
-              "direction": "Inbound"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "apiVersion": "2017-04-01",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[variables('publicIPAddressName')]",
-      "location": "[parameters('location')]",
-      "properties": {
-        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
-        "dnsSettings": {
-          "domainNameLabel": "[variables('controllerDNSNamePrefix')]"
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('baseUrl'), 'containerRegistry.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "required": "[empty(parameters('registryUrl'))]",
+          "location": "[parameters('location')]"
         }
       }
     },
     {
-      "apiVersion": "2017-04-01",
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[variables('virtualNetworkName')]",
-      "location": "[parameters('location')]",
+      "apiVersion": "2017-05-10",
+      "name": "controllerNode",
+      "type": "Microsoft.Resources/deployments",
       "dependsOn": [
-        "[concat('Microsoft.Network/networkSecurityGroups/', variables('frontEndNSGName'))]"
+        "[resourceId('Microsoft.Resources/deployments/', 'containerService')]",
+        "[resourceId('Microsoft.Resources/deployments/', 'storageAccount')]",
+        "[resourceId('Microsoft.Resources/deployments/', 'containerRegistry')]"
       ],
       "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[variables('addressPrefix')]"
-          ]
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('baseUrl'), 'controllerNode.json')]",
+          "contentVersion": "1.0.0.0"
         },
-        "subnets": [
-          {
-            "name": "[variables('subnetName')]",
-            "properties": {
-              "addressPrefix": "[variables('subnetPrefix')]",
-              "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('frontEndNSGName'))]"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "apiVersion": "2017-04-01",
-      "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('nicName')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
-        "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
-      ],
-      "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
-              },
-              "subnet": {
-                "id": "[variables('subnetRef')]"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "apiVersion": "2017-03-30",
-      "type": "Microsoft.Compute/virtualMachines",
-      "name": "[variables('vmName')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
-        "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts/', variables('dataStorageAccountName'))]",
-        "[resourceId('Microsoft.ContainerService/containerServices/', concat('containerservice-',resourceGroup().name))]",
-        "[resourceId('Microsoft.ContainerRegistry/registries/', variables('registryName'))]"
-      ],
-      "properties": {
-        "hardwareProfile": {
-          "vmSize": "[variables('vmSize')]"
-        },
-        "osProfile": {
-          "computerName": "[variables('vmName')]",
-          "adminUsername": "[parameters('linuxAdminUsername')]",
-          "adminPassword": "[parameters('adminPassword')]"
-        },
-        "storageProfile": {
-          "imageReference": {
-            "publisher": "[variables('imagePublisher')]",
-            "offer": "[variables('imageOffer')]",
-            "sku": "[parameters('ubuntuOSVersion')]",
-            "version": "latest"
-          },
-          "osDisk": {
-            "createOption": "FromImage"
-          },
-          "dataDisks": [
-            {
-              "diskSizeGB": "1023",
-              "lun": 0,
-              "createOption": "Empty"
-            }
-          ]
-        },
-        "networkProfile": {
-          "networkInterfaces": [
-            {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
-            }
-          ]
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": "true",
-            "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2016-01-01').primaryEndpoints.blob)]"
-          }
-        }
-      },
-      "resources": [
-        {
-          "name": "config-app",
-          "type": "extensions",
+        "parameters": {
+          "dnsNamePrefix": "[parameters('dnsNamePrefix')]",
+          "linuxAdminUsername": "[parameters('linuxAdminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]",
+          "ubuntuOSVersion": "[parameters('ubuntuOSVersion')]",
+          "privateKey": "[parameters('privateKey')]",
           "location": "[parameters('location')]",
-          "apiVersion": "2015-06-15",
-          "dependsOn": [
-            "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Azure.Extensions",
-            "type": "CustomScript",
-            "typeHandlerVersion": "2.0",
-            "autoUpgradeMinorVersion": true,
-            "settings": {
-              "fileUris": [
-                "[concat(variables('baseUrl'), 'scripts/run.sh')]"
-              ]
-            },
-            "protectedSettings": {
-              "commandToExecute": "[concat('bash run.sh ', variables('mastersEndpointDNSNamePrefix'), ' ', parameters('location'), ' ', parameters('linuxAdminUsername'), ' ', parameters('adminPassword'), ' ', variables('basedPrivateKey'), ' ', variables('registryName'), ' ',  listCredentials(variables('registryName'), '2017-03-01').passwords[0].value, ' ', variables('dataStorageAccountName'))]"
-            }
-          }
+          "registryUrl": "[parameters('registryUrl')]",
+          "baseTemplateUrl": "[parameters('baseTemplateUrl')]",
+          "storageAccountSku": "[parameters('storageAccountSku')]"
         }
-      ]
+      }
     }
   ],
   "outputs": {
-    "masterFQDN": {
-      "type": "string",
-      "value": "[reference(concat('Microsoft.ContainerService/containerServices/', 'containerservice-', resourceGroup().name)).masterProfile.fqdn]"
-    },
-    "sshMaster0": {
-      "type": "string",
-      "value": "[concat('ssh ', variables('adminUsername'), '@', reference(concat('Microsoft.ContainerService/containerServices/', 'containerservice-', resourceGroup().name)).masterProfile.fqdn, ' -A -p 22')]"
-    },
-    "agentFQDN": {
-      "type": "string",
-      "value": "[reference(concat('Microsoft.ContainerService/containerServices/', 'containerservice-', resourceGroup().name)).agentPoolProfiles[0].fqdn]"
-    },
     "hostname": {
       "type": "string",
-      "value": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
+      "value": "[reference('controllerNode').outputs.hostname]"
     },
     "sshCommand": {
       "type": "string",
-      "value": "[concat('ssh ', variables('adminUsername'), '@', reference(variables('publicIPAddressName')).dnsSettings.fqdn)]"
+      "value": "[reference('controllerNode').outputs.sshCommand]"
     }
   }
 }

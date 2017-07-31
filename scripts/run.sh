@@ -19,6 +19,8 @@ do
      esac
 done
 
+
+
 if [ -z ${masterDns} ]; then
     echo 'Master DNS is required' >&2
     exit 1
