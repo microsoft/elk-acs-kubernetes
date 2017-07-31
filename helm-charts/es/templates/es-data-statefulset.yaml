@@ -69,7 +69,7 @@ spec:
   - metadata:
       name: es-persistent-storage
       annotations:
-        volume.beta.kubernetes.io/storage-class: slow
+        volume.beta.kubernetes.io/storage-class: storageAccount
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:

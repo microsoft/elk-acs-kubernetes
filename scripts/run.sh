@@ -2,25 +2,71 @@
 
 set -e
 
-MASTER_DNS=$1
-RESOURCE_LOCATION=$2
-MASTER_USERNAME=$3
-NGINX_PASSWORD=$4
-BASED_PRIVATE_KEY=$5
-REGISTRY_NAME=$6
-REGISTRY_PASS=$7
+while getopts ':d:l:u:p:k:r:a:b:s:c:d:' arg
+do
+     case ${arg} in
+        d) masterDns=${OPTARG};;
+        l) resourceLocation=${OPTARG};;
+        u) masterUsername=${OPTARG};;
+        p) masterPassword=${OPTARG};;
+        k) privateKey=${OPTARG};;
+        r) registryUrl=${OPTARG};;
+        a) registryUsername=${OPTARG};;
+        b) registryPassword=${OPTARG};;
+        s) storageAccount=${OPTARG};;
+        c) storageAccountSku=${OPTARG};;
+        d) repositoryUrl=${OPTARG};;
+     esac
+done
 
-export REGISTRY_URL=${REGISTRY_NAME}.azurecr.io
-export STORAGE_ACCOUNT=$8
-export STORAGE_LOCATION=${RESOURCE_LOCATION}
+if [ -z ${masterDns} ]; then
+    echo 'Master DNS is required' >&2
+    exit 1
+fi
 
-PRIVATE_KEY='private_key'
+if [ -z ${resourceLocation} ]; then
+    echo 'Resource location is required' >&2
+    exit 1
+fi
 
-MASTER_URL=${MASTER_DNS}.${RESOURCE_LOCATION}.cloudapp.azure.com
+if [ -z ${masterUsername} ]; then
+    echo 'Master username is required' >&2
+    exit 1
+fi
+
+if [ -z ${masterPassword} ]; then
+    echo 'Master password is required' >&2
+    exit 1
+fi
+
+if [ -z ${privateKey} ]; then
+    echo 'Private key is required' >&2
+    exit 1
+fi
+
+if [ -z ${storageAccount} ]; then
+    echo 'Storage account name is required' >&2
+    exit 1
+fi
+
+if [ -z ${storageAccountSku} ]; then
+    echo 'Storage account sku is required' >&2
+    exit 1
+fi
+
+if [ -z ${repositoryUrl} ]; then
+    echo 'Repository URL is required' >&2
+    exit 1
+fi
+
+
+privateKeyFile='private_key'
+
+masterUrl=${masterDns}.${resourceLocation}.cloudapp.azure.com
 
 export KUBECONFIG=/root/.kube/config
 
-# prerequisite
+# prerequisites, e.g. docker, nginx
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 sudo apt-get update
@@ -34,11 +80,11 @@ chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 
 # write private key
-echo "${BASED_PRIVATE_KEY}" | base64 -d | tee ${PRIVATE_KEY}
-chmod 400 ${PRIVATE_KEY}
+echo "${privateKey}" | base64 -d | tee ${privateKeyFile}
+chmod 400 ${privateKeyFile}
 
 mkdir -p /root/.kube
-scp -o StrictHostKeyChecking=no -i ${PRIVATE_KEY} ${MASTER_USERNAME}@${MASTER_URL}:.kube/config ${KUBECONFIG}
+scp -o StrictHostKeyChecking=no -i ${privateKeyFile} ${masterUsername}@${masterUrl}:.kube/config ${KUBECONFIG}
 kubectl get nodes
 
 # install helm
@@ -46,20 +92,24 @@ curl -s https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | b
 helm init
 
 # download templates
-REPO_URL='https://github.com/Microsoft/elk-acs-kubernetes/archive/rc.zip'
-
-curl -L ${REPO_URL} -o template.zip
+curl -L ${repositoryUrl} -o template.zip
 unzip -o template.zip -d template
 
 # expose kubectl proxy
 cd template/elk-acs-kubernetes-rc/
-echo ${NGINX_PASSWORD} | htpasswd -c -i /etc/nginx/.htpasswd ${MASTER_USERNAME}
+echo ${masterPassword} | htpasswd -c -i /etc/nginx/.htpasswd ${masterUsername}
 cp config/nginx-site.conf /etc/nginx/sites-available/default
 nohup kubectl proxy --port=8080 &
 systemctl reload nginx
 
-# push image & helm install 
+# push image
 cd docker
-bash push-images.sh ${REGISTRY_NAME} ${REGISTRY_PASS} ${MASTER_USERNAME} ${NGINX_PASSWORD}
+if [ -z ${registryUrl} ]; then
+    # assume azure container registry, image push is required.
+    registryUrl=${registryUsername}.azurecr.io
+    bash push-images.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword}
+fi
+
+# install helm charts
 cd ../helm-charts
-bash start-elk.sh ${REGISTRY_NAME} ${REGISTRY_PASS}
+bash start-elk.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku}

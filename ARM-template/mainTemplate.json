@@ -207,7 +207,7 @@
     "registryName": "[concat(uniquestring(resourceGroup().id), 'registry')]",
     "registryDisk": "[concat(uniquestring(resourceGroup().id), 'elkimage')]",
     "basedPrivateKey": "[parameters('privateKey')]",
-    "baseUrl": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/"
+    "baseUrl": "[parameters('baseTemplateUrl')]"
   },
   "resources": [
     {

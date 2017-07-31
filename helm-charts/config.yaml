@@ -5,7 +5,7 @@ common:
 
 elasticsearch:
   image:
-    tag: 1.0.0
+    tag: ${TAG}
   client:
     replicas: 2
   master:
@@ -14,13 +14,14 @@ elasticsearch:
     replicas: 2
     storageAccount: ${STORAGE_ACCOUNT}
     location: ${STORAGE_LOCATION}
+    storageSku: ${STORAGE_SKU}
 
 kibana:
   image:
-    tag: 1.0.0
+    tag: ${TAG}
   replicaCount: 1
 
 logstash:
   image:
-    tag: 1.0.0
+    tag: ${TAG}
   replicaCount: 1
