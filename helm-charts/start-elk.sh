@@ -5,7 +5,7 @@ set -e
 
 echo $@
 
-while getopts ':r:u:p:d:l:s:' arg
+while getopts ':r:u:p:d:l:s:a:b:' arg
 do
      case ${arg} in
         r) registryUrl=${OPTARG};;
@@ -14,7 +14,9 @@ do
         d) storageAccountName=${OPTARG};;
         l) resourceLocation=${OPTARG};;
         s) storageAccountSku=${OPTARG};;
-     esac
+        a) kibanaUsername=${OPTARG};;
+        b) kibanaPassword=${OPTARG};;
+     esac 
 done
 
 export TAG='latest'
@@ -23,6 +25,8 @@ export STORAGE_ACCOUNT=${storageAccountName}
 export STORAGE_LOCATION=${resourceLocation}
 export STORAGE_SKU=${storageAccountSku}
 export NAMESPACE=elk-cluster-ns
+export USERNAME=${kibanaUsername}
+export PASSWORD=${kibanaPassword}
 
 # substitute environment variables
 cat config.yaml | envsubst > effect.yaml

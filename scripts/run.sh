@@ -115,12 +115,12 @@ if [ -z ${registryUrl} ]; then
     bash push-images.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword}
 
     cd ../helm-charts   
-    bash start-elk.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku}
+    bash start-elk.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku} -a ${masterUsername} -b ${masterPassword}
 
 else
 
     # install helm charts
     cd ../helm-charts
-    bash start-elk.sh -r ${registryUrl} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku}
+    bash start-elk.sh -r ${registryUrl} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku} -a ${masterUsername} -b ${masterPassword}
 
 fi

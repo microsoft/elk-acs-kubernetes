@@ -20,6 +20,9 @@ kibana:
   image:
     tag: ${TAG}
   replicaCount: 1
+  env:
+    USERNAME: ${USERNAME}
+    PASSWORD: ${PASSWORD}
 
 logstash:
   image:
