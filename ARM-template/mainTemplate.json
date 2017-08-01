@@ -275,6 +275,7 @@
       "apiVersion": "2017-05-10",
       "name": "containerRegistry",
       "type": "Microsoft.Resources/deployments",
+      "condition": "[empty(parameters('registryUrl'))]",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -282,9 +283,6 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "required": {
-            "value": "[empty(parameters('registryUrl'))]"
-          },
           "location": {
             "value": "[parameters('location')]"
           }
