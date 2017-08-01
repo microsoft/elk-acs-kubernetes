@@ -96,6 +96,11 @@ kubectl get nodes
 curl -s https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 helm init
 
+# make sure helm installed
+until [ $(kubectl get pods -n kube-system -l app=helm,name=tiller -o jsonpath="{.items[0].status.containerStatuses[0].ready}") = "true" ]; do
+  sleep 2
+done
+
 # download templates
 curl -L ${repositoryUrl} -o template.zip
 unzip -o template.zip -d template

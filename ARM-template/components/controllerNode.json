@@ -241,6 +241,10 @@
             "apiVersion": "2017-05-10",
             "name": "virtualMachine",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -277,7 +281,8 @@
                     },
                     "archiveUrl": {
                         "value": "[parameters('archiveUrl')]"
-                    },"directoryName": {
+                    },
+                    "directoryName": {
                         "value": "[parameters('directoryName')]"
                     }
                 }
