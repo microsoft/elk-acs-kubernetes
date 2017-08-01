@@ -15,7 +15,7 @@ do
      esac
 done
 
-export TAG=':latest'
+export TAG='latest'
 export STORAGE_ACCOUNT=${storageAccountName}
 export STORAGE_LOCATION=${resourceLocation}
 export STORAGE_SKU=${storageAccountSku}

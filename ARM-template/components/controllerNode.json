@@ -100,10 +100,10 @@
         "basedPrivateKey": "[parameters('privateKey')]",
         "baseUrl": "[concat(parameters('baseTemplateUrl'), '/ARM-template/components/')]",
         "controlTemplate": {
-            "true": "controllorAzureRegistry.json",
-            "false": "controllerCustomRegistry.json"
+            "True": "controllorAzureRegistry.json",
+            "False": "controllerCustomRegistry.json"
         },
-        "actualTemplate": "[concat(variables('baseUrl'), variables('controlTemplate')[empty(parameters('registryUrl'))])]"
+        "actualTemplate": "[concat(variables('baseUrl'), variables('controlTemplate')[string(empty(parameters('registryUrl')))])]"
     },
     "resources": [
         {

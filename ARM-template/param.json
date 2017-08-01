@@ -12,28 +12,34 @@
       "value": "Standard_DS3_v2"
     },
     "linuxAdminUsername": {
-      "value": "<controller-admin-username>"
+      "value": "azureuser"
     },
     "masterCount": {
       "value": 1
     },
     "sshRSAPublicKey": {
-      "value": "<ssh-public-key>"
+      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+0JNfoTzkdz+8auZ6vUmYk7r/+KLXQy/FAW3lFAZivZ5Ww+7xnZ0/fp+aszimyiKKGvZuCCmflC9uQpcPanVfsr+3Ykrd0sw/+9i30FQWVu4rEB6PI5wwF3vtcZCM6XiVpMPmiV6EuxEeGsOeIFyUlHOi3GARLD5vdzM5/semqTME/0CsoHnX9DEMJgE8Ne7Sdmj3PItywI8364Z5Qa8MD10rmzjZQtKgmmInzIC7vtvQqPNkOVK1JTVdeQQJRM9zqP97Anr8EI5U8DBx4Z7j+saM7wC8m2CxOt0J0jl9rsKUO69mhOMKFhToSG/6qM5b2Qv4YmvfkGSqIrBqpZEF webcrypto"
     },
     "privateKey": {
-      "value": "<ssh-private-key-base64-encoded>"
+      "value": "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBdnRDVFg2RTg1SGMvdkdybWVyMUptSk82Ly9paTEwTXZ4UUZ0NVJRR1lyMmVWc1B1OFoyZFAzNmYKbXJNNHBzb2lpaHIyYmdncG41UXZia0tYRDJwMVg3Sy90MkpLM2RMTVAvdll0OUJVRmxidUt4QWVqeU9jTUJkNzdYR1FqT2w0CmxhVEQ1b2xlaExzUkhockRuaUJjbEpSem90eGdFU3crYjNjek9mN0hwcWt6QlA5QXJLQjUxL1F4RENZQlBEWHUwblpvOXp5TApjc0NQTit1R2VVR3ZEQTlkSzVzNDJVTFNvSnBpSjh5QXU3N2IwS2p6WkRsU3RTVTFYWGtFQ1VUUGM2ai9ld0o2L0JDT1ZQQXcKY2VHZTQvckdqTzhBdkp0Z3NUcmRDZEk1ZmE3Q2xEdXZab1RqQ2hZVTZFaHYrcWpPVzlrTCtHSnIzNUJrcWlLd2FxV1JCUUlECkFRQUJBb0lCQURpVWptNlgxLytDNExKVkhIeWVyamtBN1QxRGs3MnkzWEpVUnlyYk1qMkxMbTFaOGZ0UkdqU2VybUxuNjgrQgpOcGF2QWcyRWZCc21qSjNzUHZEQ1I0V1Y4a1ZGYngreGh3RWVBNWdWdlNsV280Ni9XK0JqMWNkbzMwVjhIRG04YlJZcVlqQjAKNFVNSVdUNE0vNTVleURVQ2cvdHh6MGFvVU9jcWVGVWxHRHh4Z2xkU285UVcwNXNhbDUrV1ZnZ2pUdkxjVnEzNUNJa2Nqd2t0ClBFRTR0UjFHRC9MQWlaYjFrbnBlQzVwWmtkY1ZjYXhROXNLUlRTREUwV2tickxuamVQbnV0WEdqZ1lrUlA4MXdMT3Rib1VvUQpzSW5rOFU5YmJYbXBPZGRUT0VEVEh6VFhXYThMRFZEVmNRS1lNaFBYdTVZTEV6UElQNTBvdWd6QTdHaGpteUVDZ1lFQTVUTXoKcjZrRmxWd21LdDd4RjltSFAzYy9VMlh2UmgvTXpyVjIydHVDM056eEt6NVdJZ21RRHAxN2pJekVldkFqMkNVVXl3eWpmaTFNCkQ2bFNQeUNiWEZjTmk2dzVCdHF1Q1ErVmc3SlpNZVhvWUNDRktJcTh0UEF2dFNoc2lmbXppcEVDKzE3cnBodU5GVzdaOVdGZAovdXJjVWFHN25HdG1RT0NSVVZaK29ka0NnWUVBMVNCY3E1Tks2RUNNUkFsdGxzUzIvdzIyUFpqL3VaNFVSbnk4SVhrakJ2VU0KQnFES244R1MvNm1XTDdoWEREcUNXMWZDd0VxRU1lYzg3eFpsNWd1OWdGOUJobnV3ZVhWR3ZVMUNNWnZXdUdiQy91S3hFaDFWCitOZ1RJZDI0bENDWWduVFNlR0FDVzRrR0N1VXdGSnY3YTkyMldodXh3L1lNN25SdzltbFJnUTBDZ1lFQXBlSFEzcW10Nk5PdwpyQVorNTR3QVh1YW5abXk0S0VDTHNtK1RmZ0t4UzdoOHM1ZUNMMUJNZXNkdnkrRjFzcVJxek56Smw4dWw2SVJRTUdXVHFTeW8KUk1TY2dTSThnOEZ4aEExTFlPMkxzSmw4L1ZXTUNqT2ZNRFZGMGc5WHZ1U0NGUit1ME05NkxkWnkzYmhFOTF0bzlENTNCbjNQCmt2NElHNXhza0RuUm5NRUNnWUVBc2t3bm10WlhoV055dFB5YU5OYVBMV01nUWZuOGZpSFVYbis5dDljcXlZZzVybFhZRGJ5WQpxTkFNT0JIa3FQTk4yUExibDVqL2JPeEIydGNIR21SWi9jb3kvRG9BRWl4ZHFNSzRqTjROelNrVEdyODFXYTAzSGo1T0N6ZjkKVWRiUEg5eHhzNGpHa0NOYTdjUjg2OUR1am5mbU5RNFVNcGRtakJyWDRoMkx0UVVDZ1lBYnNkVW1PRXIzd1l0d0dPSUFYYjJVClM2b1FMUG9VbWQ0RytySEhjSFp4NzVjWUZrQTZEYzVTUVJwZHJRcWc4eHc4Z0t0VXFKL0NrYjRUamZsN3JQbkgwRGhwbVhnQgp0ODEwb2dBTTMxem5raTZaK1lCWWJGbm9WOTNoSC9sbzVHcmk0UUpqNStWNVNRZDhGTStlZFc0UnFFL284dUxzMGE4UEswWEUKTUVydGR3PT0KLS0tLS1FTkQgUlNBIFBSSVZBVEUgS0VZLS0tLS0="
     },
     "servicePrincipalClientId": {
-      "value": "<service-principal-client-id>"
+      "value": "7af72b11-3660-4252-865f-4275a8ca768a"
     },
     "servicePrincipalClientSecret": {
-      "value": "<service-principal-client-password>"
+      "value": "0d2cd54e-c498-4a3c-9280-1d8851520ad9"
     },
     "adminPassword": {
-      "value": "<controller-admin-password>"
+      "value": "AAAAAAaaa123."
     },
     "baseTemplateUrl": {
-      "value": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/"
+      "value": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/feature/dockerhub/"
+    },
+    "storageAccountSku": {
+      "value": "Premium_LRS"
+    },
+    "registryUrl": {
+      "value": "docker.io/zhzy0077"
     }
   }
 }

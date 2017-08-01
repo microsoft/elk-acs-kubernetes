@@ -217,19 +217,37 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(variables('baseUrl'), 'containserService.json')]",
+          "uri": "[concat(variables('baseUrl'), 'containerService.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "dnsNamePrefix": "[parameters('dnsNamePrefix')]",
-          "agentCount": "[parameters('agentCount')]",
-          "agentVMSize": "[parameters('agentVMSize')]",
-          "linuxAdminUsername": "[parameters('linuxAdminUsername')]",
-          "masterCount": "[parameters('masterCount')]",
-          "sshRSAPublicKey": "[parameters('sshRSAPublicKey')]",
-          "servicePrincipalClientId": "[parameters('servicePrincipalClientId')]",
-          "servicePrincipalClientSecret": "[parameters('servicePrincipalClientSecret')]",
-          "location": "[parameters('location')]"
+          "dnsNamePrefix": {
+            "value": "[parameters('dnsNamePrefix')]"
+          },
+          "agentCount": {
+            "value": "[parameters('agentCount')]"
+          },
+          "agentVMSize": {
+            "value": "[parameters('agentVMSize')]"
+          },
+          "linuxAdminUsername": {
+            "value": "[parameters('linuxAdminUsername')]"
+          },
+          "masterCount": {
+            "value": "[parameters('masterCount')]"
+          },
+          "sshRSAPublicKey": {
+            "value": "[parameters('sshRSAPublicKey')]"
+          },
+          "servicePrincipalClientId": {
+            "value": "[parameters('servicePrincipalClientId')]"
+          },
+          "servicePrincipalClientSecret": {
+            "value": "[parameters('servicePrincipalClientSecret')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
         }
       }
     },
@@ -244,8 +262,12 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "storageAccountSku": "[parameters('storageAccountSku')]",
-          "location": "[parameters('location')]"
+          "storageAccountSku": {
+            "value": "[parameters('storageAccountSku')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
         }
       }
     },
@@ -260,8 +282,12 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "required": "[empty(parameters('registryUrl'))]",
-          "location": "[parameters('location')]"
+          "required": {
+            "value": "[empty(parameters('registryUrl'))]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
         }
       }
     },
@@ -281,15 +307,33 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "dnsNamePrefix": "[parameters('dnsNamePrefix')]",
-          "linuxAdminUsername": "[parameters('linuxAdminUsername')]",
-          "adminPassword": "[parameters('adminPassword')]",
-          "ubuntuOSVersion": "[parameters('ubuntuOSVersion')]",
-          "privateKey": "[parameters('privateKey')]",
-          "location": "[parameters('location')]",
-          "registryUrl": "[parameters('registryUrl')]",
-          "baseTemplateUrl": "[parameters('baseTemplateUrl')]",
-          "storageAccountSku": "[parameters('storageAccountSku')]"
+          "dnsNamePrefix": {
+            "value": "[parameters('dnsNamePrefix')]"
+          },
+          "linuxAdminUsername": {
+            "value": "[parameters('linuxAdminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "ubuntuOSVersion": {
+            "value": "[parameters('ubuntuOSVersion')]"
+          },
+          "privateKey": {
+            "value": "[parameters('privateKey')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "registryUrl": {
+            "value": "[parameters('registryUrl')]"
+          },
+          "baseTemplateUrl": {
+            "value": "[parameters('baseTemplateUrl')]"
+          },
+          "storageAccountSku": {
+            "value": "[parameters('storageAccountSku')]"
+          }
         }
       }
     }
