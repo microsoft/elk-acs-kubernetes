@@ -2,7 +2,7 @@
 
 set -e
 
-while getopts ':d:l:u:p:k:r:a:b:s:c:e:' arg
+while getopts ':d:l:u:p:k:r:a:b:s:c:e:f:' arg
 do
      case ${arg} in
         d) masterDns=${OPTARG};;
@@ -16,6 +16,7 @@ do
         s) storageAccount=${OPTARG};;
         c) storageAccountSku=${OPTARG};;
         e) repositoryUrl=${OPTARG};;
+        f) directoryName=${OPTARG};;
      esac
 done
 
@@ -98,7 +99,7 @@ curl -L ${repositoryUrl} -o template.zip
 unzip -o template.zip -d template
 
 # expose kubectl proxy
-cd template/elk-acs-kubernetes-rc/
+cd template/${directoryName}
 echo ${masterPassword} | htpasswd -c -i /etc/nginx/.htpasswd ${masterUsername}
 cp config/nginx-site.conf /etc/nginx/sites-available/default
 nohup kubectl proxy --port=8080 &

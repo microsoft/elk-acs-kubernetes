@@ -171,7 +171,21 @@
       "type": "string",
       "defaultValue": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/",
       "metadata": {
-        "description": "base URL of templates, typically a repository for configuraions"
+        "description": "Base URL of templates, typically a repository for configuraions"
+      }
+    },
+    "archiveUrl": {
+      "type": "string",
+      "defaultValue": "https://github.com/Microsoft/elk-acs-kubernetes/archive/rc.zip",
+      "metadata": {
+        "description": "Archive URL of all contents."
+      }
+    },
+    "directoryName": {
+      "type": "string",
+      "defaultValue": "elk-acs-kubernetes-rc/",
+      "metadata": {
+        "description": "Directory in archive."
       }
     }
   },
@@ -336,6 +350,12 @@
           },
           "storageAccountSku": {
             "value": "[parameters('storageAccountSku')]"
+          },
+          "archiveUrl": {
+            "value": "[parameters('archiveUrl')]"
+          },
+          "directoryName": {
+            "value": "[parameters('directoryName')]"
           }
         }
       }

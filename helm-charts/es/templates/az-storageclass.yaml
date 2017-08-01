@@ -2,7 +2,7 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
 metadata:
-  name: storageAccount
+  name: data
   namespace: {{ .Values.common.namespace }}
 provisioner: kubernetes.io/azure-disk
 parameters:

@@ -1,5 +1,5 @@
 common:
-  namespace: elk-cluster-ns
+  namespace: ${NAMESPACE}
   secretName: azure-registry
   registry: ${REGISTRY_URL}
 

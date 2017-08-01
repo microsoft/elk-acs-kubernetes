@@ -19,20 +19,20 @@ export TAG='latest'
 export STORAGE_ACCOUNT=${storageAccountName}
 export STORAGE_LOCATION=${resourceLocation}
 export STORAGE_SKU=${storageAccountSku}
+export NAMESPACE=elk-cluster-ns
+
 # substitute environment variables
 cat config.yaml | envsubst > effect.yaml
 
-# create namespace
-namespace=elk-cluster-ns
+helm install -f effect.yaml ns
 
-helm install -f config.yaml ns
-
+echo ${registryUsername}
 if [ ! -z ${registryUsername} ]; then
     # create secret
     registry_name=azure-registry
     registry_email=example@example.com
 
-    kubectl --namespace=${namespace} create secret docker-registry ${registry_name} \
+    kubectl --namespace=${NAMESPACE} create secret docker-registry ${registry_name} \
     --docker-server=${registryUrl} \
     --docker-username=${registryUsername} \
     --docker-password=${registryPassword} \

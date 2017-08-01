@@ -69,7 +69,7 @@ spec:
   - metadata:
       name: es-persistent-storage
       annotations:
-        volume.beta.kubernetes.io/storage-class: storageAccount
+        volume.beta.kubernetes.io/storage-class: data
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:

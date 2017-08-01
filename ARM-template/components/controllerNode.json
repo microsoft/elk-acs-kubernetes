@@ -73,6 +73,20 @@
             "metadata": {
                 "description": "Storage account sku to be used as Elasticsearch data node"
             }
+        },
+        "archiveUrl": {
+            "type": "string",
+            "defaultValue": "https://github.com/Microsoft/elk-acs-kubernetes/archive/rc.zip",
+            "metadata": {
+                "description": "Archive URL of all contents."
+            }
+        },
+        "directoryName": {
+            "type": "string",
+            "defaultValue": "elk-acs-kubernetes-rc/",
+            "metadata": {
+                "description": "Directory in archive."
+            }
         }
     },
     "variables": {
@@ -260,6 +274,11 @@
                     },
                     "storageAccountSku": {
                         "value": "[parameters('storageAccountSku')]"
+                    },
+                    "archiveUrl": {
+                        "value": "[parameters('archiveUrl')]"
+                    },"directoryName": {
+                        "value": "[parameters('directoryName')]"
                     }
                 }
             }

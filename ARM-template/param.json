@@ -40,7 +40,12 @@
     },
     "registryUrl": {
       "value": "docker.io/zhzy0077"
+    },
+    "archiveUrl": {
+      "value": "https://github.com/Microsoft/elk-acs-kubernetes/archive/feature/dockerhub.zip"
+    },
+    "directoryName": {
+      "value": "elk-acs-kubernetes-feature-dockerhub/"
     }
   }
 }
-
