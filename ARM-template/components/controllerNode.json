@@ -234,15 +234,33 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "dnsNamePrefix": "[parameters('dnsNamePrefix')]",
-                    "linuxAdminUsername": "[parameters('linuxAdminUsername')]",
-                    "adminPassword": "[parameters('adminPassword')]",
-                    "ubuntuOSVersion": "[parameters('ubuntuOSVersion')]",
-                    "privateKey": "[parameters('privateKey')]",
-                    "location": "[parameters('location')]",
-                    "registryUrl": "[parameters('registryUrl')]",
-                    "baseTemplateUrl": "[parameters('baseTemplateUrl')]",
-                    "storageAccountSku": "[parameters('storageAccountSku')]"
+                    "dnsNamePrefix": {
+                        "value": "[parameters('dnsNamePrefix')]"
+                    },
+                    "linuxAdminUsername": {
+                        "value": "[parameters('linuxAdminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "ubuntuOSVersion": {
+                        "value": "[parameters('ubuntuOSVersion')]"
+                    },
+                    "privateKey": {
+                        "value": "[parameters('privateKey')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "registryUrl": {
+                        "value": "[parameters('registryUrl')]"
+                    },
+                    "baseTemplateUrl": {
+                        "value": "[parameters('baseTemplateUrl')]"
+                    },
+                    "storageAccountSku": {
+                        "value": "[parameters('storageAccountSku')]"
+                    }
                 }
             }
         }
