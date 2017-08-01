@@ -2,7 +2,7 @@
 
 set -e
 
-while getopts ':d:l:u:p:k:r:a:b:s:c:d:' arg
+while getopts ':d:l:u:p:k:r:a:b:s:c:e:' arg
 do
      case ${arg} in
         d) masterDns=${OPTARG};;
@@ -15,7 +15,7 @@ do
         b) registryPassword=${OPTARG};;
         s) storageAccount=${OPTARG};;
         c) storageAccountSku=${OPTARG};;
-        d) repositoryUrl=${OPTARG};;
+        e) repositoryUrl=${OPTARG};;
      esac
 done
 
