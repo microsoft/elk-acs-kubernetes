@@ -3,6 +3,8 @@
 # terminate once a command failed
 set -e
 
+echo $@
+
 while getopts ':r:u:p:d:l:s' arg
 do
      case ${arg} in
@@ -16,6 +18,7 @@ do
 done
 
 export TAG='latest'
+export REGISTRY_URL=${registryUrl}
 export STORAGE_ACCOUNT=${storageAccountName}
 export STORAGE_LOCATION=${resourceLocation}
 export STORAGE_SKU=${storageAccountSku}

@@ -2,6 +2,8 @@
 
 set -e
 
+echo $@
+
 while getopts ':d:l:u:p:k:r:a:b:s:c:e:f:' arg
 do
      case ${arg} in
