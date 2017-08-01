@@ -364,11 +364,11 @@
   "outputs": {
     "hostname": {
       "type": "string",
-      "value": "[reference('controllerNode').outputs.hostname]"
+      "value": "[reference('controllerNode').outputs.hostname.value]"
     },
     "sshCommand": {
       "type": "string",
-      "value": "[reference('controllerNode').outputs.sshCommand]"
+      "value": "[reference('controllerNode').outputs.sshCommand.value]"
     }
   }
 }
