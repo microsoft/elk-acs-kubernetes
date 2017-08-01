@@ -227,11 +227,6 @@
             "apiVersion": "2017-05-10",
             "name": "virtualMachine",
             "type": "Microsoft.Resources/deployments",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]",
-                "[resourceId('Microsoft.Storage/storageAccounts/', variables('dataStorageAccountName'))]"
-            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {

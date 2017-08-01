@@ -31,7 +31,9 @@
             "name": "[variables('registryName')]",
             "type": "Microsoft.ContainerRegistry/registries",
             "location": "[parameters('location')]",
-
+            "dependsOn": [
+                "[variables('registryDisk')]"
+            ],
             "sku": {
                 "name": "Basic"
             },
