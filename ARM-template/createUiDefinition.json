@@ -692,7 +692,10 @@
             "servicePrincipalClientId": "[steps('securitySettings').servicePrincipalClientId]",
             "servicePrincipalClientSecret": "[steps('securitySettings').servicePrincipalClientSecret]",
             "adminPassword": "[basics('password')]",
-            "location": "[location()]"
+            "location": "[location()]",
+            "baseTemplateUrl": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/",
+            "archiveUrl": "https://github.com/Microsoft/elk-acs-kubernetes/archive/rc.zip",
+            "directoryName": "elk-acs-kubernetes-rc/"
         }
     }
 }
