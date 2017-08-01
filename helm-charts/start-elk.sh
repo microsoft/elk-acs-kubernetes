@@ -5,7 +5,7 @@ set -e
 
 echo $@
 
-while getopts ':r:u:p:d:l:s' arg
+while getopts ':r:u:p:d:l:s:' arg
 do
      case ${arg} in
         r) registryUrl=${OPTARG};;

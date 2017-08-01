@@ -113,8 +113,14 @@ if [ -z ${registryUrl} ]; then
     # assume azure container registry, image push is required.
     registryUrl=${registryUsername}.azurecr.io
     bash push-images.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword}
-fi
 
-# install helm charts
-cd ../helm-charts
-bash start-elk.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku}
+    cd ../helm-charts   
+    bash start-elk.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku}
+
+else
+
+    # install helm charts
+    cd ../helm-charts
+    bash start-elk.sh -r ${registryUrl} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku}
+
+fi
