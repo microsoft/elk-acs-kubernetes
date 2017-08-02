@@ -1,0 +1,302 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dnsNamePrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "Sets the Domain name prefix for the cluster.  The concatenation of the domain name and the regionalized DNS zone make up the fully qualified domain name associated with the public IP address."
+            }
+        },
+        "linuxAdminUsername": {
+            "type": "string",
+            "defaultValue": "azureuser",
+            "metadata": {
+                "description": "User name for the Linux Virtual Machines."
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password to login controller node"
+            }
+        },
+        "ubuntuOSVersion": {
+            "type": "string",
+            "defaultValue": "16.04.0-LTS",
+            "allowedValues": [
+                "12.04.5-LTS",
+                "14.04.5-LTS",
+                "16.04.0-LTS"
+            ],
+            "metadata": {
+                "description": "The Ubuntu version for the controller node. This will pick a fully patched image of this given Ubuntu version."
+            }
+        },
+        "privateKey": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Base64 encoded private key corresbonding to the public key for ACS"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location of all components"
+            }
+        },
+        "registryUrl": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Custom registry(e.g. Docker Hub) url to be used"
+            }
+        },
+        "baseTemplateUrl": {
+            "type": "string",
+            "defaultValue": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/",
+            "metadata": {
+                "description": "base URL of templates, typically a repository for configuraions"
+            }
+        },
+        "storageAccountSku": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS",
+                "Standard_RAGRS",
+                "Standard_ZRS",
+                "Premium_LRS"
+            ],
+            "metadata": {
+                "description": "Storage account sku to be used as Elasticsearch data node"
+            }
+        },
+        "archiveUrl": {
+            "type": "string",
+            "defaultValue": "https://github.com/Microsoft/elk-acs-kubernetes/archive/rc.zip",
+            "metadata": {
+                "description": "Archive URL of all contents."
+            }
+        },
+        "directoryName": {
+            "type": "string",
+            "defaultValue": "elk-acs-kubernetes-rc/",
+            "metadata": {
+                "description": "Directory in archive."
+            }
+        }
+    },
+    "variables": {
+        "adminUsername": "[parameters('linuxAdminUsername')]",
+        "mastersEndpointDNSNamePrefix": "[concat(parameters('dnsNamePrefix'), 'master')]",
+        "controllerDNSNamePrefix": "[concat(parameters('dnsNamePrefix'), 'control')]",
+        "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'ctl')]",
+        "frontEndNSGName": "[concat(uniquestring(resourceGroup().id), 'frontEndNSG')]",
+        "imagePublisher": "Canonical",
+        "imageOffer": "UbuntuServer",
+        "nicName": "controllernic",
+        "addressPrefix": "10.0.0.0/16",
+        "subnetName": "Subnet",
+        "subnetPrefix": "10.0.0.0/24",
+        "storageAccountType": "Standard_LRS",
+        "publicIPAddressName": "controllerip",
+        "publicIPAddressType": "Dynamic",
+        "vmName": "controllervm",
+        "vmSize": "Standard_A1",
+        "virtualNetworkName": "controller-vnet",
+        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+        "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+        "dataStorageAccountName": "[concat(uniquestring(resourceGroup().id), 'data')]",
+        "registryName": "[concat(uniquestring(resourceGroup().id), 'registry')]",
+        "basedPrivateKey": "[parameters('privateKey')]",
+        "baseUrl": "[concat(parameters('baseTemplateUrl'), '/ARM-template/components/')]",
+        "controlTemplate": {
+            "True": "controllorAzureRegistry.json",
+            "False": "controllerCustomRegistry.json"
+        },
+        "actualTemplate": "[concat(variables('baseUrl'), variables('controlTemplate')[string(empty(parameters('registryUrl')))])]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[variables('storageAccountName')]",
+            "apiVersion": "2017-06-01",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[variables('storageAccountType')]"
+            },
+            "kind": "Storage",
+            "properties": {}
+        },
+        {
+            "apiVersion": "2017-04-01",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[variables('frontEndNSGName')]",
+            "location": "[parameters('location')]",
+            "tags": {
+                "displayName": "NSG - Front End"
+            },
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "ssh-rule",
+                        "properties": {
+                            "description": "Allow SSH",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "Internet",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "web-rule",
+                        "properties": {
+                            "description": "Allow WEB",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "80",
+                            "sourceAddressPrefix": "Internet",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 101,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2017-04-01",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[variables('publicIPAddressName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+                "dnsSettings": {
+                    "domainNameLabel": "[variables('controllerDNSNamePrefix')]"
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-04-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[variables('virtualNetworkName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkSecurityGroups/', variables('frontEndNSGName'))]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('addressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnetPrefix')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('frontEndNSGName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2017-04-01",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[variables('nicName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+                            },
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "virtualMachine",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('actualTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "dnsNamePrefix": {
+                        "value": "[parameters('dnsNamePrefix')]"
+                    },
+                    "linuxAdminUsername": {
+                        "value": "[parameters('linuxAdminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "ubuntuOSVersion": {
+                        "value": "[parameters('ubuntuOSVersion')]"
+                    },
+                    "privateKey": {
+                        "value": "[parameters('privateKey')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "registryUrl": {
+                        "value": "[parameters('registryUrl')]"
+                    },
+                    "baseTemplateUrl": {
+                        "value": "[parameters('baseTemplateUrl')]"
+                    },
+                    "storageAccountSku": {
+                        "value": "[parameters('storageAccountSku')]"
+                    },
+                    "archiveUrl": {
+                        "value": "[parameters('archiveUrl')]"
+                    },
+                    "directoryName": {
+                        "value": "[parameters('directoryName')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "hostname": {
+            "type": "string",
+            "value": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
+        },
+        "sshCommand": {
+            "type": "string",
+            "value": "[concat('ssh ', variables('adminUsername'), '@', reference(variables('publicIPAddressName')).dnsSettings.fqdn)]"
+        }
+    }
+}

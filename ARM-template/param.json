@@ -9,7 +9,7 @@
       "value": 1
     },
     "agentVMSize": {
-      "value": "Standard_D2_v2"
+      "value": "Standard_DS3_v2"
     },
     "linuxAdminUsername": {
       "value": "<controller-admin-username>"
@@ -31,7 +31,21 @@
     },
     "adminPassword": {
       "value": "<controller-admin-password>"
+    },
+    "baseTemplateUrl": {
+      "value": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/feature/dockerhub/"
+    },
+    "storageAccountSku": {
+      "value": "Premium_LRS"
+    },
+    "registryUrl": {
+      "value": ""
+    },
+    "archiveUrl": {
+      "value": "https://github.com/Microsoft/elk-acs-kubernetes/archive/feature/dockerhub.zip"
+    },
+    "directoryName": {
+      "value": "elk-acs-kubernetes-feature-dockerhub/"
     }
   }
 }
-
