@@ -60,7 +60,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Registry url",
                         "defaultValue": "",
-                        "toolTip": "Custom image registry to be used. If you don't understand it, leave it blank.",
+                        "toolTip": "If you want to use a public registry service e.g. Docker Hub, put repository url here. Otherwise, leave it blank.",
                         "constraints": {
                             "required": false
                         },
