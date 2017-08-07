@@ -12,28 +12,28 @@
       "value": "Standard_DS3_v2"
     },
     "linuxAdminUsername": {
-      "value": "<controller-admin-username>"
+      "value": "azureuser"
     },
     "masterCount": {
       "value": 1
     },
     "sshRSAPublicKey": {
-      "value": "<ssh-public-key>"
+      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtnRN770zi6aFuFlR4o89eKn1Z/w0QwbrTBTdg+DjdlPgxILT2ckZvNLtHCsUpCnFhQcjVPrb5h26gZmJdiYQqZiVBAvWea7rPjsaTpxC3tDJcV9vwRIcQXQYMKSugUazS0nd9P+gMa52O9Nr+Qo/0EjZAFYMdZAOiZ7c4zWX7jSW5ZCeoZwx+PwddDEOUAlmrUMALMwGD7EtcoEJpjrFLmtr2DQYQpYSFDHhx0HRBvr4W5B5eTmqj3iyektAcGolWVwM8Xt/qIxF+7gmuktZr4PEupp1zqWENiOw6WxmbsfxeinFpofOynsBy5aeVi1ILLEBOwMQiboO6CQ/VN4pP webcrypto"
     },
     "privateKey": {
-      "value": "<ssh-private-key-base64-encoded>"
+      "value": "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcFFJQkFBS0NBUUVBN1owVGUrOU00dW1oYmhaVWVLUFBYaXA5V2Y4TkVNRzYwd1UzWVBnNDNaVDRNU0MwOW5KR2J6UzcKUndyRktRcHhZVUhJMVQ2MitZZHVvR1ppWFltRUttWWxRUUwxbm11Nno0N0drNmNRdDdReVhGZmI4RVNIRUYwR0RDa3JvRkdzCjB0SjNmVC9vREd1ZGp2VGEva0tQOUJJMlFCV0RIV1FEb21lM09NMWwrNDBsdVdRbnFHY01majhIWFF4RGxBSlpxMURBQ3pNQgpnK3hMWEtCQ2FZNnhTNXJhOWcwR0VLV0VoUXg0Y2RCMFFiNitGdVFlWGs1cW85NHNucExRSEJxSlZsY0RQRjdmNmlNUmZ1NEoKcnBMV2ErRHhMcWFkYzZsaERZanNPbHNabTdIOFhvcHhhYUh6c3A3QWN1V25sWXRTQ3l4QVRzREVJbTZEdWdrUDFUZUtUd0lECkFRQUJBb0lCQUVrdjZvSnY4TVNycFhkZEZXT2JRUklHRUZvWi94SThPYWtwb0NjVURaL2lkSmZkTlIvN2pzcE4rYWttSGhoSQpDU2dsdFJCSm90NDA0dFF3OVBkT2xoRGhLWFJlenZ5ZXZnbVVOb0hnSVh3VDJyY3FzS25PMGJNdWsrQkhCaEw1VlR3U2E0OSsKa2FEUnZOUDlnejV4amhsbFNxUnVlOVlmcWlicHZ6dVZ1R1hFT2U0U0ZwLzNxZ0krcTkyditjUGt6ZThiZWZqU0VzWXVJN0x3Ck5NOXoxZXhWeE55SHpGY3hTbjUwWnJJUnlMa3d2WlFMaEJRRDVnRFgvYnRxdkU1TGFyN0p2bTBPakxkRHN6NUtxQXYvdzZncAozTVV5WVhuVGY0QjNWS3pZZkVONWJoRXJ1NFhGK2FVNmE3L0pYRmJsOTlDVy9wTFliVnlqKzJIZXhtTmRaWEVDZ1lFQS9ad1cKaFYvcmNNbVI3Y0RKQ1kxeE0xSjZPYlhZZlhEKzUvSFBQMklucGEvN3l5K2o3L2Nma2JWelVzbWV0TWZRbFNMcThRL3R4WDVLCmtCeE1KUCsyaHVadGhDV1FmRXFkeE11b0EyZlN2OVFWdGY0Nk1qZVFZTmNlM0lWdzBWRk9rb1lMSmpTSFFKcHVRS1dsb1JaOQoxdm8wbG5oREFlYW5TS2lFSk5rZUVIc0NnWUVBNzlwa2VtajRlZDhHanRBOFZhWVpuR1NKejFwWmlDZUM2VXo5VFA2NFJPYzgKVkU0Wm9vYzZTcEx3OSt0bk5KaHN2aFdFSlRpUWpzUW5NcVdHdDEvQzRpdmhIR01kVEw4KzlWOHEydkkyMG5ERHZLaldkU3pECjhDaFRvQUE3VzMzaG9aQWl6ck9HZ1NNbFdodXBiK0dESXNSSURZdlUrN2h0QXFLWmxoMWF4ejBDZ1lFQWhkaUhHa1VSWVNsQQoxeFhVQkRLZDk5UWpwYW1QWkVUcWcwZGZkYmc3N0hvQWphL0srYTZXL3JPZzlhUnJHa1lLazJzbVM2dDRkYTY5YzJrNzFwc08Kbmd1bTZRTmFTZjZuWFdHT2ZwMmc0SlR5RUdib0YvQ3pSaWpDcE9mWUx1Q1djMFpEUkJxYzl6K0p5SnlqMld5aFpZQVBtUXBICmN3MWtaRGhyNVhhaEkxa0NnWUVBd0h6aEZFZjMyVDUrTWRDMkN2cHhKVXllT0ZWRzh2amFtOGJZcFpqcVl3bThKZUJEdkdhUQpCbGNrb2FJK3dqdnRVU05OV04yclRaZm42VUpqK2ZnVkc1T2haam00d3VYY2Jla0JLSk1vSWZ5emFVMktScUUxWWgvSzlPWWEKdk5NcVo1R1lEWkNQeWtWZGJaSXppWUZPejNEOGJqcWhJNTZmaFhUZWsxVmRpL1VDZ1lFQTVvSjRVcnZILzZlVmJpOGx3UU9pCjVtTVp5a3dnUjladkFYcG5rV3FzTkN3V1I1WU9wdVRKVEtPNEZhbmc0L1NXWWNVVlUvaE5nMDVpY3hsZ1hVZEN4VHQ3YURXWQprdkZwUHIrbEZjRUFtaFgwOUd6MnFpSGZzUExOK3Z0aDY5UG1CeWhLenRtcExhRGNReDVFOU1nM2N1M1c4TGtOemZtcXZxYTYKV0VXUmxmTT0KLS0tLS1FTkQgUlNBIFBSSVZBVEUgS0VZLS0tLS0="
     },
     "servicePrincipalClientId": {
-      "value": "<service-principal-client-id>"
+      "value": "54040e53-3e93-4b1f-af72-c96917cae663"
     },
     "servicePrincipalClientSecret": {
-      "value": "<service-principal-client-password>"
+      "value": "82f01986-eb5c-4cd1-822f-316d72ded966"
     },
     "adminPassword": {
-      "value": "<controller-admin-password>"
+      "value": "AAAAAAaaa123."
     },
     "baseTemplateUrl": {
-      "value": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/feature/dockerhub/"
+      "value": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/fix/typo"
     },
     "storageAccountSku": {
       "value": "Premium_LRS"
@@ -42,10 +42,10 @@
       "value": ""
     },
     "archiveUrl": {
-      "value": "https://github.com/Microsoft/elk-acs-kubernetes/archive/feature/dockerhub.zip"
+      "value": "https://github.com/Microsoft/elk-acs-kubernetes/archive/fix/typo.zip"
     },
     "directoryName": {
-      "value": "elk-acs-kubernetes-feature-dockerhub/"
+      "value": "elk-acs-kubernetes-fix-typo/"
     }
   }
 }
