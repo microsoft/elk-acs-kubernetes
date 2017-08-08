@@ -174,9 +174,7 @@
                     "type": "extensions",
                     "location": "[parameters('location')]",
                     "apiVersion": "2015-06-15",
-                    "dependsOn": [
-                        "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-                    ],
+                    
                     "properties": {
                         "publisher": "Microsoft.Azure.Extensions",
                         "type": "CustomScript",
@@ -188,7 +186,7 @@
                             ]
                         },
                         "protectedSettings": {
-                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', parameters('adminPassword'), ' -k ', variables('basedPrivateKey'), ' -a ', variables('registryName'), '-b', listCredentials(resourceId('Microsoft.ContainerRegistry/registries', 'registryName'), '2017-03-01').passwords[0].value, ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'))]"
+                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', parameters('adminPassword'), ' -k ', variables('basedPrivateKey'), ' -a ', variables('registryName'), '-b', listCredentials(resourceId('Microsoft.ContainerRegistry/registries', variables('registryName')), '2017-03-01').passwords[0].value, ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'))]"
                         }
                     }
                 }
