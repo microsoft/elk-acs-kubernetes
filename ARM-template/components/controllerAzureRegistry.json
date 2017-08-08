@@ -181,7 +181,7 @@
                         "autoUpgradeMinorVersion": true,
                         "settings": {
                             "fileUris": [
-                                "[concat(variables('baseUrl'), 'scripts/run.sh')]"
+                                "[concat(variables('baseUrl'), '/scripts/run.sh')]"
                             ]
                         },
                         "protectedSettings": {
