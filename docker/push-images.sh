@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+set -e
+
+echo $@
+
 while getopts ':r:u:p:' arg
 do
      case ${arg} in
