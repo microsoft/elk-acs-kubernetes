@@ -122,7 +122,7 @@
         {
             "apiVersion": "2017-03-30",
             "dependsOn": [
-                "[resourceId('Microsoft.ContainerRegistry/registries', variables('registryName'))]"
+                "[resourceId('Microsoft.ContainerRegistry/registries/', variables('registryName'))]"
             ],
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[variables('vmName')]",
