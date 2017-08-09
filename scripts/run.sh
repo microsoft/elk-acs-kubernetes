@@ -4,7 +4,7 @@ set -e
 
 echo $@
 
-while getopts ':d:l:u:p:k:r:a:b:s:c:e:f:g:' arg
+while getopts ':d:l:u:p:k:r:a:b:s:c:e:f:g:h:i:t:' arg
 do
      case ${arg} in
         d) masterDns=${OPTARG};;
@@ -19,7 +19,10 @@ do
         c) storageAccountSku=${OPTARG};;
         e) repositoryUrl=${OPTARG};;
         f) directoryName=${OPTARG};;
-        g) loginMethod=${OPTARG};; # "AzureAD" or "BasicAuth"
+        g) loginMode=${OPTARG};; # "AzureAD" or "BasicAuth"
+        h) clientId=${OPTARG};;
+        i) clientSecret=${OPTARG};;
+        t) tenant=${OPTARG};;
      esac
 done
 
@@ -65,10 +68,24 @@ if [ -z ${repositoryUrl} ]; then
     exit 1
 fi
 
-if [ -z ${loginMethod} ]; then
-    loginMethod = 'BasicAuth'
+if [ -z ${loginMode} ]; then
+    loginMode = 'BasicAuth'
 fi
 
+if [ "${loginMode}" = "AzureAD" ]; then
+    if [ -z ${clientId} ]; then
+        echo 'Client ID is required in Azure AD mode' >&2
+        exit 1
+    fi
+    if [ -z ${clientSecret} ]; then
+        echo 'Client secret is required in Azure AD mode' >&2
+        exit 1
+    fi
+    if [ -z ${tenant} ]; then
+        echo 'Tenant is required in Azure AD mode' >&2
+        exit 1
+    fi
+fi
 
 privateKeyFile='private_key'
 
@@ -117,16 +134,19 @@ unzip -o template.zip -d template
 nohup kubectl proxy --port=8080 &
 
 cd template/${directoryName}
-if [ "${loginMethod}" = "Basic Auth" ]; then
+if [ "${loginMode}" = "BasicAuth" ]; then
     echo ${masterPassword} | htpasswd -c -i /etc/nginx/.htpasswd ${masterUsername}
     cp config/nginx-basic.conf /usr/local/openresty/nginx/conf/nginx.conf
     systemctl reload openresty
 else
     opm get pintsized/lua-resty-http bungle/lua-resty-session
     cp config/openidc.lua /usr/local/openresty/lualib/resty/openidc.lua
+    export TENANT=${tenant}
+    export CLIENT_ID=${clientId}
+    export CLIENT_SECRET=${clientSecret}
     cat config/nginx-openid.conf | envsubst > /usr/local/openresty/nginx/conf/nginx.conf
     systemctl reload openresty
-fi;
+fi
 
 # push image
 cd docker

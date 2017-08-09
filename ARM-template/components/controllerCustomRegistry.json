@@ -87,6 +87,38 @@
             "metadata": {
                 "description": "Directory in archive."
             }
+        },
+        "loginMode": {
+            "type": "string",
+            "defaultValue": "BasicAuth",
+            "allowedValues": [
+                "BasicAuth",
+                "AzureAD"
+            ],
+            "metadata": {
+                "description": "Login mode to authenicate user."
+            }
+        },
+        "azureAdClientId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure AD client ID(Application ID)"
+            }
+        },
+        "azureAdClientSecret": {
+            "type": "securestring",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure AD client secret/key"
+            }
+        },
+        "tenant": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure AD tenant(e.g. contoso.onmicrosoft.com)"
+            }
         }
     },
     "variables": {
@@ -185,7 +217,7 @@
                             ]
                         },
                         "protectedSettings": {
-                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', parameters('adminPassword'), ' -k ', variables('basedPrivateKey'), ' -r ', parameters('registryUrl'), ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'))]"
+                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', parameters('adminPassword'), ' -k ', variables('basedPrivateKey'), ' -r ', parameters('registryUrl'), ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'), ' -g ', parameters('loginMode'), ' -h ', parameters('azureAdClientId'), ' -i ', parameters('azureAdClientSecret'), ' -t ', parameters('tenant'))]"
                         }
                     }
                 }
