@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "dnsNamePrefix": {
-      "value": "acs-dns-abcdef"
+      "value": "acs-dns-abx"
     },
     "agentCount": {
       "value": 1
@@ -33,7 +33,7 @@
       "value": "<controller-admin-password>"
     },
     "baseTemplateUrl": {
-      "value": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/feature/dockerhub/"
+      "value": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc"
     },
     "storageAccountSku": {
       "value": "Premium_LRS"
@@ -42,10 +42,10 @@
       "value": ""
     },
     "archiveUrl": {
-      "value": "https://github.com/Microsoft/elk-acs-kubernetes/archive/feature/dockerhub.zip"
+      "value": "https://github.com/Microsoft/elk-acs-kubernetes/archive/rc.zip"
     },
     "directoryName": {
-      "value": "elk-acs-kubernetes-feature-dockerhub/"
+      "value": "elk-acs-kubernetes-rc/"
     }
   }
 }
