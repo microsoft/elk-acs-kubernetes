@@ -136,7 +136,7 @@ nohup kubectl proxy --port=8080 &
 
 cd template/${directoryName}
 if [ "${loginMode}" = "BasicAuth" ]; then
-    echo ${masterPassword} | htpasswd -c -i /etc/nginx/.htpasswd ${masterUsername}
+    echo ${masterPassword} | htpasswd -c -i /usr/local/openresty/nginx/conf/.htpasswd ${masterUsername}
     cp config/nginx-basic.conf /usr/local/openresty/nginx/conf/nginx.conf
     systemctl reload openresty
 else
