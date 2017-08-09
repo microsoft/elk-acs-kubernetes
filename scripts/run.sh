@@ -92,6 +92,7 @@ privateKeyFile='private_key'
 masterUrl=${masterDns}.${resourceLocation}.cloudapp.azure.com
 
 export KUBECONFIG=/root/.kube/config
+export HOME=/root
 
 # prerequisites, e.g. docker, openresty
 sudo apt-get -y install software-properties-common
