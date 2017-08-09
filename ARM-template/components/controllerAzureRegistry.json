@@ -137,7 +137,7 @@
         "publicIPAddressName": "controllerip",
         "publicIPAddressType": "Dynamic",
         "vmName": "controllervm",
-        "vmSize": "Standard_A1",
+        "vmSize": "Standard_D1_v2",
         "virtualNetworkName": "controller-vnet",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
