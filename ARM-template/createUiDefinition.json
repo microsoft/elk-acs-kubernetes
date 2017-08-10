@@ -99,9 +99,9 @@
                         }
                     },
                     {
-                        "name": "loginMode",
+                        "name": "authenticationMode",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Login Mode",
+                        "label": "Authentication Mode",
                         "defaultValue": "BasicAuth",
                         "toolTip": "Mode to authenticate user for Kubernetes dashboard and Kibana",
                         "constraints": {
@@ -127,7 +127,7 @@
                         "constraints": {
                             "required": false
                         },
-                        "visible": "[equals('AzureAD', steps('commonSettings').loginMode)]"
+                        "visible": "[equals('AzureAD', steps('commonSettings').authenticationMode)]"
                     },
                     {
                         "name": "azureAdClientSecret",
@@ -138,7 +138,7 @@
                         "constraints": {
                             "required": false
                         },
-                        "visible": "[equals('AzureAD', steps('commonSettings').loginMode)]"
+                        "visible": "[equals('AzureAD', steps('commonSettings').authenticationMode)]"
                     },
                     {
                         "name": "tenant",
@@ -149,7 +149,7 @@
                         "constraints": {
                             "required": false
                         },
-                        "visible": "[equals('AzureAD', steps('commonSettings').loginMode)]"
+                        "visible": "[equals('AzureAD', steps('commonSettings').authenticationMode)]"
                     }
                 ]
             },
@@ -736,7 +736,7 @@
             "dnsNamePrefix": "[steps('commonSettings').dnsNamePrefix]",
             "registryUrl": "[steps('commonSettings').registryUrl]",
             "storageAccountSku": "[steps('commonSettings').storageAccountSku]",
-            "loginMode": "[steps('commonSettings').loginMode]",
+            "authenticationMode": "[steps('commonSettings').authenticationMode]",
             "azureAdClientId": "[steps('commonSettings').azureAdClientId]",
             "azureAdClientSecret": "[steps('commonSettings').azureAdClientSecret]",
             "tenant": "[steps('commonSettings').tenant]",

@@ -47,7 +47,7 @@
     "directoryName": {
       "value": "elk-acs-kubernetes-rc/"
     },
-    "loginMode": {
+    "authenticationMode": {
       "value": "BasicAuth"
     },
     "azureAdClientId": {

@@ -19,7 +19,7 @@ do
         c) storageAccountSku=${OPTARG};;
         e) repositoryUrl=${OPTARG};;
         f) directoryName=${OPTARG};;
-        g) loginMode=${OPTARG};; # "AzureAD" or "BasicAuth"
+        g) authenticationMode=${OPTARG};; # "AzureAD" or "BasicAuth"
         h) clientId=${OPTARG};;
         i) clientSecret=${OPTARG};;
         t) tenant=${OPTARG};;
@@ -68,11 +68,11 @@ if [ -z ${repositoryUrl} ]; then
     exit 1
 fi
 
-if [ -z ${loginMode} ]; then
-    loginMode = 'BasicAuth'
+if [ -z ${authenticationMode} ]; then
+    authenticationMode = 'BasicAuth'
 fi
 
-if [ "${loginMode}" = "AzureAD" ]; then
+if [ "${authenticationMode}" = "AzureAD" ]; then
     if [ -z ${clientId} ]; then
         echo 'Client ID is required in Azure AD mode' >&2
         exit 1
@@ -135,7 +135,7 @@ unzip -o template.zip -d template
 nohup kubectl proxy --port=8080 &
 
 cd template/${directoryName}
-if [ "${loginMode}" = "BasicAuth" ]; then
+if [ "${authenticationMode}" = "BasicAuth" ]; then
     echo ${masterPassword} | htpasswd -c -i /usr/local/openresty/nginx/conf/.htpasswd ${masterUsername}
     cp config/nginx-basic.conf /usr/local/openresty/nginx/conf/nginx.conf
     systemctl reload openresty

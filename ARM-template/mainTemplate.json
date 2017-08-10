@@ -188,7 +188,7 @@
         "description": "Directory in archive."
       }
     },
-    "loginMode": {
+    "authenticationMode": {
       "type": "string",
       "defaultValue": "BasicAuth",
       "allowedValues": [
@@ -196,7 +196,7 @@
         "AzureAD"
       ],
       "metadata": {
-        "description": "Login mode to authenicate user."
+        "description": "User authentication mode."
       }
     },
     "azureAdClientId": {
@@ -388,8 +388,8 @@
           "directoryName": {
             "value": "[parameters('directoryName')]"
           },
-          "loginMode": {
-            "value": "[parameters('loginMode')]"
+          "authenticationMode": {
+            "value": "[parameters('authenticationMode')]"
           },
           "azureAdClientId": {
             "value": "[parameters('azureAdClientId')]"
