@@ -737,7 +737,7 @@
             "registryUrl": "[steps('commonSettings').registryUrl]",
             "storageAccountSku": "[steps('commonSettings').storageAccountSku]",
             "loginMode": "[steps('commonSettings').loginMode]",
-            "azureAdClientId": "[steps('commonSettings').auzreAdClientId]",
+            "azureAdClientId": "[steps('commonSettings').azureAdClientId]",
             "azureAdClientSecret": "[steps('commonSettings').azureAdClientSecret]",
             "tenant": "[steps('commonSettings').tenant]",
             "agentCount": "[steps('k8sSettings').agentCount]",
