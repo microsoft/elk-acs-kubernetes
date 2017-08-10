@@ -46,6 +46,18 @@
     },
     "directoryName": {
       "value": "elk-acs-kubernetes-rc/"
+    },
+    "loginMode": {
+      "value": "BasicAuth"
+    },
+    "azureAdClientId": {
+      "value": "<azure-ad-client-id>"
+    },
+    "azureAdClientSecret": {
+      "value": "<azure-ad-client-secret>"
+    },
+    "tenant": {
+      "value": "<tenant-name>"
     }
   }
 }
