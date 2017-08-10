@@ -97,6 +97,59 @@
                                 }
                             ]
                         }
+                    },
+                    {
+                        "name": "authenticationMode",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Authentication Mode",
+                        "defaultValue": "BasicAuth",
+                        "toolTip": "Basic authentication for Kubernetes dashboard and Kibana",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Basic Authentication",
+                                    "value": "BasicAuth"
+                                },
+                                {
+                                    "label": "Azure Active Directory",
+                                    "value": "AzureAD"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "azureAdClientId",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Azure AD client ID",
+                        "defaultValue": "",
+                        "toolTip": "Azure AD client ID(Application ID)",
+                        "constraints": {
+                            "required": false
+                        },
+                        "visible": "[equals('AzureAD', steps('commonSettings').authenticationMode)]"
+                    },
+                    {
+                        "name": "azureAdClientSecret",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Azure AD client secret",
+                        "defaultValue": "",
+                        "toolTip": "Azure AD client secret/key",
+                        "constraints": {
+                            "required": false
+                        },
+                        "visible": "[equals('AzureAD', steps('commonSettings').authenticationMode)]"
+                    },
+                    {
+                        "name": "tenant",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Azure AD tenant",
+                        "defaultValue": "",
+                        "toolTip": "Azure AD tenant(e.g. contoso.onmicrosoft.com)",
+                        "constraints": {
+                            "required": false
+                        },
+                        "visible": "[equals('AzureAD', steps('commonSettings').authenticationMode)]"
                     }
                 ]
             },
@@ -683,6 +736,10 @@
             "dnsNamePrefix": "[steps('commonSettings').dnsNamePrefix]",
             "registryUrl": "[steps('commonSettings').registryUrl]",
             "storageAccountSku": "[steps('commonSettings').storageAccountSku]",
+            "authenticationMode": "[steps('commonSettings').authenticationMode]",
+            "azureAdClientId": "[steps('commonSettings').azureAdClientId]",
+            "azureAdClientSecret": "[steps('commonSettings').azureAdClientSecret]",
+            "tenant": "[steps('commonSettings').tenant]",
             "agentCount": "[steps('k8sSettings').agentCount]",
             "agentVMSize": "[steps('k8sSettings').agentVMSize]",
             "linuxAdminUsername": "[basics('userName')]",

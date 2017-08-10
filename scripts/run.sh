@@ -4,7 +4,7 @@ set -e
 
 echo $@
 
-while getopts ':d:l:u:p:k:r:a:b:s:c:e:f:' arg
+while getopts ':d:l:u:p:k:r:a:b:s:c:e:f:g:h:i:t:' arg
 do
      case ${arg} in
         d) masterDns=${OPTARG};;
@@ -19,6 +19,10 @@ do
         c) storageAccountSku=${OPTARG};;
         e) repositoryUrl=${OPTARG};;
         f) directoryName=${OPTARG};;
+        g) authenticationMode=${OPTARG};; # "AzureAD" or "BasicAuth"
+        h) clientId=${OPTARG};;
+        i) clientSecret=${OPTARG};;
+        t) tenant=${OPTARG};;
      esac
 done
 
@@ -64,19 +68,41 @@ if [ -z ${repositoryUrl} ]; then
     exit 1
 fi
 
+if [ -z ${authenticationMode} ]; then
+    authenticationMode = 'BasicAuth'
+fi
+
+if [ "${authenticationMode}" = "AzureAD" ]; then
+    if [ -z ${clientId} ]; then
+        echo 'Client ID is required in Azure AD mode' >&2
+        exit 1
+    fi
+    if [ -z ${clientSecret} ]; then
+        echo 'Client secret is required in Azure AD mode' >&2
+        exit 1
+    fi
+    if [ -z ${tenant} ]; then
+        echo 'Tenant is required in Azure AD mode' >&2
+        exit 1
+    fi
+fi
 
 privateKeyFile='private_key'
 
 masterUrl=${masterDns}.${resourceLocation}.cloudapp.azure.com
 
 export KUBECONFIG=/root/.kube/config
+export HOME=/root
 
-# prerequisites, e.g. docker, nginx
+# prerequisites, e.g. docker, openresty
+sudo apt-get -y install software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+wget -qO - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
+sudo add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo add-apt-repository -y "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main"
 sudo apt-get update
 apt-cache policy docker-ce
-sudo apt-get install -y unzip docker-ce nginx apache2-utils
+sudo apt-get install -y unzip docker-ce openresty apache2-utils
 
 # install kubectl
 cd /tmp
@@ -98,7 +124,7 @@ helm init
 
 # make sure helm installed
 until [ $(kubectl get pods -n kube-system -l app=helm,name=tiller -o jsonpath="{.items[0].status.containerStatuses[0].ready}") = "true" ]; do
-  sleep 2
+    sleep 2
 done
 
 # download templates
@@ -106,11 +132,22 @@ curl -L ${repositoryUrl} -o template.zip
 unzip -o template.zip -d template
 
 # expose kubectl proxy
-cd template/${directoryName}
-echo ${masterPassword} | htpasswd -c -i /etc/nginx/.htpasswd ${masterUsername}
-cp config/nginx-site.conf /etc/nginx/sites-available/default
 nohup kubectl proxy --port=8080 &
-systemctl reload nginx
+
+cd template/${directoryName}
+if [ "${authenticationMode}" = "BasicAuth" ]; then
+    echo ${masterPassword} | htpasswd -c -i /usr/local/openresty/nginx/conf/.htpasswd ${masterUsername}
+    cp config/nginx-basic.conf /usr/local/openresty/nginx/conf/nginx.conf
+    systemctl reload openresty
+else
+    opm get pintsized/lua-resty-http bungle/lua-resty-session
+    cp config/openidc.lua /usr/local/openresty/lualib/resty/openidc.lua
+    export TENANT=${tenant}
+    export CLIENT_ID=${clientId}
+    export CLIENT_SECRET=${clientSecret}
+    cat config/nginx-openid.conf | envsubst > /usr/local/openresty/nginx/conf/nginx.conf
+    systemctl reload openresty
+fi
 
 # push image
 cd docker

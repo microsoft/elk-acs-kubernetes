@@ -87,6 +87,38 @@
             "metadata": {
                 "description": "Directory in archive."
             }
+        },
+        "authenticationMode": {
+            "type": "string",
+            "defaultValue": "BasicAuth",
+            "allowedValues": [
+                "BasicAuth",
+                "AzureAD"
+            ],
+            "metadata": {
+                "description": "User authentication mode."
+            }
+        },
+        "azureAdClientId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure AD client ID(Application ID)"
+            }
+        },
+        "azureAdClientSecret": {
+            "type": "securestring",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure AD client secret/key"
+            }
+        },
+        "tenant": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure AD tenant(e.g. contoso.onmicrosoft.com)"
+            }
         }
     },
     "variables": {
@@ -105,7 +137,7 @@
         "publicIPAddressName": "controllerip",
         "publicIPAddressType": "Dynamic",
         "vmName": "controllervm",
-        "vmSize": "Standard_A1",
+        "vmSize": "Standard_D1_v2",
         "virtualNetworkName": "controller-vnet",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
@@ -185,7 +217,7 @@
                             ]
                         },
                         "protectedSettings": {
-                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', parameters('adminPassword'), ' -k ', variables('basedPrivateKey'), ' -a ', variables('registryName'), ' -b ', listCredentials(resourceId('Microsoft.ContainerRegistry/registries', variables('registryName')), '2017-03-01').passwords[0].value, ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'))]"
+                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', parameters('adminPassword'), ' -k ', variables('basedPrivateKey'), ' -a ', variables('registryName'), ' -b ', listCredentials(resourceId('Microsoft.ContainerRegistry/registries', variables('registryName')), '2017-03-01').passwords[0].value, ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'), ' -g ', parameters('authenticationMode'), ' -h ', parameters('azureAdClientId'), ' -i ', parameters('azureAdClientSecret'), ' -t ', parameters('tenant'))]"
                         }
                     }
                 }

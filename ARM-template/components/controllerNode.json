@@ -87,6 +87,38 @@
             "metadata": {
                 "description": "Directory in archive."
             }
+        },
+        "authenticationMode": {
+            "type": "string",
+            "defaultValue": "BasicAuth",
+            "allowedValues": [
+                "BasicAuth",
+                "AzureAD"
+            ],
+            "metadata": {
+                "description": "User authentication mode."
+            }
+        },
+        "azureAdClientId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure AD client ID(Application ID)"
+            }
+        },
+        "azureAdClientSecret": {
+            "type": "securestring",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure AD client secret/key"
+            }
+        },
+        "tenant": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure AD tenant(e.g. contoso.onmicrosoft.com)"
+            }
         }
     },
     "variables": {
@@ -284,6 +316,18 @@
                     },
                     "directoryName": {
                         "value": "[parameters('directoryName')]"
+                    },
+                    "authenticationMode": {
+                        "value": "[parameters('authenticationMode')]"
+                    },
+                    "azureAdClientId": {
+                        "value": "[parameters('azureAdClientId')]"
+                    },
+                    "azureAdClientSecret": {
+                        "value": "[parameters('azureAdClientSecret')]"
+                    },
+                    "tenant": {
+                        "value": "[parameters('tenant')]"
                     }
                 }
             }
