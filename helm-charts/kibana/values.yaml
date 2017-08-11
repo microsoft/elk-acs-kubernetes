@@ -15,3 +15,6 @@ kibana:
     name: kibana
     type: LoadBalancer
     port: 80
+  env:
+    USERNAME: azureuser
+    PASSWORD: azureuser

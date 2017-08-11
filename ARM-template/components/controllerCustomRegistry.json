@@ -1,0 +1,227 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dnsNamePrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "Sets the Domain name prefix for the cluster.  The concatenation of the domain name and the regionalized DNS zone make up the fully qualified domain name associated with the public IP address."
+            }
+        },
+        "linuxAdminUsername": {
+            "type": "string",
+            "defaultValue": "azureuser",
+            "metadata": {
+                "description": "User name for the Linux Virtual Machines."
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password to login controller node"
+            }
+        },
+        "ubuntuOSVersion": {
+            "type": "string",
+            "defaultValue": "16.04.0-LTS",
+            "allowedValues": [
+                "12.04.5-LTS",
+                "14.04.5-LTS",
+                "16.04.0-LTS"
+            ],
+            "metadata": {
+                "description": "The Ubuntu version for the controller node. This will pick a fully patched image of this given Ubuntu version."
+            }
+        },
+        "privateKey": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Base64 encoded private key corresbonding to the public key for ACS"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location of all components"
+            }
+        },
+        "registryUrl": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Custom registry(e.g. Docker Hub) url to be used"
+            }
+        },
+        "baseTemplateUrl": {
+            "type": "string",
+            "defaultValue": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/",
+            "metadata": {
+                "description": "base URL of templates, typically a repository for configuraions"
+            }
+        },
+        "storageAccountSku": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS",
+                "Standard_RAGRS",
+                "Standard_ZRS",
+                "Premium_LRS"
+            ],
+            "metadata": {
+                "description": "Storage account sku to be used as Elasticsearch data node"
+            }
+        },
+        "archiveUrl": {
+            "type": "string",
+            "defaultValue": "https://github.com/Microsoft/elk-acs-kubernetes/archive/rc.zip",
+            "metadata": {
+                "description": "Archive URL of all contents."
+            }
+        },
+        "directoryName": {
+            "type": "string",
+            "defaultValue": "elk-acs-kubernetes-rc/",
+            "metadata": {
+                "description": "Directory in archive."
+            }
+        },
+        "authenticationMode": {
+            "type": "string",
+            "defaultValue": "BasicAuth",
+            "allowedValues": [
+                "BasicAuth",
+                "AzureAD"
+            ],
+            "metadata": {
+                "description": "User authentication mode."
+            }
+        },
+        "azureAdClientId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure AD client ID(Application ID)"
+            }
+        },
+        "azureAdClientSecret": {
+            "type": "securestring",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure AD client secret/key"
+            }
+        },
+        "tenant": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure AD tenant(e.g. contoso.onmicrosoft.com)"
+            }
+        }
+    },
+    "variables": {
+        "adminUsername": "[parameters('linuxAdminUsername')]",
+        "mastersEndpointDNSNamePrefix": "[concat(parameters('dnsNamePrefix'), 'master')]",
+        "controllerDNSNamePrefix": "[concat(parameters('dnsNamePrefix'), 'control')]",
+        "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'ctl')]",
+        "frontEndNSGName": "[concat(uniquestring(resourceGroup().id), 'frontEndNSG')]",
+        "imagePublisher": "Canonical",
+        "imageOffer": "UbuntuServer",
+        "nicName": "controllernic",
+        "addressPrefix": "10.0.0.0/16",
+        "subnetName": "Subnet",
+        "subnetPrefix": "10.0.0.0/24",
+        "storageAccountType": "Standard_LRS",
+        "publicIPAddressName": "controllerip",
+        "publicIPAddressType": "Dynamic",
+        "vmName": "controllervm",
+        "vmSize": "Standard_D1_v2",
+        "virtualNetworkName": "controller-vnet",
+        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+        "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+        "dataStorageAccountName": "[concat(uniquestring(resourceGroup().id), 'data')]",
+        "registryName": "[concat(uniquestring(resourceGroup().id), 'registry')]",
+        "basedPrivateKey": "[parameters('privateKey')]",
+        "baseUrl": "[parameters('baseTemplateUrl')]",
+        "controlTemplate": {
+            "true": "/ARM-template/components/controllorAzureRegistry.json",
+            "false": "/ARM-tempalte/components/controllerCustomRegistry.json"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-03-30",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[variables('vmName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[variables('vmSize')]"
+                },
+                "osProfile": {
+                    "computerName": "[variables('vmName')]",
+                    "adminUsername": "[parameters('linuxAdminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "[variables('imagePublisher')]",
+                        "offer": "[variables('imageOffer')]",
+                        "sku": "[parameters('ubuntuOSVersion')]",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage"
+                    },
+                    "dataDisks": [
+                        {
+                            "diskSizeGB": "63",
+                            "lun": 0,
+                            "createOption": "Empty"
+                        }
+                    ]
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": "true",
+                        "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2016-01-01').primaryEndpoints.blob)]"
+                    }
+                }
+            },
+            "resources": [
+                {
+                    "name": "config-app",
+                    "type": "extensions",
+                    "location": "[parameters('location')]",
+                    "apiVersion": "2015-06-15",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Azure.Extensions",
+                        "type": "CustomScript",
+                        "typeHandlerVersion": "2.0",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                            "fileUris": [
+                                "[concat(variables('baseUrl'), '/scripts/run.sh')]"
+                            ]
+                        },
+                        "protectedSettings": {
+                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', parameters('adminPassword'), ' -k ', variables('basedPrivateKey'), ' -r ', parameters('registryUrl'), ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'), ' -g ', parameters('authenticationMode'), ' -h ', parameters('azureAdClientId'), ' -i ', parameters('azureAdClientSecret'), ' -t ', parameters('tenant'))]"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

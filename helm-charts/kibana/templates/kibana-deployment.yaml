@@ -16,6 +16,11 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.common.registry }}/kibana:{{ .Values.kibana.image.tag }}"
         imagePullPolicy: {{ .Values.kibana.image.pullPolicy }}
+        env:
+        {{- range $key, $value :=  .Values.kibana.env }}
+        - name: {{ $key | upper | replace "-" "_" }}
+          value: {{ $value | quote }}
+        {{- end }}
         ports:
         - containerPort: {{ .Values.kibana.service.port }}
       imagePullSecrets:

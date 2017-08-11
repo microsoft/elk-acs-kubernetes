@@ -1,18 +1,25 @@
 #!/usr/bin/env bash
 
-REGISTRY_SERVER=$1.azurecr.io
-REGISTRY_USERNAME=$1
-REGISTRY_PASSWORD=$2
-USERNAME=$3
-PASSWORD=$4
+set -e
 
-docker login --username ${REGISTRY_USERNAME} --password ${REGISTRY_PASSWORD} ${REGISTRY_SERVER}
+echo $@
 
-docker build -t ${REGISTRY_SERVER}/elasticsearch:1.0.0 ./elasticsearch
-docker push ${REGISTRY_SERVER}/elasticsearch:1.0.0
-docker build -t ${REGISTRY_SERVER}/kibana:1.0.0 --build-arg USERNAME=${USERNAME} --build-arg PASSWORD=${PASSWORD} ./kibana
-docker push ${REGISTRY_SERVER}/kibana:1.0.0
-docker build -t ${REGISTRY_SERVER}/logstash:1.0.0 ./logstash
-docker push ${REGISTRY_SERVER}/logstash:1.0.0
-docker build -t ${REGISTRY_SERVER}/filebeat:1.0.0 ./filebeat
-docker push ${REGISTRY_SERVER}/filebeat:1.0.0
+while getopts ':r:u:p:' arg
+do
+     case ${arg} in
+        r) registryUrl=${OPTARG};;
+        u) registryUsername=${OPTARG};;
+        p) registryPassword=${OPTARG};;
+     esac
+done
+
+docker login --username ${registryUsername} --password ${registryPassword} ${registryUrl}
+
+docker build -t ${registryUrl}/elasticsearch ./elasticsearch
+docker push ${registryUrl}/elasticsearch
+docker build -t ${registryUrl}/kibana ./kibana
+docker push ${registryUrl}/kibana
+docker build -t ${registryUrl}/logstash ./logstash
+docker push ${registryUrl}/logstash
+docker build -t ${registryUrl}/filebeat ./filebeat
+docker push ${registryUrl}/filebeat

@@ -35,3 +35,9 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
      },
     ...
    ```
+
+## License
+  This project is under MIT license.
+
+  ```config/openidc.lua``` is derived from [https://github.com/pingidentity/lua-resty-openidc](https://github.com/pingidentity/lua-resty-openidc) with some modifications to satisfy requirements and this file (```config/openidc.lua```) is under Apache 2.0 license.
+  

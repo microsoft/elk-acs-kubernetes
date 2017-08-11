@@ -15,16 +15,13 @@ RUN cd /tmp \
 
 RUN apt-get update && apt-get install -y nginx apache2-utils
 
-ARG USERNAME=azureuser
-ARG PASSWORD=azureuser
-RUN echo ${PASSWORD} | htpasswd -c -i /etc/nginx/.htpasswd ${USERNAME}
 COPY nginx-site.conf /etc/nginx/sites-available/default
-RUN service nginx reload
-
-WORKDIR /kibana
 
 ENV SERVER_PORT 5601
 ENV SERVER_HOST "localhost"
 ENV ELASTICSEARCH_URL "http://elasticsearch:9200"
 
-CMD service nginx start && /kibana/bin/kibana --server.host=$SERVER_HOST --server.port=$SERVER_PORT --elasticsearch.url=$ELASTICSEARCH_URL
+COPY run.sh /run.sh
+RUN chmod +x /run.sh
+
+CMD ["/run.sh"]

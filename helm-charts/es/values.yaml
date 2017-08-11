@@ -40,6 +40,7 @@ elasticsearch:
     replicas: 2
     storageAccount: azdisksa
     location: westus
+    storageSku: Standard_LRS
     env:
       NODE_DATA: "true"
       NODE_MASTER: "false"
