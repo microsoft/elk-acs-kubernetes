@@ -105,6 +105,7 @@
                         "defaultValue": "BasicAuth",
                         "toolTip": "Basic authentication for Kubernetes dashboard and Kibana",
                         "constraints": {
+                            "required": true,
                             "allowedValues": [
                                 {
                                     "label": "Basic Authentication",
