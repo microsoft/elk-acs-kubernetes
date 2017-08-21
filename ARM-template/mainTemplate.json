@@ -398,7 +398,7 @@
             "value": "[parameters('azureAdClientSecret')]"
           },
           "tenant": {
-            "value": "[parameters('tenant')]" 
+            "value": "[parameters('tenant')]"
           }
         }
       }
