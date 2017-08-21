@@ -12,7 +12,11 @@ RUN cd /tmp \
   && echo "Install Logstash..." \
   && wget -O logstash.tar.gz "$DOWNLOAD_URL" \
   && tar -xf logstash.tar.gz \
-  && mv logstash-$VERSION /logstash
+  && mv logstash-$VERSION /logstash \
+  && echo "Installing Azure WAD Event Hub Plugin..." \
+  && sudo /opt/logstash/bin/logstash-plugin install logstash-input-azurewadeventhub \
+  && echo "Installing Azure WAD Table Plugin..." \
+  && sudo /opt/logstash/bin/logstash-plugin install logstash-input-azurewadtable
 
 WORKDIR /logstash
 
