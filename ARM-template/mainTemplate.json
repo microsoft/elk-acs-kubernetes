@@ -262,7 +262,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "name": "containerService",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -303,7 +303,7 @@
       }
     },
     {
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "name": "storageAccount",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -323,7 +323,7 @@
       }
     },
     {
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "name": "containerRegistry",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -340,7 +340,7 @@
       }
     },
     {
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "name": "controllerNode",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
@@ -398,7 +398,7 @@
             "value": "[parameters('azureAdClientSecret')]"
           },
           "tenant": {
-            "value": "[parameters('tenant')]" 
+            "value": "[parameters('tenant')]"
           }
         }
       }

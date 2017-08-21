@@ -119,7 +119,9 @@ scp -o StrictHostKeyChecking=no -i ${privateKeyFile} ${masterUsername}@${masterU
 kubectl get nodes
 
 # install helm
-curl -s https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+curl -L "https://kubernetes-helm.storage.googleapis.com/helm-v2.5.1-linux-amd64.tar.gz" -o helm.tar.gz
+tar vzxf helm.tar.gz
+cp linux-amd64/helm /usr/local/bin/helm
 helm init
 
 # make sure helm installed
