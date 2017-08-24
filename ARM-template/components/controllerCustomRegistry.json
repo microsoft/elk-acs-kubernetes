@@ -53,6 +53,41 @@
                 "description": "Custom registry(e.g. Docker Hub) url to be used"
             }
         },
+        "eventHubNamespace": {
+            "type": "string",
+            "defaultValue": "undefined",
+            "metadata": {
+                "description": "The target event hub namespace"
+            }
+        },
+        "eventHubKeyName": {
+            "type": "string",
+            "defaultValue": "undefined",
+            "metadata": {
+                "description": "The name of the shared access policy"
+            }
+        },
+        "eventHubKey": {
+            "type": "string",
+            "defaultValue": "undefined",
+            "metadata": {
+                "description": "The shared access key to the target event hub"
+            }
+        },
+        "eventHubEntityPath": {
+            "type": "string",
+            "defaultValue": "undefined",
+            "metadata": {
+                "description": "The target event hub name"
+            }
+        },
+        "eventHubPartitionnumber": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Partition count of the target event hub"
+            }
+        },
         "baseTemplateUrl": {
             "type": "string",
             "defaultValue": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/",
@@ -217,7 +252,7 @@
                             ]
                         },
                         "protectedSettings": {
-                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', parameters('adminPassword'), ' -k ', variables('basedPrivateKey'), ' -r ', parameters('registryUrl'), ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'), ' -g ', parameters('authenticationMode'), ' -h ', parameters('azureAdClientId'), ' -i ', parameters('azureAdClientSecret'), ' -t ', parameters('tenant'))]"
+                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', parameters('adminPassword'), ' -k ', variables('basedPrivateKey'), ' -r ', parameters('registryUrl'), '-j', parameters('eventHubNamespace'), '-k', parameters('eventHubKeyName'), '-m', parameters('eventHubKey'), '-n', parameters('eventHubEntityPath'), '-o', parameters('eventHubPartitionnumber'), ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'), ' -g ', parameters('authenticationMode'), ' -h ', parameters('azureAdClientId'), ' -i ', parameters('azureAdClientSecret'), ' -t ', parameters('tenant'))]"
                         }
                     }
                 }

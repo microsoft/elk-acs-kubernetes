@@ -4,12 +4,17 @@ set -e
 
 echo $@
 
-while getopts ':r:u:p:' arg
+while getopts ':r:u:p:a:b:c:d:e:' arg
 do
      case ${arg} in
         r) registryUrl=${OPTARG};;
         u) registryUsername=${OPTARG};;
         p) registryPassword=${OPTARG};;
+        a) diagEvtHubNs=${OPTARG};;
+        b) diagEvtHubNa=${OPTARG};;
+        c) diagEvtHubKey=${OPTARG};;
+        d) diagEvtHubEntPa=${OPTARG};;
+        e) diagEvtHubPartNum=${OPTARG};;
      esac
 done
 
@@ -19,7 +24,11 @@ docker build -t ${registryUrl}/elasticsearch ./elasticsearch
 docker push ${registryUrl}/elasticsearch
 docker build -t ${registryUrl}/kibana ./kibana
 docker push ${registryUrl}/kibana
-docker build -t ${registryUrl}/logstash ./logstash
+docker build -t ${registryUrl}/logstash ./logstash --build-arg DIAG_EVT_HUB_NS=${diagEvtHubNs} \
+                                                               DIAG_EVT_HUB_KEY_NAME=${diagEvtHubNa} \
+                                                               DIAG_EVT_HUB_ACC_KEY=${diagEvtHubKey} \
+                                                               DIAG_EVT_HUB_ENT_PATH=${diagEvtHubEntPa} \
+                                                               DIAG_EVT_HUB_PART=${diagEvtHubPartNum}
 docker push ${registryUrl}/logstash
 docker build -t ${registryUrl}/filebeat ./filebeat
 docker push ${registryUrl}/filebeat

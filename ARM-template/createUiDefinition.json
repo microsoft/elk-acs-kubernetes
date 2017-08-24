@@ -67,6 +67,61 @@
                         "visible": true
                     },
                     {
+                        "name": "eventHubNamespace",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Event hub namespace",
+                        "defaultValue": "",
+                        "toolTip": "The target event hub namespace.",
+                        "constraints": {
+                            "required": false
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "eventHubKeyName",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Event hub key name",
+                        "defaultValue": "",
+                        "toolTip": "The name of the shared access policy.",
+                        "constraints": {
+                            "required": false
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "eventHubKey",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Event hub key value",
+                        "defaultValue": "",
+                        "toolTip": "The shared access key to the target event hub.",
+                        "constraints": {
+                            "required": false
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "eventHubEntityPath",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Event hub entity name",
+                        "defaultValue": "",
+                        "toolTip": "The target event hub name.",
+                        "constraints": {
+                            "required": false
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "eventHubPartitionnumber",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Event hub partition count",
+                        "defaultValue": "",
+                        "toolTip": "Partition count of the target event hub.",
+                        "constraints": {
+                            "required": false
+                        },
+                        "visible": true
+                    },
+                    {
                         "name": "storageAccountSku",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Data node storage account sku",
@@ -151,6 +206,18 @@
                             "required": false
                         },
                         "visible": "[equals('AzureAD', steps('commonSettings').authenticationMode)]"
+                    },
+                    
+                    {
+                        "name": "diagEvtHubNs",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Diagnostics Event Hub Namespace",
+                        "defaultValue": "",
+                        "toolTip": "",
+                        "constraints": {
+                            "required": false
+                        },
+                        "visible": true
                     }
                 ]
             },
@@ -736,6 +803,11 @@
         "outputs": {
             "dnsNamePrefix": "[steps('commonSettings').dnsNamePrefix]",
             "registryUrl": "[steps('commonSettings').registryUrl]",
+            "eventHubNamespace": "[steps('commonSettings').eventHubNamespace]",
+            "eventHubKeyName": "[steps('commonSettings').eventHubKeyName]",
+            "eventHubKey": "[steps('commonSettings').eventHubKey]",
+            "eventHubEntityPath": "[steps('commonSettings').eventHubEntityPath]",
+            "eventHubPartitionnumber": "[steps('commonSettings').eventHubPartitionnumber]",
             "storageAccountSku": "[steps('commonSettings').storageAccountSku]",
             "authenticationMode": "[steps('commonSettings').authenticationMode]",
             "azureAdClientId": "[steps('commonSettings').azureAdClientId]",

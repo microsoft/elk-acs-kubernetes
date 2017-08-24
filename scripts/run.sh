@@ -4,7 +4,7 @@ set -e
 
 echo $@
 
-while getopts ':d:l:u:p:k:r:a:b:s:c:e:f:g:h:i:t:' arg
+while getopts ':d:l:u:p:k:r:a:b:j:k:m:n:o:q:s:c:e:f:g:h:i:t:' arg
 do
      case ${arg} in
         d) masterDns=${OPTARG};;
@@ -15,6 +15,11 @@ do
         r) registryUrl=${OPTARG};;
         a) registryUsername=${OPTARG};;
         b) registryPassword=${OPTARG};;
+        j) diagEvtHubNs=${OPTARG};;  # for logstash eh plugin
+        k) diagEvtHubNa=${OPTARG};;  # for logstash eh plugin
+        m) diagEvtHubKey=${OPTARG};;  # for logstash eh plugin
+        n) diagEvtHubEntPa=${OPTARG};;  # for logstash eh plugin
+        o) diagEvtHubPartNum=${OPTARG};;  # for logstash eh plugin
         s) storageAccount=${OPTARG};;
         c) storageAccountSku=${OPTARG};;
         e) repositoryUrl=${OPTARG};;
@@ -156,7 +161,7 @@ cd docker
 if [ -z ${registryUrl} ]; then
     # assume azure container registry, image push is required.
     registryUrl=${registryUsername}.azurecr.io
-    bash push-images.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword}
+    bash push-images.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -a ${diagEvtHubNs} -b ${diagEvtHubNa} -c ${diagEvtHubKey} -d ${diagEvtHubEntPa} -e ${diagEvtHubPartNum}
 
     cd ../helm-charts   
     bash start-elk.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku} -a ${masterUsername} -b ${masterPassword}

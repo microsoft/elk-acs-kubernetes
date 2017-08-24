@@ -41,6 +41,21 @@
     "registryUrl": {
       "value": ""
     },
+    "eventHubNamespace": {
+      "value": ""
+    },
+    "eventHubKeyName": {
+      "value": ""
+    },
+    "eventHubKey": {
+      "value": ""
+    },
+    "eventHubEntityPath": {
+      "value": ""
+    },
+    "eventHubPartitionnumber": {
+      "value": ""
+    },
     "archiveUrl": {
       "value": "https://github.com/Microsoft/elk-acs-kubernetes/archive/rc.zip"
     },
