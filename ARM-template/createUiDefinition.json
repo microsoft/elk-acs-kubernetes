@@ -207,7 +207,7 @@
                         },
                         "visible": "[equals('AzureAD', steps('commonSettings').authenticationMode)]"
                     },
-                    
+
                     {
                         "name": "diagEvtHubNs",
                         "type": "Microsoft.Common.TextBox",
@@ -823,9 +823,9 @@
             "servicePrincipalClientSecret": "[steps('securitySettings').servicePrincipalClientSecret]",
             "adminPassword": "[basics('password')]",
             "location": "[location()]",
-            "baseTemplateUrl": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/",
-            "archiveUrl": "https://github.com/Microsoft/elk-acs-kubernetes/archive/rc.zip",
-            "directoryName": "elk-acs-kubernetes-rc/"
+            "baseTemplateUrl": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/logstash-eventhub-aztable/",
+            "archiveUrl": "https://github.com/Microsoft/elk-acs-kubernetes/archive/logstash-eventhub-aztable.zip",
+            "directoryName": "elk-acs-kubernetes-logstash-eventhub-aztable/"
         }
     }
 }

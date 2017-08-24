@@ -76,14 +76,14 @@
         },
         "archiveUrl": {
             "type": "string",
-            "defaultValue": "https://github.com/Microsoft/elk-acs-kubernetes/archive/rc.zip",
+            "defaultValue": "https://github.com/Microsoft/elk-acs-kubernetes/archive/logstash-eventhub-aztable.zip",
             "metadata": {
                 "description": "Archive URL of all contents."
             }
         },
         "directoryName": {
             "type": "string",
-            "defaultValue": "elk-acs-kubernetes-rc/",
+            "defaultValue": "elk-acs-kubernetes-logstash-eventhub-aztable/",
             "metadata": {
                 "description": "Directory in archive."
             }
