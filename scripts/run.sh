@@ -9,6 +9,7 @@ set -e
 
 echo $@
 
+log "enter scripts/run.sh"
 while getopts ':d:l:u:p:k:r:a:b:j:q:m:n:o:s:c:e:f:g:h:i:t:' arg; do
      log "arg $arg set with value ${OPTARG}"
      case ${arg} in
@@ -100,6 +101,7 @@ fi
 privateKeyFile='private_key'
 
 masterUrl=${masterDns}.${resourceLocation}.cloudapp.azure.com
+log "masterUrl: ${masterUrl}"
 
 export KUBECONFIG=/root/.kube/config
 export HOME=/root
@@ -114,20 +116,24 @@ sudo apt-get update
 apt-cache policy docker-ce
 sudo apt-get install -y unzip docker-ce openresty apache2-utils
 
+log "install kubectl"
 # install kubectl
 cd /tmp
 curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 
+log "write private key to ${privateKeyFile}"
 # write private key
 echo "${privateKey}" | base64 -d | tee ${privateKeyFile}
 chmod 400 ${privateKeyFile}
 
+log "copy ${masterUsername}@${masterUrl}:.kube/config to ${KUBECONFIG}"
 mkdir -p /root/.kube
 scp -o StrictHostKeyChecking=no -i ${privateKeyFile} ${masterUsername}@${masterUrl}:.kube/config ${KUBECONFIG}
 kubectl get nodes
 
+log "install helm"
 # install helm
 curl -L "https://kubernetes-helm.storage.googleapis.com/helm-v2.5.1-linux-amd64.tar.gz" -o helm.tar.gz
 tar vzxf helm.tar.gz
@@ -139,13 +145,16 @@ until [ $(kubectl get pods -n kube-system -l app=helm,name=tiller -o jsonpath="{
     sleep 2
 done
 
+log "download templates from ${repositoryUrl}"
 # download templates
 curl -L ${repositoryUrl} -o template.zip
 unzip -o template.zip -d template
 
+log "expose kubectl proxy at 8080"
 # expose kubectl proxy
 nohup kubectl proxy --port=8080 &
 
+log "config nginx"
 cd template/${directoryName}
 if [ "${authenticationMode}" = "BasicAuth" ]; then
     echo ${masterPassword} | htpasswd -c -i /usr/local/openresty/nginx/conf/.htpasswd ${masterUsername}
@@ -164,6 +173,7 @@ fi
 # push image
 cd docker
 if [ -z ${registryUrl} ]; then
+    log "push image to azure container registry"
     # assume azure container registry, image push is required.
     registryUrl=${registryUsername}.azurecr.io
     bash push-images.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -a ${diagEvtHubNs} -b ${diagEvtHubNa} -c ${diagEvtHubKey} -d ${diagEvtHubEntPa} -e ${diagEvtHubPartNum}
@@ -172,9 +182,10 @@ if [ -z ${registryUrl} ]; then
     bash start-elk.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku} -a ${masterUsername} -b ${masterPassword}
 
 else
-
+    log "install helm charts"
     # install helm charts
     cd ../helm-charts
     bash start-elk.sh -r ${registryUrl} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku} -a ${masterUsername} -b ${masterPassword}
 
 fi
+log "exit scripts/run.sh"
