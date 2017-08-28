@@ -25,10 +25,10 @@ docker push ${registryUrl}/elasticsearch
 docker build -t ${registryUrl}/kibana ./kibana
 docker push ${registryUrl}/kibana
 docker build -t ${registryUrl}/logstash ./logstash --build-arg DIAG_EVT_HUB_NS=${diagEvtHubNs} \
-                                                               DIAG_EVT_HUB_KEY_NAME=${diagEvtHubNa} \
-                                                               DIAG_EVT_HUB_ACC_KEY=${diagEvtHubKey} \
-                                                               DIAG_EVT_HUB_ENT_PATH=${diagEvtHubEntPa} \
-                                                               DIAG_EVT_HUB_PART=${diagEvtHubPartNum}
+                                                   --build-arg DIAG_EVT_HUB_KEY_NAME=${diagEvtHubNa} \
+                                                   --build-arg DIAG_EVT_HUB_ACC_KEY=${diagEvtHubKey} \
+                                                   --build-arg DIAG_EVT_HUB_ENT_PATH=${diagEvtHubEntPa} \
+                                                   --build-arg DIAG_EVT_HUB_PART=${diagEvtHubPartNum}
 docker push ${registryUrl}/logstash
 docker build -t ${registryUrl}/filebeat ./filebeat
 docker push ${registryUrl}/filebeat
