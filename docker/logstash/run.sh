@@ -6,11 +6,11 @@ help()
     echo "This script installs Logstash on Ubuntu, and configures it to be used with Event Hub plugin and user plugins/configurations."
     echo "Parameters:"
     echo "n - Event Hub namespace"
-	echo "a - Event Hub shared access key name"
-	echo "k - Event Hub shared access key"
-	echo "e - Event Hub entity path"
-	echo "p - Event Hub partitions"
-	echo "i - Elasticsearch URL"
+    echo "a - Event Hub shared access key name"
+    echo "k - Event Hub shared access key"
+    echo "e - Event Hub entity path"
+    echo "p - Event Hub partitions"
+    echo "i - Elasticsearch URL"
     echo ""
     echo ""
     echo ""
@@ -63,7 +63,7 @@ log "EH_PARTITIONS="$EH_PARTITIONS
 log "ES_CLUSTER_URL="$ES_CLUSTER_URL
 
 # Install User Configuration from encoded string
-if [ "$EH_NAMESPACE"="undefined" ] 
+if [ "$EH_NAMESPACE"="undefined" ]
 then
   # No EH provided
   echo "input {" > /logstash/config/logstash.conf

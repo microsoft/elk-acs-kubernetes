@@ -53,6 +53,41 @@
                 "description": "Custom registry(e.g. Docker Hub) url to be used"
             }
         },
+        "eventHubNamespace": {
+          "type": "string",
+          "defaultValue": "undefined",
+          "metadata": {
+              "description": "The target event hub namespace"
+          }
+        },
+        "eventHubKeyName": {
+          "type": "string",
+          "defaultValue": "undefined",
+          "metadata": {
+              "description": "The name of the shared access policy"
+          }
+        },
+        "eventHubKey": {
+          "type": "string",
+          "defaultValue": "undefined",
+          "metadata": {
+              "description": "The shared access key to the target event hub"
+          }
+        },
+        "eventHubEntityPath": {
+          "type": "string",
+          "defaultValue": "undefined",
+          "metadata": {
+              "description": "The target event hub name"
+          }
+        },
+        "eventHubPartitionnumber": {
+          "type": "string",
+          "defaultValue": "undefined",
+          "metadata": {
+              "description": "Partition count of the target event hub"
+          }
+        },
         "baseTemplateUrl": {
             "type": "string",
             "defaultValue": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/",
@@ -304,6 +339,21 @@
                     },
                     "registryUrl": {
                         "value": "[parameters('registryUrl')]"
+                    },
+                    "eventHubNamespace": {
+                        "value": "[parameters('eventHubNamespace')]"
+                    },
+                    "eventHubKeyName": {
+                        "value": "[parameters('eventHubKeyName')]"
+                    },
+                    "eventHubKey": {
+                        "value": "[parameters('eventHubKey')]"
+                    },
+                    "eventHubEntityPath": {
+                        "value": "[parameters('eventHubEntityPath')]"
+                    },
+                    "eventHubPartitionnumber": {
+                        "value": "[parameters('eventHubPartitionnumber')]"
                     },
                     "baseTemplateUrl": {
                         "value": "[parameters('baseTemplateUrl')]"

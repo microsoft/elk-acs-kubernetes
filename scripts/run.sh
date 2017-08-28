@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
+log()
+{
+    echo "$1"
+}
+
 set -e
 
 echo $@
 
-while getopts ':d:l:u:p:k:r:a:b:j:k:m:n:o:q:s:c:e:f:g:h:i:t:' arg
-do
+while getopts ':d:l:u:p:k:r:a:b:j:q:m:n:o:s:c:e:f:g:h:i:t:' arg; do
+     log "arg $arg set with value ${OPTARG}"
      case ${arg} in
         d) masterDns=${OPTARG};;
         l) resourceLocation=${OPTARG};;
@@ -16,7 +21,7 @@ do
         a) registryUsername=${OPTARG};;
         b) registryPassword=${OPTARG};;
         j) diagEvtHubNs=${OPTARG};;  # for logstash eh plugin
-        k) diagEvtHubNa=${OPTARG};;  # for logstash eh plugin
+        q) diagEvtHubNa=${OPTARG};;  # for logstash eh plugin
         m) diagEvtHubKey=${OPTARG};;  # for logstash eh plugin
         n) diagEvtHubEntPa=${OPTARG};;  # for logstash eh plugin
         o) diagEvtHubPartNum=${OPTARG};;  # for logstash eh plugin
@@ -163,7 +168,7 @@ if [ -z ${registryUrl} ]; then
     registryUrl=${registryUsername}.azurecr.io
     bash push-images.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -a ${diagEvtHubNs} -b ${diagEvtHubNa} -c ${diagEvtHubKey} -d ${diagEvtHubEntPa} -e ${diagEvtHubPartNum}
 
-    cd ../helm-charts   
+    cd ../helm-charts
     bash start-elk.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku} -a ${masterUsername} -b ${masterPassword}
 
 else

@@ -16,7 +16,7 @@ do
         s) storageAccountSku=${OPTARG};;
         a) kibanaUsername=${OPTARG};;
         b) kibanaPassword=${OPTARG};;
-     esac 
+     esac
 done
 
 export TAG='latest'
