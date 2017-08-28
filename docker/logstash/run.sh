@@ -18,7 +18,7 @@ help()
 
 log()
 {
-    echo "$1"
+    echo "$1" >> /var/lib/waagent/custom-script/download/0/stdout
 }
 
 #Loop through options passed
