@@ -39,4 +39,4 @@ ARG DIAG_EVT_HUB_ENT_PATH=undefined
 ARG DIAG_EVT_HUB_PART=undefined
 ENV ELASTICSEARCH_URL "http://elasticsearch:9200"
 
-RUN /run.sh -n ${DIAG_EVT_HUB_NS} -a ${DIAG_EVT_HUB_KEY_NAME} -k ${DIAG_EVT_HUB_ACC_KEY} -e ${DIAG_EVT_HUB_ENT_PATH} -p ${DIAG_EVT_HUB_PART} -i ${ELASTICSEARCH_URL}
+CMD ["/run.sh", "-n", "${DIAG_EVT_HUB_NS}", "-a", "${DIAG_EVT_HUB_KEY_NAME}", "-k", "${DIAG_EVT_HUB_ACC_KEY}", "-e", "${DIAG_EVT_HUB_ENT_PATH}", "-p", "${DIAG_EVT_HUB_PART}", "-i", "${ELASTICSEARCH_URL}"]
