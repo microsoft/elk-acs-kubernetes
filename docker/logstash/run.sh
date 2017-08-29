@@ -14,13 +14,20 @@ log()
 
 # No EH provided
 echo "input {" > /logstash/config/logstash.conf
-echo "  beats { host => \"0.0.0.0\" port => 5043 }" >> /logstash/config/logstash.conf
-echo "  azurewadeventhub {key => '$EVT_HUB_ACC_KEY' username => '$EVT_HUB_KEY_NAME' eventhub => '$EVT_HUB_ENT_PATH'  namespace => '$EVT_HUB_NS' partitions => $EVT_HUB_PART}" >> /logstash/config/logstash.conf
+echo "  beats { host => \"0.0.0.0\" port => 5043 tags => ['beats']}" >> /logstash/config/logstash.conf
+echo "  azurewadeventhub {key => '$EVT_HUB_ACC_KEY' username => '$EVT_HUB_KEY_NAME' eventhub => '$EVT_HUB_ENT_PATH'  namespace => '$EVT_HUB_NS' partitions => $EVT_HUB_PART tags => ['wad']}" >> /logstash/config/logstash.conf
 echo "}" >> /logstash/config/logstash.conf
-echo "output {" > /logstash/config/logstash.conf
-echo "  elasticsearch {hosts => ['$ELASTICSEARCH_URL']}" >> /logstash/config/logstash.conf
-echo "  elasticsearch {hosts => ['$ELASTICSEARCH_URL'] index => 'wad'}" >> /logstash/config/logstash.conf
-echo "}"
+echo "output {" >> /logstash/config/logstash.conf
+echo "  if [tags][0] == 'beats' {" >> /logstash/config/logstash.conf
+echo "    elasticsearch {hosts => ['$ELASTICSEARCH_URL']}" >> /logstash/config/logstash.conf
+echo "  } else if [tags][0] == 'wad' {" >> /logstash/config/logstash.conf
+echo "    elasticsearch {hosts => ['$ELASTICSEARCH_URL'] index => 'wad'}" >> /logstash/config/logstash.conf
+echo "  } else {" >> /logstash/config/logstash.conf
+echo "    file {" >> /logstash/config/logstash.conf
+echo "      path => '/var/log/logstash/other.log'" >> /logstash/config/logstash.conf
+echo "    }" >> /logstash/config/logstash.conf
+echo "  }" >> /logstash/config/logstash.conf
+echo "}" >> /logstash/config/logstash.conf
 
 log "Output logstash.conf"
 cat /logstash/config/logstash.conf
