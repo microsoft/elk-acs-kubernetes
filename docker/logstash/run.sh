@@ -35,8 +35,8 @@ cat /logstash/config/logstash.conf
 # Configure Start
 log "Configure start up service"
 # /logstash/bin/logstash -f /logstash/config/logstash.conf
-sudo update-rc.d logstash defaults 95 10
-sudo service logstash start
+update-rc.d logstash defaults 95 10
+service logstash start
 
 
 
