@@ -18,7 +18,7 @@ echo "  beats { host => \"0.0.0.0\" port => 5043 }" >> /logstash/config/logstash
 echo "  azurewadeventhub {key => '$EVT_HUB_ACC_KEY' username => '$EVT_HUB_KEY_NAME' eventhub => '$EVT_HUB_ENT_PATH'  namespace => '$EVT_HUB_NS' partitions => $EVT_HUB_PART}" >> /logstash/config/logstash.conf
 echo "}" >> /logstash/config/logstash.conf
 echo "output {" > /logstash/config/logstash.conf
-echo "  elasticsearch {hosts => ['$ELASTICSEARCH_URL'] index => '%{[@metadata][beat]}-%{+YYYY.MM.dd}'" >> /logstash/config/logstash.conf
+echo "  elasticsearch {hosts => ['$ELASTICSEARCH_URL']}" >> /logstash/config/logstash.conf
 echo "  elasticsearch {hosts => ['$ELASTICSEARCH_URL'] index => 'wad'}" >> /logstash/config/logstash.conf
 echo "}"
 
