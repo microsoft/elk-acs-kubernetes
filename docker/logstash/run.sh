@@ -12,31 +12,19 @@ log()
 # EVT_HUB_PART ${DIAG_EVT_HUB_PART}
 # ELASTICSEARCH_URL "http://elasticsearch:9200"
 
-if [ "$EVT_HUB_NS" = "undefined" ]
-then
-  # No EH provided
-  echo "input {" >> /logstash/config/logstash.conf
-  echo "  beats { host => \"0.0.0.0\" port => 5043 }" >> /logstash/config/logstash.conf
-  echo "}" >> /logstash/config/logstash.conf
-  echo "output {elasticsearch {hosts => ['$ELASTICSEARCH_URL']}}" >> /logstash/config/logstash.conf
-else
-  # Install Logstash configuration
-  log "Generating Logstash Config"
-  log "Eventhub Plugin Input"
-  echo "input {" >> /logstash/config/logstash.conf
-  echo "  azurewadeventhub {key => '$EVT_HUB_ACC_KEY' username => '$EVT_HUB_KEY_NAME' eventhub => '$EVT_HUB_ENT_PATH'  namespace => '$EVT_HUB_NS' partitions => $EVT_HUB_PART}" >> /logstash/config/logstash.conf
-  echo "}" >> /logstash/config/logstash.conf
-  echo "output {elasticsearch {hosts => ['$ELASTICSEARCH_URL'] index => 'wad'}}" >> /logstash/config/logstash.conf
-fi
+# No EH provided
+echo "input {" > /logstash/config/logstash.conf
+echo "  beats { host => \"0.0.0.0\" port => 5043 }" >> /logstash/config/logstash.conf
+echo "  azurewadeventhub {key => '$EVT_HUB_ACC_KEY' username => '$EVT_HUB_KEY_NAME' eventhub => '$EVT_HUB_ENT_PATH'  namespace => '$EVT_HUB_NS' partitions => $EVT_HUB_PART}" >> /logstash/config/logstash.conf
+echo "}" >> /logstash/config/logstash.conf
+echo "output {" > /logstash/config/logstash.conf
+echo "  elasticsearch {hosts => ['$ELASTICSEARCH_URL']} index => '%{[@metadata][beat]}-%{+YYYY.MM.dd}'" >> /logstash/config/logstash.conf
+echo "  elasticsearch {hosts => ['$ELASTICSEARCH_URL'] index => 'wad'}" >> /logstash/config/logstash.conf
+echo "}"
 
 log "Output logstash.conf"
 cat /logstash/config/logstash.conf
 
 # Configure Start
 log "Configure start up service"
-# /logstash/bin/logstash -f /logstash/config/logstash.conf
-update-rc.d logstash defaults 95 10
-service logstash start
-
-
-
+/logstash/bin/logstash -f /logstash/config/logstash.conf
