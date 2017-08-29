@@ -2,7 +2,7 @@
 
 log()
 {
-    echo "$1" >> /var/lib/waagent/custom-script/download/0/stdout
+    echo "$1"
 }
 
 set -e
