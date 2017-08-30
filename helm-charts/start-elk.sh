@@ -54,3 +54,6 @@ helm install -f effect.yaml kibana
 
 # create Logstash
 helm install -f effect.yaml logstash
+
+# create Filebeat
+helm install -f effect.yaml filebeat
