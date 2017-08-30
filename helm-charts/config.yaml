@@ -32,5 +32,4 @@ logstash:
 filebeat:
   image:
     tag: ${TAG}
-  replicaCount: 1
 

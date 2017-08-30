@@ -6,8 +6,9 @@ common:
   registry: elkacr.azurecr.io
   secretName: azure-registry
 nameOverride: filebeat
-image:
-  tag: 1.0.0
-  pullPolicy: Always
-service:
-  name: filebeat
+filebeat:
+  image:
+    tag: 1.0.0
+    pullPolicy: Always
+  service:
+    name: filebeat

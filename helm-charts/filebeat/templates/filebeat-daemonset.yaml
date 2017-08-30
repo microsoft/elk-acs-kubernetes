@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: filebeat
-        image: "{{ .Values.common.registry }}/filebeat:{{ .Values.image.tag }}"
+        image: "{{ .Values.common.registry }}/filebeat:{{ .Values.filebeat.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
           limits:
