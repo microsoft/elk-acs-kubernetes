@@ -28,3 +28,9 @@ logstash:
   image:
     tag: ${TAG}
   replicaCount: 1
+
+filebeat:
+  image:
+    tag: ${TAG}
+  replicaCount: 1
+
