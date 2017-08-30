@@ -15,7 +15,7 @@ spec:
       containers:
       - name: filebeat
         image: "{{ .Values.common.registry }}/filebeat:{{ .Values.filebeat.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        imagePullPolicy: {{ .Values.filebeat.image.pullPolicy }}
         resources:
           limits:
             cpu: 50m
