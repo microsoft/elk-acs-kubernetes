@@ -12,7 +12,7 @@ elasticsearch:
   image:
     repository: elkacr.azurecr.io/elasticsearch
     tag: 1.0.0
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   # Client/ingest nodes can execute pre-processing pipelines, composed of
   # one or more ingest processors. Depending on the type of operations
   # performed by the ingest processors and the required resources, it may make
