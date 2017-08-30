@@ -30,5 +30,5 @@ docker build -t ${registryUrl}/logstash ./logstash --build-arg DIAG_EVT_HUB_NS=$
                                                    --build-arg DIAG_EVT_HUB_ENT_PATH=${diagEvtHubEntPa} \
                                                    --build-arg DIAG_EVT_HUB_PART=${diagEvtHubPartNum}
 docker push ${registryUrl}/logstash
-docker build -t ${registryUrl}/filebeat ./filebeat
+docker build -t ${registryUrl}/filebeat:1.0.0 ./filebeat
 docker push ${registryUrl}/filebeat

@@ -10,7 +10,7 @@ logstash:
   image:
     repository: elkacr.azurecr.io/logstash
     tag: 1.0.0
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
   service:
     name: logstash
     type: LoadBalancer
