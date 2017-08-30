@@ -31,5 +31,5 @@ logstash:
 
 filebeat:
   image:
-    tag: ${TAG}
+    tag: 1.0.0
 
