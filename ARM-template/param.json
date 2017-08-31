@@ -36,7 +36,7 @@
       "value": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/logstash-eventhub-aztable"
     },
     "storageAccountSku": {
-      "value": "Premium_LRS"
+      "value": "Standard_LRS"
     },
     "registryUrl": {
       "value": ""
