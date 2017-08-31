@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "dnsNamePrefix": {
-      "value": "acs-dns-abxmaster"
+      "value": "acs-dns-abx"
     },
     "agentCount": {
       "value": 1
@@ -66,13 +66,13 @@
       "value": "BasicAuth"
     },
     "azureAdClientId": {
-      "value": "<azure-ad-client-id>"
+      "value": ""
     },
     "azureAdClientSecret": {
-      "value": "<azure-ad-client-secret>"
+      "value": ""
     },
     "tenant": {
-      "value": "<tenant-name>"
+      "value": ""
     }
   }
 }
