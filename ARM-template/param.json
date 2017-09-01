@@ -66,13 +66,13 @@
       "value": "BasicAuth"
     },
     "azureAdClientId": {
-      "value": ""
+      "value": "undefined"
     },
     "azureAdClientSecret": {
-      "value": ""
+      "value": "undefined"
     },
     "tenant": {
-      "value": ""
+      "value": "undefined"
     }
   }
 }
