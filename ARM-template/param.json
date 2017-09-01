@@ -51,10 +51,10 @@
       "value": "OBd/ecVidm5O9UmWM5wW5pDnqJFA8XsJdQ1PMujyTg8="
     },
     "eventHubEntityPath": {
-      "value": "firsteh"
+      "value": "insights-operational-logs"
     },
     "eventHubPartitionnumber": {
-      "value": "2"
+      "value": "4"
     },
     "archiveUrl": {
       "value": "https://github.com/Microsoft/elk-acs-kubernetes/archive/logstash-eventhub-aztable.zip"
