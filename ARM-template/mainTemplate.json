@@ -183,7 +183,7 @@
     },
     "eventHubPartitionnumber": {
       "type": "string",
-      "defaultValue": "undefined",
+      "defaultValue": "4",
       "metadata": {
         "description": "Partition count of the target event hub"
       }
@@ -410,6 +410,21 @@
           },
           "registryUrl": {
             "value": "[parameters('registryUrl')]"
+          },
+          "eventHubNamespace": {
+            "value": "[parameters('eventHubNamespace')]"
+          },
+          "eventHubKeyName": {
+            "value": "[parameters('eventHubKeyName')]"
+          },
+          "eventHubKey": {
+            "value": "[parameters('eventHubKey')]"
+          },
+          "eventHubEntityPath": {
+            "value": "[parameters('eventHubEntityPath')]"
+          },
+          "eventHubPartitionnumber": {
+            "value": "[parameters('eventHubPartitionnumber')]"
           },
           "baseTemplateUrl": {
             "value": "[parameters('baseTemplateUrl')]"

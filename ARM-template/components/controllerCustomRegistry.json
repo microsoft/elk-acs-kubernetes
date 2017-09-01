@@ -83,7 +83,7 @@
         },
         "eventHubPartitionnumber": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "4",
             "metadata": {
                 "description": "Partition count of the target event hub"
             }
