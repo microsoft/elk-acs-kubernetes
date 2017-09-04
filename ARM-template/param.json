@@ -42,16 +42,16 @@
       "value": ""
     },
     "eventHubNamespace": {
-      "value": "yaweiweh"
+      "value": "yaweiweventhub"
     },
     "eventHubKeyName": {
-      "value": "sendreceivepolicy"
+      "value": "RootManageSharedAccessKey"
     },
     "eventHubKey": {
-      "value": "OBd/ecVidm5O9UmWM5wW5pDnqJFA8XsJdQ1PMujyTg8="
+      "value": "U8LLqG6pbMQxLcXc1DkEJYbSUskqOXsQCcjjeJd+FyU="
     },
     "eventHubEntityPath": {
-      "value": "insights-operational-logs"
+      "value": "insights-logs-networksecuritygroupevent"
     },
     "eventHubPartitionnumber": {
       "value": "4"

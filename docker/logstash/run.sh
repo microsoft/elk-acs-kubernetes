@@ -16,6 +16,8 @@ log()
 echo "input {" > /logstash/config/logstash.conf
 echo "  beats { host => \"0.0.0.0\" port => 5043 tags => ['beats']}" >> /logstash/config/logstash.conf
 echo "  azurewadeventhub {key => '$EVT_HUB_ACC_KEY' username => '$EVT_HUB_KEY_NAME' eventhub => '$EVT_HUB_ENT_PATH'  namespace => '$EVT_HUB_NS' partitions => $EVT_HUB_PART tags => ['wad']}" >> /logstash/config/logstash.conf
+echo "  azurewadeventhub {key => '$EVT_HUB_ACC_KEY' username => '$EVT_HUB_KEY_NAME' eventhub => 'insights-logs-operationallogs'  namespace => '$EVT_HUB_NS' partitions => $EVT_HUB_PART tags => ['wad']}" >> /logstash/config/logstash.conf
+echo "  azurewadeventhub {key => '$EVT_HUB_ACC_KEY' username => '$EVT_HUB_KEY_NAME' eventhub => 'insights-logs-networksecuritygrouprulecounter'  namespace => '$EVT_HUB_NS' partitions => $EVT_HUB_PART tags => ['wad']}" >> /logstash/config/logstash.conf
 echo "}" >> /logstash/config/logstash.conf
 echo "output {" >> /logstash/config/logstash.conf
 echo "  if [tags][0] == 'beats' {" >> /logstash/config/logstash.conf
@@ -34,4 +36,4 @@ cat /logstash/config/logstash.conf
 
 # Configure Start
 log "Configure start up service"
-/logstash/bin/logstash -f /logstash/config/logstash.conf
+/logstash/bin/logstash -r -f /logstash/config/logstash.conf
