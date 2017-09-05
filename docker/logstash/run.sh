@@ -17,7 +17,7 @@ echo "input {" > /logstash/config/logstash.conf
 echo "  beats { host => \"0.0.0.0\" port => 5043 tags => ['beats']}" >> /logstash/config/logstash.conf
 # Remove spaces in $EVT_HUB_ENT_PATH
 log "EVT_HUB_ENT_PATH: " $EVT_HUB_ENT_PATH
-eventHubs = "${EVT_HUB_ENT_PATH//[[:space:]]/}"
+eventHubs="${EVT_HUB_ENT_PATH//[[:space:]]/}"
 log "eventHubs: " $eventHubs
 for eventHub in $(echo $eventHubs | sed "s/,/ /g")
 do
