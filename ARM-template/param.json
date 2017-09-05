@@ -42,19 +42,19 @@
       "value": ""
     },
     "eventHubNamespace": {
-      "value": "yaweiweventhub"
+      "value": ""
     },
     "eventHubKeyName": {
-      "value": "RootManageSharedAccessKey"
+      "value": ""
     },
     "eventHubKey": {
-      "value": "U8LLqG6pbMQxLcXc1DkEJYbSUskqOXsQCcjjeJd+FyU="
+      "value": ""
     },
     "eventHubEntityPath": {
-      "value": "insights-logs-networksecuritygroupevent,a,b,c,d,insights-logs-operationallogs,insights-logs-networksecuritygrouprulecounter"
+      "value": ""
     },
     "eventHubPartitionnumber": {
-      "value": "4"
+      "value": ""
     },
     "archiveUrl": {
       "value": "https://github.com/Microsoft/elk-acs-kubernetes/archive/logstash-eventhub-aztable.zip"

@@ -102,9 +102,9 @@
                     {
                         "name": "eventHubEntityPath",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Event hub entity name",
+                        "label": "List of logstash plugin event hubs",
                         "defaultValue": "",
-                        "toolTip": "The target event hub name.",
+                        "toolTip": "Comma seperated list of event hubs of the logstash plugin input stream.",
                         "constraints": {
                             "required": false
                         },
