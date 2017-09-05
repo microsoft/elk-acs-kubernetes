@@ -42,19 +42,19 @@
       "value": ""
     },
     "eventHubNamespace": {
-      "value": ""
+      "value": "undefined"
     },
     "eventHubKeyName": {
-      "value": ""
+      "value": "undefined"
     },
     "eventHubKey": {
-      "value": ""
+      "value": "undefined"
     },
     "eventHubEntityPath": {
-      "value": ""
+      "value": "undefined"
     },
     "eventHubPartitionnumber": {
-      "value": ""
+      "value": "undefined"
     },
     "archiveUrl": {
       "value": "https://github.com/Microsoft/elk-acs-kubernetes/archive/logstash-eventhub-aztable.zip"
