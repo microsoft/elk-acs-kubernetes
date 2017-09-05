@@ -51,7 +51,7 @@
       "value": "U8LLqG6pbMQxLcXc1DkEJYbSUskqOXsQCcjjeJd+FyU="
     },
     "eventHubEntityPath": {
-      "value": "insights-logs-networksecuritygroupevent"
+      "value": "insights-logs-networksecuritygroupevent,a,b, c,d,insights-logs-operationallogs,insights-logs-networksecuritygrouprulecounter"
     },
     "eventHubPartitionnumber": {
       "value": "4"
