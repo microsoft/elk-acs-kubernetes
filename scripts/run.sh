@@ -2,7 +2,7 @@
 
 log()
 {
-    echo "$1" | tee output.log
+    echo "$1" | tee -a /tmp/output.log
 }
 
 set -e
