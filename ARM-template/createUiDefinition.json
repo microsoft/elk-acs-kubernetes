@@ -70,8 +70,8 @@
                         "name": "eventHubNamespace",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Event hub namespace",
-                        "defaultValue": "",
-                        "toolTip": "The target event hub namespace.",
+                        "defaultValue": "undefined",
+                        "toolTip": "Target event hub namespace. If you don't want to stream in event hub events, leave it as is.",
                         "constraints": {
                             "required": false
                         },
@@ -81,8 +81,8 @@
                         "name": "eventHubKeyName",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Event hub key name",
-                        "defaultValue": "",
-                        "toolTip": "The name of the shared access policy.",
+                        "defaultValue": "undefined",
+                        "toolTip": "Name of the shared access policy. If you don't want to stream in event hub events, leave it as is.",
                         "constraints": {
                             "required": false
                         },
@@ -92,8 +92,8 @@
                         "name": "eventHubKey",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Event hub key value",
-                        "defaultValue": "",
-                        "toolTip": "The shared access key to the target event hub.",
+                        "defaultValue": "undefined",
+                        "toolTip": "Shared access key. If you don't want to stream in event hub events, leave it as is.",
                         "constraints": {
                             "required": false
                         },
@@ -102,9 +102,9 @@
                     {
                         "name": "eventHubEntityPath",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "List of logstash plugin event hubs",
-                        "defaultValue": "",
-                        "toolTip": "Comma seperated list of event hubs of the logstash plugin input stream.",
+                        "label": "List of event hubs",
+                        "defaultValue": "undefined",
+                        "toolTip": "Comma seperated list of event hubs of the logstash plugin input stream. If you don't want to stream in event hub events, leave it as is.",
                         "constraints": {
                             "required": false
                         },
@@ -114,8 +114,8 @@
                         "name": "eventHubPartitionnumber",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Event hub partition count",
-                        "defaultValue": "",
-                        "toolTip": "Partition count of the target event hub.",
+                        "defaultValue": "undefined",
+                        "toolTip": "Partition count of event hubs. If you don't want to stream in event hub events, leave it as is.",
                         "constraints": {
                             "required": false
                         },
@@ -125,7 +125,7 @@
                         "name": "storageAccountSku",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Data node storage account sku",
-                        "toolTip": "Storage account sku to be used as Elasticsearch data node.<br>For detailed information about storage account sku, refer to [Azure Storage Account Replication](https://docs.microsoft.com/en-us/azure/storage/storage-introduction#replication-for-durability-and-high-availability)",
+                        "toolTip": "Storage account sku to be used as Elasticsearch data node.<br>For detailed information about storage account sku, refer to [Azure Storage Account Replication](https://docs.microsoft.com/en-us/azure/storage/storage-introduction#replication-for-durability-and-high-availability).",
                         "defaultValue": "Standard locally-redundant storage(Standard_LRS)",
                         "constraints": {
                             "required": true,
@@ -158,7 +158,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Authentication Mode",
                         "defaultValue": "BasicAuth",
-                        "toolTip": "Basic authentication for Kubernetes dashboard and Kibana",
+                        "toolTip": "Basic authentication for Kubernetes dashboard and Kibana.",
                         "constraints": {
                             "required": true,
                             "allowedValues": [
@@ -179,7 +179,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Azure AD client ID",
                         "defaultValue": "undefined",
-                        "toolTip": "Azure AD client ID(Application ID)",
+                        "toolTip": "Azure AD client ID(Application ID). If deploying with BasicAuth, leave it as is.",
                         "constraints": {
                             "required": false
                         },
@@ -190,7 +190,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Azure AD client secret",
                         "defaultValue": "undefined",
-                        "toolTip": "Azure AD client secret/key",
+                        "toolTip": "Azure AD client secret/key. If deploying with BasicAuth, leave it as is.",
                         "constraints": {
                             "required": false
                         },
@@ -201,7 +201,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Azure AD tenant",
                         "defaultValue": "undefined",
-                        "toolTip": "Azure AD tenant(e.g. contoso.onmicrosoft.com)",
+                        "toolTip": "Azure AD tenant(e.g. contoso.onmicrosoft.com). If deploying with BasicAuth, leave it as is.",
                         "constraints": {
                             "required": false
                         },
@@ -744,7 +744,7 @@
                             "sshPublicKey": "SSH public key"
                         },
                         "toolTip": {
-                            "sshPublicKey": "SSH public key for Controller communicating with Kubernetes cluster. <br>[Generating SSH key pair online](https://microsoft.github.io/elk-acs-kubernetes/)"
+                            "sshPublicKey": "SSH public key for Controller communicating with Kubernetes cluster. <br>[Generating SSH key pair online](https://microsoft.github.io/elk-acs-kubernetes/)."
                         },
                         "type": "Microsoft.Compute.CredentialsCombo",
                         "constraints": {
@@ -759,7 +759,7 @@
                         "name": "privateKey",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Base64 encoded SSH private key",
-                        "toolTip": "SSH private key for Controller communicating with Kubernetes cluster. The key must be base64 encoded. <br>[Generating SSH key pair online](https://microsoft.github.io/elk-acs-kubernetes/)",
+                        "toolTip": "SSH private key for Controller communicating with Kubernetes cluster. The key must be base64 encoded. <br>[Generating SSH key pair online](https://microsoft.github.io/elk-acs-kubernetes/).",
                         "constraints": {
                             "required": true
                         },
@@ -769,7 +769,7 @@
                         "name": "servicePrincipalClientId",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Service principal client ID",
-                        "toolTip": "The Client ID of service principal object for accessing Azure resources. <br>[Creating a Service Principal](https://go.microsoft.com/fwlink/?linkid=834427)",
+                        "toolTip": "The Client ID of service principal object for accessing Azure resources. <br>[Creating a Service Principal](https://go.microsoft.com/fwlink/?linkid=834427).",
                         "constraints": {
                             "required": true
                         },
@@ -779,7 +779,7 @@
                         "name": "servicePrincipalClientSecret",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Service principal client secret",
-                        "toolTip": "The Client Secret of the service principal object for accessing Azure resources. <br>[Creating a Service Principal](https://go.microsoft.com/fwlink/?linkid=834427)",
+                        "toolTip": "The Client Secret of the service principal object for accessing Azure resources. <br>[Creating a Service Principal](https://go.microsoft.com/fwlink/?linkid=834427).",
                         "constraints": {
                             "required": true
                         },
