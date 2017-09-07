@@ -136,21 +136,21 @@
         },
         "azureAdClientId": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "undefined",
             "metadata": {
                 "description": "Azure AD client ID(Application ID)"
             }
         },
         "azureAdClientSecret": {
             "type": "securestring",
-            "defaultValue": "",
+            "defaultValue": "undefined",
             "metadata": {
                 "description": "Azure AD client secret/key"
             }
         },
         "tenant": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "undefined",
             "metadata": {
                 "description": "Azure AD tenant(e.g. contoso.onmicrosoft.com)"
             }

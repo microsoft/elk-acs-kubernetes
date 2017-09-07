@@ -178,7 +178,7 @@
                         "name": "azureAdClientId",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Azure AD client ID",
-                        "defaultValue": "",
+                        "defaultValue": "undefined",
                         "toolTip": "Azure AD client ID(Application ID)",
                         "constraints": {
                             "required": false
@@ -189,7 +189,7 @@
                         "name": "azureAdClientSecret",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Azure AD client secret",
-                        "defaultValue": "",
+                        "defaultValue": "undefined",
                         "toolTip": "Azure AD client secret/key",
                         "constraints": {
                             "required": false
@@ -200,24 +200,12 @@
                         "name": "tenant",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Azure AD tenant",
-                        "defaultValue": "",
+                        "defaultValue": "undefined",
                         "toolTip": "Azure AD tenant(e.g. contoso.onmicrosoft.com)",
                         "constraints": {
                             "required": false
                         },
                         "visible": "[equals('AzureAD', steps('commonSettings').authenticationMode)]"
-                    },
-
-                    {
-                        "name": "diagEvtHubNs",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Diagnostics Event Hub Namespace",
-                        "defaultValue": "",
-                        "toolTip": "",
-                        "constraints": {
-                            "required": false
-                        },
-                        "visible": true
                     }
                 ]
             },
