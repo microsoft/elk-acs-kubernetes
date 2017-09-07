@@ -2,7 +2,7 @@
 
 log()
 {
-    echo "$1"
+    echo "$1" | tee output.log
 }
 
 set -e
@@ -189,3 +189,4 @@ else
 
 fi
 log "exit scripts/run.sh"
+exit 0
