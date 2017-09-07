@@ -189,4 +189,10 @@ else
 
 fi
 log "exit scripts/run.sh"
+log "==================="
+log "Re-deploy solution using Azure Container Registry:"
+log "run.sh -d ${masterDns} -l ${resourceLocation} -u ${masterUsername} -p ${masterPassword} -k ${privateKey} -a ${registryUsername} -b ${registryPassword} -j ${diagEvtHubNs} -q ${diagEvtHubNa} -m ${diagEvtHubKey} -n ${diagEvtHubEntPa} -o ${diagEvtHubPartNum} -s ${storageAccount} -c ${storageAccountSku} -e ${repositoryUrl} -f ${directoryName} -g ${authenticationMode} -h ${clientId} -i ${clientSecret} -t ${tenant}"
+log "Re-deploy solution using Custom Registry:"
+log "run.sh -d ${masterDns} -l ${resourceLocation} -u ${masterUsername} -p ${masterPassword} -k ${privateKey} -r ${registryUrl} -j ${diagEvtHubNs} -q ${diagEvtHubNa} -m ${diagEvtHubKey} -n ${diagEvtHubEntPa} -o ${diagEvtHubPartNum} -s ${storageAccount} -c ${storageAccountSku} -e ${repositoryUrl} -f ${directoryName} -g ${authenticationMode} -h ${clientId} -i ${clientSecret} -t ${tenant}"
+log "==================="
 exit 0
