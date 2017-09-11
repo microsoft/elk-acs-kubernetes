@@ -154,7 +154,7 @@ log "expose kubectl proxy at 8080"
 # expose kubectl proxy
 nohup kubectl proxy --port=8080 &
 
-log "config nginx"
+log "config nginx for ${authenticationMode} authentication mode"
 cd template/${directoryName}
 if [ "${authenticationMode}" = "BasicAuth" ]; then
     echo ${masterPassword} | htpasswd -c -i /usr/local/openresty/nginx/conf/.htpasswd ${masterUsername}
@@ -173,7 +173,7 @@ fi
 # push image
 cd docker
 if [ -z ${registryUrl} ]; then
-    log "push image to azure container registry"
+    log "push image to azure container registry: ${registryUsername}.azurecr.io"
     # assume azure container registry, image push is required.
     registryUrl=${registryUsername}.azurecr.io
     bash push-images.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -a ${diagEvtHubNs} -b ${diagEvtHubNa} -c ${diagEvtHubKey} -d ${diagEvtHubEntPa} -e ${diagEvtHubPartNum}
@@ -182,7 +182,7 @@ if [ -z ${registryUrl} ]; then
     bash start-elk.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku} -a ${masterUsername} -b ${masterPassword}
 
 else
-    log "install helm charts"
+    log "install helm charts and start elk cluster"
     # install helm charts
     cd ../helm-charts
     bash start-elk.sh -r ${registryUrl} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku} -a ${masterUsername} -b ${masterPassword}
@@ -190,9 +190,12 @@ else
 fi
 log "exit scripts/run.sh"
 log "==================="
+log " "
 log "Re-deploy solution using Azure Container Registry:"
 log "run.sh -d ${masterDns} -l ${resourceLocation} -u ${masterUsername} -p ${masterPassword} -k ${privateKey} -a ${registryUsername} -b ${registryPassword} -j ${diagEvtHubNs} -q ${diagEvtHubNa} -m ${diagEvtHubKey} -n ${diagEvtHubEntPa} -o ${diagEvtHubPartNum} -s ${storageAccount} -c ${storageAccountSku} -e ${repositoryUrl} -f ${directoryName} -g ${authenticationMode} -h ${clientId} -i ${clientSecret} -t ${tenant}"
+log " "
 log "Re-deploy solution using Custom Registry:"
 log "run.sh -d ${masterDns} -l ${resourceLocation} -u ${masterUsername} -p ${masterPassword} -k ${privateKey} -r ${registryUrl} -j ${diagEvtHubNs} -q ${diagEvtHubNa} -m ${diagEvtHubKey} -n ${diagEvtHubEntPa} -o ${diagEvtHubPartNum} -s ${storageAccount} -c ${storageAccountSku} -e ${repositoryUrl} -f ${directoryName} -g ${authenticationMode} -h ${clientId} -i ${clientSecret} -t ${tenant}"
+log " "
 log "==================="
 exit 0
