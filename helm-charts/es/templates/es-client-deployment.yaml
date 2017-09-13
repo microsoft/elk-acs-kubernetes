@@ -40,6 +40,11 @@ spec:
               - SYS_RESOURCE
         image: "{{ .Values.common.registry }}/elasticsearch:{{ .Values.elasticsearch.image.tag }}"
         imagePullPolicy: {{ .Values.elasticsearch.image.pullPolicy }}
+        resources:
+          limits:
+            memory: "1024Mi"
+          requests:
+            memory: "256Mi"
         env:
         - name: NAMESPACE
           valueFrom:
