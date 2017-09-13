@@ -88,6 +88,13 @@
               "description": "Partition count of the target event hub"
           }
         },
+        "eventHubThreadWaitSec": {
+          "type": "string",
+          "defaultValue": "1",
+          "metadata": {
+              "description": "Logstash event hub plugin thread wait interval in seconds"
+          }
+        },
         "baseTemplateUrl": {
             "type": "string",
             "defaultValue": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/",
@@ -354,6 +361,9 @@
                     },
                     "eventHubPartitionnumber": {
                         "value": "[parameters('eventHubPartitionnumber')]"
+                    },
+                    "eventHubThreadWaitSec": {
+                        "value": "[parameters('eventHubThreadWaitSec')]"
                     },
                     "baseTemplateUrl": {
                         "value": "[parameters('baseTemplateUrl')]"

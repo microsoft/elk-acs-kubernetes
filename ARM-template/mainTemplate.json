@@ -188,6 +188,13 @@
         "description": "Partition count of the target event hub"
       }
     },
+    "eventHubThreadWaitSec": {
+      "type": "string",
+      "defaultValue": "1",
+      "metadata": {
+        "description": "Logstash event hub plugin thread wait interval in seconds"
+      }
+    },
     "storageAccountSku": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -425,6 +432,9 @@
           },
           "eventHubPartitionnumber": {
             "value": "[parameters('eventHubPartitionnumber')]"
+          },
+          "eventHubThreadWaitSec": {
+            "value": "[parameters('eventHubThreadWaitSec')]"
           },
           "baseTemplateUrl": {
             "value": "[parameters('baseTemplateUrl')]"

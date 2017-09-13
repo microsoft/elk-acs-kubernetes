@@ -88,6 +88,13 @@
                 "description": "Partition count of the target event hub"
             }
         },
+        "eventHubThreadWaitSec": {
+            "type": "string",
+            "defaultValue": "1",
+            "metadata": {
+                "description": "Logstash event hub plugin thread wait interval in seconds"
+            }
+        },
         "baseTemplateUrl": {
             "type": "string",
             "defaultValue": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/",
@@ -252,7 +259,7 @@
                             ]
                         },
                         "protectedSettings": {
-                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', parameters('adminPassword'), ' -k ', variables('basedPrivateKey'), ' -a ', variables('registryName'), ' -b ', listCredentials(resourceId('Microsoft.ContainerRegistry/registries', variables('registryName')), '2017-03-01').passwords[0].value, ' -j ', parameters('eventHubNamespace'), ' -q ', parameters('eventHubKeyName'), ' -m ', parameters('eventHubKey'), ' -n ', parameters('eventHubEntityPath'), ' -o ', parameters('eventHubPartitionnumber'), ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'), ' -g ', parameters('authenticationMode'), ' -h ', parameters('azureAdClientId'), ' -i ', parameters('azureAdClientSecret'), ' -t ', parameters('tenant'))]"
+                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', parameters('adminPassword'), ' -k ', variables('basedPrivateKey'), ' -a ', variables('registryName'), ' -b ', listCredentials(resourceId('Microsoft.ContainerRegistry/registries', variables('registryName')), '2017-03-01').passwords[0].value, ' -j ', parameters('eventHubNamespace'), ' -q ', parameters('eventHubKeyName'), ' -m ', parameters('eventHubKey'), ' -n ', parameters('eventHubEntityPath'), ' -o ', parameters('eventHubPartitionnumber'), ' -v ', parameters('eventHubThreadWaitSec'), ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'), ' -g ', parameters('authenticationMode'), ' -h ', parameters('azureAdClientId'), ' -i ', parameters('azureAdClientSecret'), ' -t ', parameters('tenant'))]"
                         }
                     }
                 }

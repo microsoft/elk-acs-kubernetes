@@ -122,6 +122,17 @@
                         "visible": true
                     },
                     {
+                        "name": "eventHubThreadWaitSec",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Thread wait interval(s)",
+                        "defaultValue": "undefined",
+                        "toolTip": "Logstash event hub plugin thread wait interval in seconds. If you don't want to stream in event hub events, leave it as is.",
+                        "constraints": {
+                            "required": false
+                        },
+                        "visible": true
+                    },
+                    {
                         "name": "storageAccountSku",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Data node storage account sku",
@@ -796,6 +807,7 @@
             "eventHubKey": "[steps('commonSettings').eventHubKey]",
             "eventHubEntityPath": "[steps('commonSettings').eventHubEntityPath]",
             "eventHubPartitionnumber": "[steps('commonSettings').eventHubPartitionnumber]",
+            "eventHubThreadWaitSec": "[steps('commonSettings').eventHubThreadWaitSec]",
             "storageAccountSku": "[steps('commonSettings').storageAccountSku]",
             "authenticationMode": "[steps('commonSettings').authenticationMode]",
             "azureAdClientId": "[steps('commonSettings').azureAdClientId]",

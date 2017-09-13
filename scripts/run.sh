@@ -26,6 +26,7 @@ while getopts ':d:l:u:p:k:r:a:b:j:q:m:n:o:s:c:e:f:g:h:i:t:' arg; do
         m) diagEvtHubKey=${OPTARG};;  # for logstash eh plugin
         n) diagEvtHubEntPa=${OPTARG};;  # for logstash eh plugin
         o) diagEvtHubPartNum=${OPTARG};;  # for logstash eh plugin
+        v) diagEvtHubThreadWait=${OPTARG};;  # for logstash eh plugin
         s) storageAccount=${OPTARG};;
         c) storageAccountSku=${OPTARG};;
         e) repositoryUrl=${OPTARG};;
@@ -176,7 +177,7 @@ if [ -z ${registryUrl} ]; then
     log "push image to azure container registry: ${registryUsername}.azurecr.io"
     # assume azure container registry, image push is required.
     registryUrl=${registryUsername}.azurecr.io
-    bash push-images.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -a ${diagEvtHubNs} -b ${diagEvtHubNa} -c ${diagEvtHubKey} -d ${diagEvtHubEntPa} -e ${diagEvtHubPartNum}
+    bash push-images.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -a ${diagEvtHubNs} -b ${diagEvtHubNa} -c ${diagEvtHubKey} -d ${diagEvtHubEntPa} -e ${diagEvtHubPartNum} -f ${diagEvtHubThreadWait}
 
     cd ../helm-charts
     bash start-elk.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku} -a ${masterUsername} -b ${masterPassword}
@@ -192,10 +193,10 @@ log "exit scripts/run.sh"
 log "==================="
 log " "
 log "Re-deploy solution using Azure Container Registry:"
-log "run.sh -d ${masterDns} -l ${resourceLocation} -u ${masterUsername} -p ${masterPassword} -k ${privateKey} -a ${registryUsername} -b ${registryPassword} -j ${diagEvtHubNs} -q ${diagEvtHubNa} -m ${diagEvtHubKey} -n ${diagEvtHubEntPa} -o ${diagEvtHubPartNum} -s ${storageAccount} -c ${storageAccountSku} -e ${repositoryUrl} -f ${directoryName} -g ${authenticationMode} -h ${clientId} -i ${clientSecret} -t ${tenant}"
+log "run.sh -d ${masterDns} -l ${resourceLocation} -u ${masterUsername} -p ${masterPassword} -k ${privateKey} -a ${registryUsername} -b ${registryPassword} -j ${diagEvtHubNs} -q ${diagEvtHubNa} -m ${diagEvtHubKey} -n ${diagEvtHubEntPa} -o ${diagEvtHubPartNum} -v ${diagEvtHubThreadWait} -s ${storageAccount} -c ${storageAccountSku} -e ${repositoryUrl} -f ${directoryName} -g ${authenticationMode} -h ${clientId} -i ${clientSecret} -t ${tenant}"
 log " "
 log "Re-deploy solution using Custom Registry:"
-log "run.sh -d ${masterDns} -l ${resourceLocation} -u ${masterUsername} -p ${masterPassword} -k ${privateKey} -r ${registryUrl} -j ${diagEvtHubNs} -q ${diagEvtHubNa} -m ${diagEvtHubKey} -n ${diagEvtHubEntPa} -o ${diagEvtHubPartNum} -s ${storageAccount} -c ${storageAccountSku} -e ${repositoryUrl} -f ${directoryName} -g ${authenticationMode} -h ${clientId} -i ${clientSecret} -t ${tenant}"
+log "run.sh -d ${masterDns} -l ${resourceLocation} -u ${masterUsername} -p ${masterPassword} -k ${privateKey} -r ${registryUrl} -j ${diagEvtHubNs} -q ${diagEvtHubNa} -m ${diagEvtHubKey} -n ${diagEvtHubEntPa} -o ${diagEvtHubPartNum} -v ${diagEvtHubThreadWait} -s ${storageAccount} -c ${storageAccountSku} -e ${repositoryUrl} -f ${directoryName} -g ${authenticationMode} -h ${clientId} -i ${clientSecret} -t ${tenant}"
 log " "
 log "==================="
 exit 0
