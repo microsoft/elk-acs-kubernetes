@@ -26,7 +26,7 @@ elasticsearch:
       NODE_MASTER: "false"
       NODE_INGEST: "true"
       HTTP_ENABLE: "true"
-      ES_JAVA_OPTS: "-Xms256m -Xmx1024m"
+      ES_JAVA_OPTS: "-Xms256m -Xmx256m"
 
   # Data nodes hold the shards that contain the documents you have indexed. Data
   # nodes handle data related operations like CRUD, search, and aggregations.
@@ -60,7 +60,7 @@ elasticsearch:
       NODE_MASTER: "true"
       NODE_INGEST: "false"
       HTTP_ENABLE: "false"
-      ES_JAVA_OPTS: "-Xms256m -Xmx2048m"
+      ES_JAVA_OPTS: "-Xms256m -Xmx256m"
 
       # The default value for this environment variable is 2, meaning a cluster
       # will need a minimum of 2 master nodes to operate. If you have 3 masters
