@@ -10,7 +10,7 @@ set -e
 echo $@
 
 log "enter scripts/run.sh"
-while getopts ':d:l:u:p:k:r:a:b:j:q:m:n:o:s:c:e:f:g:h:i:t:' arg; do
+while getopts ':d:l:u:p:k:r:a:b:j:q:m:n:o:v:s:c:e:f:g:h:i:t:' arg; do
      log "arg $arg set with value ${OPTARG}"
      case ${arg} in
         d) masterDns=${OPTARG};;
