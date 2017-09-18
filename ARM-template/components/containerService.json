@@ -177,7 +177,7 @@
   "outputs": {
     "masterFQDN": {
       "type": "string",
-      "value": "[concat(variables('mastersEndpointDNSNamePrefix'), '.', parameters('location'), '.cloudapp.azure.com')]"
+      "value": "[reference(concat('Microsoft.ContainerService/containerServices/', 'containerservice-', resourceGroup().name)).masterProfile.fqdn]"
     },
     "sshMaster0": {
       "type": "string",
