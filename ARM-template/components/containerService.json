@@ -119,7 +119,7 @@
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
       "allowedValues": [
-        "string(resourceGroup().location)"
+        "[resourceGroup().location]"
         ],
       "metadata": {
         "description": "The location of all components"
