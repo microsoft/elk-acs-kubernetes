@@ -42,9 +42,6 @@
         "location": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
-            "allowedValues": [
-                "[resourceGroup().location]"
-                ],
             "metadata": {
                 "description": "The location of all components"
             }
