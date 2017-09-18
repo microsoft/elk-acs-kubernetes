@@ -38,10 +38,6 @@ while getopts ':d:l:u:p:k:r:a:b:j:q:m:n:o:v:s:c:e:f:g:h:i:t:' arg; do
      esac
 done
 
-log "==============masterFQDN"
-log ${masterFQDN}
-log "==============masterFQDN"
-
 if [ -z ${masterDns} ]; then
     echo 'Master DNS is required' >&2
     exit 1
