@@ -169,7 +169,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Authentication Mode",
                         "defaultValue": "BasicAuth",
-                        "toolTip": "Basic authentication for Kubernetes dashboard and Kibana.",
+                        "toolTip": "Authentication mode for accessing Kubernetes dashboard.",
                         "constraints": {
                             "required": true,
                             "allowedValues": [
