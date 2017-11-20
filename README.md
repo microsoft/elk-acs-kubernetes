@@ -8,8 +8,8 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 
 * Install the Azure Command Line Interface (CLI) by following the instructions in the [Install Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) article.
 
-## Architecture
-
+## Elastic Stack on Kubernetes Architecture
+![Elastic Stack on Kubernetes Architecture](/elk-acs-kube-arch.png)
 
 
 ## Instructions
@@ -49,6 +49,13 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
      * `Service principal client ID` - client ID of service principal for accessing Azure resources. Find it in AAD registered app -> `Application ID`.
      * `Service principal client secret` - client secret. Create one in AAD registered app -> `Settings` -> `Keys`.
 * Click OK in Summary panel and create the solution.
+* After the deployment succeeds, find the FQDN of `controllervm` in the resource group.
+     * Kubernetes dashboard: http://<`Dns prefix`>control.<`Location`>.cloudapp.azure.com/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard/. The namespace of your kubernetes cluster is `elk-cluster-ns`.
+     * Find kibana/elasticsearch/logstash endpoints at `Discovery and Load Balancing` -> `Services`. To view events from event hubs, go to kibana portal -> `Management` -> `Configure an index pattern` -> input `wad` in `Index name or pattern` textbox -> click Create.
+
+## Troubleshooting
+* For resource deployment failure, you can find more information from Azure Portal.
+* For solution template failure, you can extract logs by ssh to `controllervm`. Deployment log is at `/tmp/outputl.log`.
 
 ## License
   This project is under MIT license.
