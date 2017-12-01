@@ -11,12 +11,11 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 ## Elastic Stack on Kubernetes Architecture
 ![Elastic Stack on Kubernetes Architecture](/elk-acs-kube-arch.png)
 
-
 ## Instructions
-* Go to Azure Marketplace and find `Elastic Stack on Kubernetes` solution template and click `Create`
-* In `Basics` panel, `Controller Username` and `Controller Password` need to be valid Ubuntu credential and will be used to access Kibana. `Resource Group` should be new or empty. Note: not all VM sizes are supported across all regions.
+* Go to Azure Marketplace and find `Elastic Stack on Kubernetes` solution template and click `Create`.
+* In `Basics` panel, `Controller Username` and `Controller Password` need to be valid Ubuntu credential and will be used to access Kibana. `Resource Group` should be new or empty.Note: not all VM sizes are supported across all regions.
 * In `Common Settings` panel, provide the following:
-   * `Dns prefix` - e.g. "contoso12345".
+   * `Dns prefix` - e.g. "contoso12345"
      * Create an app in Azure Active Directory. Go to `Azure Active Directory` -> `App registrations` -> `New application registration`. Provide the following:
        * `Name` - e.g. "contoso12345app"
        * `Application Type` - Web app / API
@@ -46,8 +45,9 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 * In `Security Settings` panel, provide the following:
      * `SSH public key` - ssh public key for controller node to talk to Kubernetes cluster
      * `Base64 encoded SSH private key` - base64 encoded ssh private key
-     * `Service principal client ID` - client ID of service principal for accessing Azure resources. Find it in AAD registered app -> `Application ID`.
-     * `Service principal client secret` - client secret. Create one in AAD registered app -> `Settings` -> `Keys`.
+     * `Service principal client ID` - "appId" of Service Principal created in previous step.
+     * `Service principal client secret` - "password" of Service Principal created in previous step.
+
 * Click OK in Summary panel and create the solution.
 * After the deployment succeeds, find the FQDN of `controllervm` in the resource group.
      * Kubernetes dashboard: http://<`Dns prefix`>control.<`Location`>.cloudapp.azure.com/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard/. The namespace of your kubernetes cluster is `elk-cluster-ns`.
