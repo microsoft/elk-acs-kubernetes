@@ -13,7 +13,7 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 
 ## Instructions
 * Go to Azure Marketplace and find `Elastic Stack on Kubernetes` solution template and click `Create`.
-* In `Basics` panel, `Controller Username` and `Controller Password` need to be valid Ubuntu credential and will be used to access Kibana. `Resource Group` should be new or empty.Note: not all VM sizes are supported across all regions.
+* In `Basics` panel, `Controller Username` and `Controller Password` need to be valid Ubuntu credential and will be used to access Kibana. Password must be at least 12 characters long and contain at least one lower case, upper case, digit and special character. `Resource Group` should be new or empty.Note: not all VM sizes are supported across all regions.
 * In `Common Settings` panel, provide the following:
    * `Dns prefix` - e.g. "contoso12345"
      * Create an app in Azure Active Directory. Go to `Azure Active Directory` -> `App registrations` -> `New application registration`. Provide the following:
