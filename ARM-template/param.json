@@ -54,10 +54,10 @@
       "value": "undefined"
     },
     "eventHubPartitionnumber": {
-      "value": "undefined"
+      "value": "4"
     },
     "eventHubThreadWaitSec": {
-      "value": "undefined"
+      "value": "10"
     },
     "archiveUrl": {
       "value": "https://github.com/Microsoft/elk-acs-kubernetes/archive/logstash-eventhub-aztable.zip"

@@ -114,7 +114,7 @@
                         "name": "eventHubPartitionnumber",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Event hub partition count",
-                        "defaultValue": "undefined",
+                        "defaultValue": "4",
                         "toolTip": "Partition count of event hubs. If you don't want to stream in event hub events, leave it as is.",
                         "constraints": {
                             "required": false
@@ -125,7 +125,7 @@
                         "name": "eventHubThreadWaitSec",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Thread wait interval(s)",
-                        "defaultValue": "undefined",
+                        "defaultValue": "10",
                         "toolTip": "Logstash event hub plugin thread wait interval in seconds. If you don't want to stream in event hub events, leave it as is.",
                         "constraints": {
                             "required": false

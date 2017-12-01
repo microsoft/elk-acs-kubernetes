@@ -90,7 +90,7 @@
         },
         "eventHubThreadWaitSec": {
             "type": "string",
-            "defaultValue": "1",
+            "defaultValue": "10",
             "metadata": {
                 "description": "Logstash event hub plugin thread wait interval in seconds"
             }
