@@ -125,6 +125,7 @@ chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 
 log "write private key to ${privateKeyFile}"
+export DEBIAN_FRONTEND="noninteractive"
 # write private key
 echo "${privateKey}" | base64 -d | tee ${privateKeyFile}
 chmod 400 ${privateKeyFile}
