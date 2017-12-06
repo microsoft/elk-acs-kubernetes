@@ -139,7 +139,7 @@ sudo apt-get update
 apt-cache policy docker-ce
 sudo apt-get install -y unzip docker-ce openresty apache2-utils azure-cli
 
-log "Login azure cli"
+log "Login Azure CLI"
 az login --service-principal -u ${azureCliendId} -p ${azurePwd} -t ${azureTenant}
 az account set -s ${subscriptionId}
 
@@ -148,7 +148,7 @@ az account set -s ${subscriptionId}
 echo "Find the Network security group"
 nsg=$(az network nsg list -g ${resourceGroup} --output table | grep -o -e 'k8s-master-.*-nsg')
 echo "Adding rule to ${nsg}"
-az network nsg rule create -n ssh --nsg-name ${nsg} --priority 102 -g ${resourceGroup} #--protocol TCP --destination-port-range 22 --source-address-prefix  --debug
+az network nsg rule create -n ssh --nsg-name ${nsg} --priority 102 -g ${resourceGroup} --protocol TCP --destination-port-range 22 --source-address-prefix virtualNetwork --debug
 
 log "install kubectl"
 # install kubectl
