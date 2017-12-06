@@ -388,6 +388,12 @@
                     },
                     "tenant": {
                         "value": "[parameters('tenant')]"
+                    },
+                    "servicePrincipalClientId": {
+                        "value": "[parameters('servicePrincipalClientId')]"
+                    },
+                    "servicePrincipalClientSecret": {
+                        "value": "[parameters('servicePrincipalClientSecret')]"
                     }
                 }
             }
