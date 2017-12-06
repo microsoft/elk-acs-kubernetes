@@ -3,37 +3,40 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "dnsNamePrefix": {
-      "value": "acs-dns-abx"
+      "value": "yuwzhodns3"
     },
     "agentCount": {
       "value": 1
     },
     "agentVMSize": {
-      "value": "Standard_DS3_v2"
+      "value": "Standard_DS2_v2"
     },
     "linuxAdminUsername": {
-      "value": "yaweiw"
+      "value": "yuwzho"
     },
     "masterCount": {
       "value": 1
     },
     "sshRSAPublicKey": {
-      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCgBTbnVnCvz0mN9aMZTBy90GYk3sBViZ2AQpaL1PHpsrVepcH2ZdouwNDf907asF+vDRG4PTNK9a0lHiEyQPYxH4xIP3xqopIZ1wsC+Jf6l/YpNwNJEUJbOQ6XLPYzl//qt58RAYZj37N1GCaw/ZPxeiwW9mfELTAI+zeVWGsemMdK1j0J/Bl5Ko78IJ5ff8ydX0Nfmy+G0CZ2Xt2n7PXiIjQm7ZHlEqI+cZUZLmyBCroQizfyt4DLaAYO8K6AVIYC6D95nCoH9OpDwlcvJ+4MLup6bjj6EoVUoU8z5Cd7pr2r2818IIe3enSmwwtzisVrm6UD3GM4rwSFEe0mbo7z webcrypto"
+      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDBNpNLH3yqhzavEBT/aG9LNFQo9nU2sWuY+zc8vvIr4sW7EGx2JBnYBocbimVzSwsMdJGO40n3CvpKa4b/H4QMpj9QexWDxWIiBwZzxcog59zxdx/Hu1XDsrEIlV2EXUFYok4i9s+nhaxBFvKBNtTHUYaCYlRtQcu2HuRgqBgcbfDxOazYM11VYXojUhHJSBxJA0wy0carf+92TjdmTX3F/zY241x3zfr4p2OcFktO6Lzd94gd3dKAtAPV5nASOZ3ke+ht6PjJGoelhPYMcV7ep923gHCpqyz05Mu8EF2EESk5/HMTpHYhOvM3BILn5qEaX/1pMCvRLWniGKko+qf5"
     },
     "privateKey": {
-      "value": "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBb0FVMjUxWndyODlKamZXakdVd2N2ZEJtSk43QVZZbWRnRUtXaTlUeDZiSzFYcVhCOW1YYUxzRFEKMy9kTzJyQmZydzBSdUQwelN2V3RKUjRoTWtEMk1SK01TRDk4YXFLU0dkY0xBdmlYK3BmMktUY0RTUkZDV3prT2x5ejJNNWYvCjZyZWZFUUdHWTkremRSZ21zUDJUOFhvc0Z2Wm54QzB3Q1BzM2xWaHJIcGpIU3RZOUNmd1plU3FPL0NDZVgzL01uVjlEWDVzdgpodEFtZGw3ZHArejE0aUkwSnUyUjVSS2lQbkdWR1M1c2dRcTZFSXMzOHJlQXkyZ0dEdkN1Z0ZTR0F1Zy9lWndxQi9UcVE4SlgKTHlmdURDN3FlbTQ0K2hLRlZLRlBNK1FuZTZhOXE5dk5mQ0NIdDNwMHBzTUxjNHJGYTV1bEE5eGpPSzhFaFJIdEptNk84d0lECkFRQUJBb0lCQUJONVB2cTlMcjUrZStXT1FKaDZCajlsUnFEekNMWUFKczR1akZLZENnbVdLWE5JdWNlS0VwakE5MHBpTnRMdgpSdDJ2T2ZwUlhGWWhlcjQ3SWZBVExzTEFvNXBCTzV0Z2lHWWpvTi91TDlTYnZLVzhYNlo3TnJlU1JIL0tSWFgyNS9xQStSY2gKTitFY25xSy8yeW1MMm42M0R2bUdhQTljTG0zUllLeklrMVNvTXNTZlRqTDRja2pqRzB1R3VmcXdkTysvTlZQQXNCOFdleFZ0Ci9rVU1Kbk5Sb1BESmhxbDVYS1NKMnRGandpb0VZRkRXbU0rMTJqVlFIM1RWVTJyWXhndXU5S0NEdS9UeG9jWXhYL24wb1Nhdwo4Ti9ZR0RKRUZLc1BGYjdST1NmTVFNSHNNVnJyV2VsUzNBTHQ0NkhnNktzYTM5N2k3UDVBbDluaDZkYkRyMVVDZ1lFQTBCSC8KeHkxVUVaRjFTVnB0VVlaZEYvTm5SM3lRN3lPMnRQNmRYYkdoME51eXk1V00wMHNCNWlYWUJpSzl6TjhGL0NvVUJkMXFXdk5nCjB2aUNiT01FT2dBRllxajRYK0xreWkva09pdGtudGcwQjYraWZhdkdCUWNwdkVnSkZDdkl6MmNENHMybzdMSUZFSXRvRVhzdwpqdkJXanRINllXM1hXM2ExdFRRUkxkY0NnWUVBeE9Hd1FNdHFONmdiMmpIQndxSzNCeVpvdmkzY1ZzUk9TWjdobDMwa0hQZ3UKVmo0UlhmaEtCc2FuS0J5aWJCOVFIUzFiaGFoR00zOFN0dFlsRUdzVytRbmVGZ1BmaG9Za05qc21zcjRmVExpZmtHczFSUU1WCmFCUjM2czlCMXNvNmhEbis3Rnp5YTBrWTEwUXI2eG1hMjNkaWRSbmxXVjNxQUZEc2NmVnQ3RVVDZ1lFQXBEbkFwMlhJbUFFMgpFSXFXQkNYSUxwSklMeTFMZStTMVhkQWxSd0ZnRmVpQ0M1dmpSaFpLem11S1FQV0UxMElraUM1eUZWcjRpZ2JVb2svUktiNVkKNUtxRmxhU0dQYkJwSW9pQVc4VktLdkc4eDJCQ0lXekY0OHdPamZSUmJpRk00eDZNKzZPVnRCU2lXTGVma1VTcFEvakFhUU9rCjJ1ZUdka09SRWcraGk0c0NnWUVBdkpmY09CVWlxREhXakVxQmFxcG5YT2dFQ2Jqd2lnVDlZVFJhc0x4bExZTG5FQ0hnalAxYwpHK1dMRmJkb050NC81ZE1mQ29kSXgrZC95N2lTUklud3Rab29MVHFFa2Q1SkxkRzNuaHpVNnE4bjJqVjRENldHaWU2aGVFSVUKdFdWK2JFOEp6T3kwSXVVZ2NJU1M5Vi9Qb1U5WTl3ZFpWU1BMRlladkdES2JtMmtDZ1lBK2MvQkhKYm40Y3BYZnUzMU1NUU9yCkZlbCtMRkpnVGp6c0EwQU0vOHhUWGdTMVl6bHZyYVJKYy9JQkpqT0pBaTg4anN3L0JuS2p2VWxESW9UemRGb3pBdk1TcDRGNQpxdGZpN2NHL1RRSFVHdVMvZ0V4UXFkVEh3N3pFTUpaNHo1VXhnV0dRSEp6ajhPVkdYa0ZxOTl3dDRDRkN4SmV3N2NVR0NadHYKMXBwZVZRPT0KLS0tLS1FTkQgUlNBIFBSSVZBVEUgS0VZLS0tLS0="
+      "value": "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb3dJQkFBS0NBUUVBd1RhVFN4OThxb2MycnhBVS8yaHZTelJVS1BaMU5yRnJtUHMzUEw3eUsrTEZ1eEJzZGlRWjJBYUgKRzRwbGMwc0xESFNSanVOSjl3cjZTbXVHL3grRURLWS9VSHNWZzhWaUlnY0djOFhLSU9mYzhYY2Z4N3RWdzdLeENKVmRoRjFCCldLSk9JdmJQcDRXc1FSYnlnVGJVeDFHR2dtSlViVUhMdGg3a1lLZ1lIRzN3OFRtczJETmRWV0Y2STFJUnlVZ2NTUU5NTXRIRwpxMy92ZGs0M1prMTl4ZjgyTnVOY2Q4MzYrS2RqbkJaTFR1aTgzZmVJSGQzU2dMUUQxZVp3RWptZDVIdm9iZWo0eVJxSHBZVDIKREhGZTNxZmR0NEJ3cWFzczlPVEx2QkJkaEJFcE9meHpFNlIySVRyek53U0M1K2FoR2wvOWFUQXIwUzFwNGhpcEtQcW4rUUlECkFRQUJBb0lCQUFNd0VlK0ErY1JOMVZ2Yjh6dlppeGJCUnYyR3NUblZENmdEcWZIc0JNNkVjYzkvSWlhSkVaekJiMEtyVjMzdgpwS05OSXczaW9qeEdmTkJYb05OSTNCdWE0Q0xob0l5aWFBR1U4R3lYV09CVi8zQW5Wbjd5OCtxdTArV3hvb1VVUmx6SlNFMzMKN2lvbDU5Y20yL0F5S1pBNTNKM0ZVSXlCSlpELzhTV3FjRklSRUEwdjRUZXRqWGpOZDVncWdwTWRzT3M2NjYzcm9Gb2lTUWF5CndIZk8vZGFQVFB2UXZCekJCdUoyUEdibmZMYlNON2xuSVdHZEg5cWx1TW9ncXFDbE1xL3hVckl3Wi9IcnBJNjhMd1BvK0hIUQpKWmo5cG85c0V3TUcwNUc4OHlXVUZQdk1BNnNVS1NPRUR4NTVEcmZFeXExcE1EUlRoRWFtbFpUb1ZHRjF0ZGtDZ1lFQTdpNFcKa0piS1ZSV25zL2ZJUzd2bi9aaW5idXEzTk40SGgzUUtvTXNxbHNSUldoU0I4SUZsckhtZFFFV2owRkM3L1F5emtkSDhiSkRrCmJmZXprRS9ZT0IvamJwM0p3RVNsQ3g0UU9naVpMZmZ4RCtML3BsRE9SNGpMeGVta1pYYk83VGFxblVPQ1Brd3l2WHJCQnVrTQpocjFVbXNTclM2eHAzclVJWVZaVGdEMENnWUVBejZzNlVtN1JHcUhCNmZzY0hJRWpxT0dyS08vVGg5TFJSVVoyanBGNmRGMVcKUTBFQWcyQzN3aVE2V2EzK25NMXJSTWZSQTkyQ3k0dmVTdDFreFBWUHRPcXI3RDRjWDg2NktnKzMzK29EMnI4a0Qrc2UwRVp1CkJIcXlVNUYwS2hFTG1EdHVlbFpJcHhzR25OeWVPT3FEMFY0NGVTOEpCd21PaFZhRVhpNDBKbTBDZ1lCREdua0JBM3E5dmZ3aAptQTIyU0pwenVDNXo4V3pzV0NHRzZBcVdncWJkRXpKWVRxN05NNmVSa0RIZGljRTlUNEduS1l6dDZGdFZ1dnlnZnNqNFA0YUwKU1hDcUdZcGR3UGsreUptSndDSm44UkxaaHZxL3dNUmRJdzFHRlMxYjZMMGoxK0w1cTZ0bUlkR3AwSXZSaHBjZzN2YVhKQkdlCm9GU3ppZzF5WHYvbmdRS0JnUUNrQVBrZFV0RW05Q3A5aThmR3B5SXZaSkZVMGhvL1FQbnVlTmgyZldPMDlHV0UxWmYvS1duVwpFK0JWSkxsWXdrMzkwc1E2QmowZVhRYWdIenBPNWVFZDR0c0Z4b09JRW00cGU2SmVYcVRPbzNkcWJ1ZzEyZmxXNWtOaEJoVTAKaDZPZGhRb1o2WHlWSkIzVDBkUE81VDVYSWM3OXZXeW10eUJzSTBpRVRINzQvUUtCZ0RqUGdvWG5KN0pTZEgwZ3dnNXpWVHkyCk8yN0lEQW5OVjhHVTZWS29IWEJCbHJLNVJ6b0dMbGhBUWhWYVdCdzhJQkc0UTNDVWs4eVJJTjYxOEVBSkJkaXRrMEJuaVhQSwpNZk9mbWVXc09CTVR1MDJzS3RTV0h2alozTG5WWnZnYzRoYkcrblo5NUN2eExVZENqSk95bjVwVzlEamV1aU9pSmZoN0VJN00KR3pNVwotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQ=="
     },
     "servicePrincipalClientId": {
-      "value": "3a6a5eaf-cb4c-47cb-8cde-25ab12cb78a0"
+      "value": "4a5aa97a-f8b9-4cb5-9ee0-07731cadcf12"
     },
     "servicePrincipalClientSecret": {
-      "value": "01e5f4ef-974c-4457-bc72-e8d4ceb17bc8"
+      "value": "S2nwa3F9iwkp06Smv+o4VvK5oTQmYajnhSb4trbx3bc="
     },
     "adminPassword": {
-      "value": "Password@12345678"
+      "value": "3Bugsfor$123"
+    },
+    "location": {
+      "value": "eastus"
     },
     "baseTemplateUrl": {
-      "value": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/logstash-eventhub-aztable"
+      "value": "https://raw.githubusercontent.com/yuwzho/elk-acs-kubernetes/logstash-eventhub-aztable/"
     },
     "storageAccountSku": {
       "value": "Standard_LRS"
@@ -60,22 +63,22 @@
       "value": "10"
     },
     "archiveUrl": {
-      "value": "https://github.com/Microsoft/elk-acs-kubernetes/archive/logstash-eventhub-aztable.zip"
+      "value": "https://github.com/yuwzho/elk-acs-kubernetes/archive/logstash-eventhub-aztable.zip"
     },
     "directoryName": {
       "value": "elk-acs-kubernetes-logstash-eventhub-aztable/"
     },
     "authenticationMode": {
-      "value": "BasicAuth"
+      "value": "AzureAD"
     },
     "azureAdClientId": {
-      "value": "undefined"
+      "value": "4a5aa97a-f8b9-4cb5-9ee0-07731cadcf12"
     },
     "azureAdClientSecret": {
-      "value": "undefined"
+      "value": "S2nwa3F9iwkp06Smv+o4VvK5oTQmYajnhSb4trbx3bc="
     },
     "tenant": {
-      "value": "undefined"
+      "value": "c2e19a76-03b0-43a4-8b56-432c24a79e1a"
     }
   }
 }
