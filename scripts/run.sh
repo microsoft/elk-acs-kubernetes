@@ -146,9 +146,8 @@ az account set -s ${subscriptionId}
 # Add NSG rule
 # virtualNetwork:22 to Any:*
 nsg=$(az network nsg list -g ${resourceGroup} --output table | grep -o -e 'k8s-master-.*-nsg')
-az network nsg rule create -n ssh --nsg-name ${nsg} --priority 102 -g ${resourceGroup} --protocol TCP --destination-port-range 22 --source-address-prefix VirtualNetwork
-
-
+log "Adding rule to ${nsg}"
+az network nsg rule create -n ssh --nsg-name ${nsg} --priority 102 -g ${resourceGroup} --protocol TCP --destination-port-range 22 --source-address-prefix  --debug
 
 log "install kubectl"
 # install kubectl
