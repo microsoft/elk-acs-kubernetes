@@ -146,7 +146,8 @@ az account set -s ${subscriptionId}
 # Add NSG rule
 # virtualNetwork:22 to Any:*
 nsg=$(az network nsg list -g ${resourceGroup} --output table | grep -o -e 'k8s-master-.*-nsg')
-az network nsg rule create -n ssh --nsg-name ${nsg} --priority 102 -g ${resourceGroup} --protocol TCP --destination-port-range 22 --source-address-prefix virtualNetwork
+ipAddress=$(az network public-ip show -n controllerip -g ${resourceGroup} --query [ipAddress] --output tsv)
+az network nsg rule create -n ssh --nsg-name ${nsg} --priority 102 -g ${resourceGroup} --protocol TCP --destination-port-range 22 --source-address-prefix ${ipAddress}
 
 log "install kubectl"
 # install kubectl
@@ -163,9 +164,11 @@ log "write private key to ${privateKeyFile}"
 # write private key
 echo "${privateKey}" | base64 -d | tee ${privateKeyFile}
 chmod 400 ${privateKeyFile}
-log "copy ${masterUsername}@${masterUrl}:.kube/config to ${KUBECONFIG}"
-mkdir -p /root/.kube
-scp -o StrictHostKeyChecking=no -i ${privateKeyFile} ${masterUsername}@${masterUrl}:.kube/config ${KUBECONFIG}
+mv ${privateKeyFile} ~/.ssh/id_rsa
+az acs kubernetes get-credentials -n containerservice-${resourceGroup} -g ${resourceGroup}
+# log "copy ${masterUsername}@${masterUrl}:.kube/config to ${KUBECONFIG}"
+# mkdir -p /root/.kube
+# scp -o StrictHostKeyChecking=no -i ${privateKeyFile} ${masterUsername}@${masterUrl}:.kube/config ${KUBECONFIG}
 kubectl get nodes
 
 log "install helm"
