@@ -461,16 +461,10 @@
             "value": "[parameters('tenant')]"
           },
           "servicePrincipalClientId": {
-            "metadata": {
-              "description": "Client ID (used by cloudprovider)"
-            },
-            "type": "securestring"
+            "value": "[parameters('servicePrincipalClientId')]"
           },
           "servicePrincipalClientSecret": {
-            "metadata": {
-              "description": "The Service Principal Client Secret."
-            },
-            "type": "securestring"
+            "value": "[parameters('servicePrincipalClientSecret')]"
           }
         }
       }
