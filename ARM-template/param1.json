@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "dnsNamePrefix": {
-        "value": "yuwzhodns3"
+        "value": "yuwzhodns4"
       },
       "agentCount": {
         "value": 1

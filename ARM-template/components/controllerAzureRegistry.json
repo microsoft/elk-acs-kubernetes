@@ -161,6 +161,18 @@
             "metadata": {
                 "description": "Azure AD tenant(e.g. contoso.onmicrosoft.com)"
             }
+        },
+        "servicePrincipalClientId": {
+            "metadata": {
+              "description": "Client ID (used by cloudprovider)"
+            },
+            "type": "securestring"
+        },
+        "servicePrincipalClientSecret": {
+            "metadata": {
+              "description": "The Service Principal Client Secret."
+            },
+            "type": "securestring"
         }
     },
     "variables": {
