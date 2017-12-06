@@ -145,9 +145,7 @@ az account set -s ${subscriptionId}
 
 # Add NSG rule
 # virtualNetwork:22 to Any:*
-echo "Find the Network security group"
 nsg=$(az network nsg list -g ${resourceGroup} --output table | grep -o -e 'k8s-master-.*-nsg')
-echo "Adding rule to ${nsg}"
 az network nsg rule create -n ssh --nsg-name ${nsg} --priority 102 -g ${resourceGroup} --protocol TCP --destination-port-range 22 --source-address-prefix virtualNetwork --debug
 
 log "install kubectl"
@@ -165,7 +163,7 @@ log "write private key to ${privateKeyFile}"
 # write private key
 echo "${privateKey}" | base64 -d | tee ${privateKeyFile}
 chmod 400 ${privateKeyFile}
-mv ${privateKey} ~/.ssh/id_rsa
+mv ${privateKeyFile} ~/.ssh/id_rsa
 az acs kubernetes get-credentials
 # log "copy ${masterUsername}@${masterUrl}:.kube/config to ${KUBECONFIG}"
 # mkdir -p /root/.kube
