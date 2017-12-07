@@ -152,23 +152,14 @@ az network nsg rule create -n ssh --nsg-name ${nsg} --priority 102 -g ${resource
 log "install kubectl"
 # install kubectl
 az acs kubernetes install-cli
-# cd /tmp
-# # curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-# # ACS currently support K8s v1.7.7
-# curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.7/bin/linux/amd64/kubectl
-# chmod +x ./kubectl
-# sudo mv ./kubectl /usr/local/bin/kubectl
-
 
 log "write private key to ${privateKeyFile}"
 # write private key
 echo "${privateKey}" | base64 -d | tee ${privateKeyFile}
 chmod 400 ${privateKeyFile}
 mv ${privateKeyFile} ~/.ssh/id_rsa
+log "Download K8S credential file"
 az acs kubernetes get-credentials -n containerservice-${resourceGroup} -g ${resourceGroup}
-# log "copy ${masterUsername}@${masterUrl}:.kube/config to ${KUBECONFIG}"
-# mkdir -p /root/.kube
-# scp -o StrictHostKeyChecking=no -i ${privateKeyFile} ${masterUsername}@${masterUrl}:.kube/config ${KUBECONFIG}
 kubectl get nodes
 
 log "install helm"
