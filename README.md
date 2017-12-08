@@ -14,7 +14,7 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 ## Instructions
 1. Follow [Create Azure Service Principal using Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal) to create an Azure Service Principal and add give access to your subscription.
 
-    Set the `Sign-on URL` to [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com](). This URL will be used your Kubernetes dashboard host name, it should be global unqiue. The `<resource-location>` is the region where you will deploy your ELK. Also note the `dns-prefix` which will be used later.
+    Set the `Sign-on URL` to [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com](#). This URL will be used your Kubernetes dashboard host name, it should be global unqiue. The `<resource-location>` is the region where you will deploy your ELK. Also note the `dns-prefix` which will be used later.
 
     > Note: not all **VM sizes** and **ACS** are supported across all regions. You can check it at [Azure products available by region](https://azure.microsoft.com/en-us/regions/services/)
 
@@ -73,7 +73,7 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 ## Acccess your ELK on Kubernetes
 After the deployment succeeds, you can find the Kubernetes dashboard and kibana/elasticsearch/logstash endpoints
 * You can access your kubernetes dashboar at:  
-  [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard/#!/overview?namespace=elk-cluster-ns]()
+  [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard/#!/overview?namespace=elk-cluster-ns](#)
 
 * Find kibana/elasticsearch/logstash endpoints at `Discovery and Load Balancing` -> `Services` on your Kubernetes dashboard.
 
