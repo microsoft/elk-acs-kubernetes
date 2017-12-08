@@ -12,18 +12,25 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 * Login to your [Azure portal](https://portal.azure.com).
 
 ## Instructions
+1. Follow [Create Azure Service Principal using Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal) to create an Azure Service Principal and add give access to your subscription.
+
+    Set the `Sign-on URL` to [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com](). This URL will be used your Kubernetes dashboard host name, it should be global unqiue. The `<resource-location>` is the region where you will deploy your ELK. Also note the `dns-prefix` which will be used later.
+
+    > Note: not all **VM sizes** and **ACS** are supported across all regions. You can check it at [Azure products available by region](https://azure.microsoft.com/en-us/regions/services/)
+
+    After the successed creation, note the `Application ID`, `Password` and `Tenant ID`.
+
+1. Grand your Service Principal access: Go to your `Service princial`-> `Settings` ->  `Required permissions`, tick `Access the directory as the signed-in user`, `Read all users' basic profiles` and `Sign in and read user profile`, then save it, then click `Grant Permissions`.
+
 1. Go to Azure Marketplace and find `Elastic Stack on Kubernetes` solution template and click `Create`.
 
 1. In `Basics` panel, `Controller Username` and `Controller Password` need to be valid Ubuntu credential and will be used to access Kibana.
-   > Password must be at least 12 characters long and contain at least one lower case, upper case, digit and special character. 
+    > Password must be at least 12 characters long and contain at least one lower case, upper case, digit and special character. 
    
-   > `Resource Group` should be a new or an empty one to create your Kubernetes.
-
-   > Note: not all VM sizes are supported across all regions. You can check it at [Azure products available by region](https://azure.microsoft.com/en-us/regions/services/)
+    > `Resource Group` should be a new or an empty one to create your Kubernetes.
 
 1. In `Common Settings` panel, provide the following:
-   * `Dns prefix` - The DNS name prefix of your Kubernetes controller. You can access the Kubernetes dashboard at [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com](#)
-     > DNS prefix and resource location pair should be global unique.
+   * `Dns prefix` - The DNS name prefix of your Kubernetes controller. It should be the same as the `dns prefix` you specific in your Azure Service Principal.
    <!-- * `Dns prefix` - e.g. "contoso12345"
      * Create an app in Azure Active Directory. Go to `Azure Active Directory` -> `App registrations` -> `New application registration`. Provide the following:
        * `Name` - e.g. "contoso12345app"
@@ -41,10 +48,7 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
    * `Authentication Mode` - authentication mode for accessing Kubernetes dashboard.
       * `Basic Authentication` mode uses `Controller Username` and `Controller Password`.
       * `Azure Active Directory` mode uses Azure AD service principal for authentication. You need to provide your service principal information:
-        
-        > Follow [Azure Service Principal using Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal) to create an Azure Service Principal and add access to your subscription. The `Sign-on URL` should be [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com]().
-        
-        > To grand your Service Principal access: Go to your `Service princial`-> `Settings` ->  `Required permissions`, tick `Access the directory as the signed-in user`, `Read all users' basic profiles` and `Sign in and read user profile`, then save it, then click `Grant Permissions`
+
         * `Azure AD client ID` - [Application ID](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#get-application-id-and-authentication-key)
         * `Azure AD client secret` - [Your generated key](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#get-application-id-and-authentication-key)
         * `Azure AD tenant` - [Tenant ID](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#get-tenant-id)
@@ -57,8 +61,8 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 1. In `Security Settings` panel, provide the following:
      * `SSH public key` - ssh public key for controller node to talk to Kubernetes cluster
      * `Base64 encoded SSH private key` - base64 encoded ssh private key
-     * `Service principal client ID` - "Application ID" of Service Principal created in previous step.
-     * `Service principal client secret` - "Your generated key" of Service Principal created in previous step.
+     * `Service principal client ID` - Application ID
+     * `Service principal client secret` - Your generated key
 
      > You can generate the SSH public key/private key pair using [js-keygen](https://microsoft.github.io/elk-acs-kubernetes/)
 
