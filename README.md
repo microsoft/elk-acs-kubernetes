@@ -2,26 +2,42 @@
 
 This repository contains tools and helm charts to help deploy the [ELK stack](https://www.elastic.co/products) on [Kubernetes](https://kubernetes.io/) in [Azure Container Service (ACS)](https://docs.microsoft.com/azure/container-service/).
 
+## Elastic Stack on Kubernetes Architecture
+![Elastic Stack on Kubernetes Architecture](/elk-acs-kube-arch.png)
+
 ## Prerequesites
 
 * An Azure subscription. If you do not have an Azure subscription, you can sign up for a [Azure Free Trial Subscription](https://azure.microsoft.com/offers/ms-azr-0044p/)
 
-* Install the Azure Command Line Interface (CLI) by following the instructions in the [Install Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) article.
-
-## Elastic Stack on Kubernetes Architecture
-![Elastic Stack on Kubernetes Architecture](/elk-acs-kube-arch.png)
+* Login to your [Azure portal](https://portal.azure.com).
 
 ## Instructions
-* Go to Azure Marketplace and find `Elastic Stack on Kubernetes` solution template and click `Create`.
-* In `Basics` panel, `Controller Username` and `Controller Password` need to be valid Ubuntu credential and will be used to access Kibana. Password must be at least 12 characters long and contain at least one lower case, upper case, digit and special character. `Resource Group` should be new or empty.Note: not all VM sizes are supported across all regions.
-* In `Common Settings` panel, provide the following:
-   * `Dns prefix` - e.g. "contoso12345"
+1. Follow [Create Azure Service Principal using Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal) to create an Azure Service Principal and add give access to your subscription.
+
+    Set the `Sign-on URL` to [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com](#). This URL will be used your Kubernetes dashboard host name, it should be global unqiue. The `<resource-location>` is the region where you will deploy your ELK. Also note the `dns-prefix` which will be used later.
+
+    > Note: not all **VM sizes** and **ACS** are supported across all regions. You can check it at [Azure products available by region](https://azure.microsoft.com/en-us/regions/services/)
+
+    After the successed creation, note the `Application ID`, `Password` and `Tenant ID`.
+
+1. Grand your Service Principal access: Go to your `Service princial`-> `Settings` ->  `Required permissions`, tick `Access the directory as the signed-in user`, `Read all users' basic profiles` and `Sign in and read user profile`, then save it, then click `Grant Permissions`.
+
+1. Go to Azure Marketplace and find `Elastic Stack on Kubernetes` solution template and click `Create`.
+
+1. In `Basics` panel, `Controller Username` and `Controller Password` need to be valid Ubuntu credential and will be used to access Kibana.
+    > Password must be at least 12 characters long and contain at least one lower case, upper case, digit and special character. 
+   
+    > `Resource Group` should be a new or an empty one to create your Kubernetes.
+
+1. In `Common Settings` panel, provide the following:
+   * `Dns prefix` - The DNS name prefix of your Kubernetes controller. It should be the same as the `dns prefix` you specific in your Azure Service Principal.
+   <!-- * `Dns prefix` - e.g. "contoso12345"
      * Create an app in Azure Active Directory. Go to `Azure Active Directory` -> `App registrations` -> `New application registration`. Provide the following:
        * `Name` - e.g. "contoso12345app"
        * `Application Type` - Web app / API
        * `Sign-on URL` - it's to be: http://<`Dns prefix`>control.<`Location`>.cloudapp.azure.com. e.g. http://contoso12345control.eastus.cloudapp.azure.com
-     * Go to `Settings` -> `API ACCESS` -> `Required permissions` and tick `Access the directory as the signed-in user`, `Read all users' basic profiles` and `Sign in and read user profile` and click `Grant Permissions`.
-   * `Registry url`- if using public registry e.g. Docker Hub.
+     * Go to `Settings` -> `API ACCESS` -> `Required permissions` and tick `Access the directory as the signed-in user`, `Read all users' basic profiles` and `Sign in and read user profile` and click `Grant Permissions`. -->
+   * `Registry url`- If using public registry e.g. Docker Hub. The solution will automatically create an Azure Container Registry to host image if it is empty.
    * `Event hub namespace` - e.g. "myeventhub".
    * `Event hub key name` - event hub `SETTINGS` find `Shared access policies` e.g. "RootManageSharedAccessKey".
    * `Event hub key value` - SAS policy key value.
@@ -29,29 +45,39 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
    * `Event hub partition count` - partition count of event hubs (all listed event hubs must have the same partition count).
    * `Thread wait interval(s)` - logstash event hub plugin thread wait interval in seconds.
    * `Data node storage account sku` - storage account sku used by Elasticsearch data node.
-   * `Authentication Mode` - authentication mode for accessing Kubernetes dashboard. `Basic Authentication` mode uses `Controller Username` and `Controller Password`. `Azure Active Directory` mode uses Azure AD service principal for authentication. You need to:
-     * Create an [Azure Service Principal](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?toc=%2fazure%2fazure-resource-manager%2ftoc.json):
-       ```shell
-       az account show
-       az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-       ```
-     * "appId" is `Azure AD client ID`
-     * "password" is `Azure AD client secret`
-     * "tenant" is `Azure AD tenant`
-* In `Kubernetes Cluster Settings` panel, provide the following:
+   * `Authentication Mode` - authentication mode for accessing Kubernetes dashboard.
+      * `Basic Authentication` mode uses `Controller Username` and `Controller Password`.
+      * `Azure Active Directory` mode uses Azure AD service principal for authentication. You need to provide your service principal information:
+
+        * `Azure AD client ID` - [Application ID](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#get-application-id-and-authentication-key)
+        * `Azure AD client secret` - [Your generated key](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#get-application-id-and-authentication-key)
+        * `Azure AD tenant` - [Tenant ID](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#get-tenant-id)
+
+1. In `Kubernetes Cluster Settings` panel, provide the following:
      * `Agent Count` - number of agent nodes of Kubernetes cluster
      * `Agent Node Size`
      * `Master Count` - number of masters of Kubernetes cluster
-* In `Security Settings` panel, provide the following:
+
+1. In `Security Settings` panel, provide the following:
      * `SSH public key` - ssh public key for controller node to talk to Kubernetes cluster
      * `Base64 encoded SSH private key` - base64 encoded ssh private key
-     * `Service principal client ID` - "appId" of Service Principal created in previous step.
-     * `Service principal client secret` - "password" of Service Principal created in previous step.
+     * `Service principal client ID` - Application ID
+     * `Service principal client secret` - Your generated key
 
-* Click OK in Summary panel and create the solution.
-* After the deployment succeeds, find the FQDN of `controllervm` in the resource group.
-     * Kubernetes dashboard: http://<`Dns prefix`>control.<`Location`>.cloudapp.azure.com/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard/. The namespace of your kubernetes cluster is `elk-cluster-ns`.
-     * Find kibana/elasticsearch/logstash endpoints at `Discovery and Load Balancing` -> `Services`. To view events from event hubs, go to kibana portal -> `Management` -> `Configure an index pattern` -> input `wad` in `Index name or pattern` textbox -> click Create.
+     > You can generate the SSH public key/private key pair using [js-keygen](https://microsoft.github.io/elk-acs-kubernetes/)
+
+1. Click OK in Summary panel and create the solution.
+
+> The creation may cost half an hour.
+
+## Acccess your ELK on Kubernetes
+After the deployment succeeds, you can find the Kubernetes dashboard and kibana/elasticsearch/logstash endpoints
+* You can access your kubernetes dashboar at:  
+  [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard/#!/overview?namespace=elk-cluster-ns](#)
+
+* Find kibana/elasticsearch/logstash endpoints at `Discovery and Load Balancing` -> `Services` on your Kubernetes dashboard.
+
+* To view events from event hubs, go to kibana portal -> `Management` -> `Configure an index pattern` -> input `wad` in `Index name or pattern` textbox -> click Create.
 
 ## Troubleshooting
 * For resource deployment failure, you can find more information from Azure Portal.
@@ -60,4 +86,4 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 ## License
   This project is under MIT license.
 
-  ```config/openidc.lua``` is derived from [https://github.com/pingidentity/lua-resty-openidc](https://github.com/pingidentity/lua-resty-openidc) with some modifications to satisfy requirements and this file (```config/openidc.lua```) is under Apache 2.0 license.
+  `config/openidc.lua` is derived from [https://github.com/pingidentity/lua-resty-openidc](https://github.com/pingidentity/lua-resty-openidc) with some modifications to satisfy requirements and this file (`config/openidc.lua`) is under Apache 2.0 license.
