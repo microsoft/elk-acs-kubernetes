@@ -151,7 +151,14 @@ az network nsg rule create -n ssh --nsg-name ${nsg} --priority 102 -g ${resource
 
 log "install kubectl"
 # install kubectl
-az acs kubernetes install-cli
+# az acs kubernetes install-cli
+cd /tmp
+# curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+# ACS currently support K8s v1.7.7
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.7/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+
 
 log "write private key to ${privateKeyFile}"
 # write private key
