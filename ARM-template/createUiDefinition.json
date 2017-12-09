@@ -822,7 +822,7 @@
             "servicePrincipalClientId": "[steps('securitySettings').servicePrincipalClientId]",
             "servicePrincipalClientSecret": "[steps('securitySettings').servicePrincipalClientSecret]",
             "adminPassword": "[basics('password')]",
-            "location": "[resourceGroup().location]",
+            "location": "[location()]",
             "baseTemplateUrl": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/logstash-eventhub-aztable/",
             "archiveUrl": "https://github.com/Microsoft/elk-acs-kubernetes/archive/logstash-eventhub-aztable.zip",
             "directoryName": "elk-acs-kubernetes-logstash-eventhub-aztable/"
