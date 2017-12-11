@@ -193,7 +193,7 @@ nohup kubectl proxy --port=8080 &
 log "config nginx for ${authenticationMode} authentication mode"
 cd template/${directoryName}
 if [ "${authenticationMode}" = "BasicAuth" ]; then
-    echo ${masterPassword} | htpasswd -c -i /usr/local/openresty/nginx/conf/.htpasswd ${masterUsername}
+    echo '${masterPassword}' | htpasswd -c -i /usr/local/openresty/nginx/conf/.htpasswd ${masterUsername}
     cp config/nginx-basic.conf /usr/local/openresty/nginx/conf/nginx.conf
     systemctl reload openresty
 else
@@ -212,16 +212,16 @@ if [ -z ${registryUrl} ]; then
     log "push image to azure container registry: ${registryUsername}.azurecr.io"
     # assume azure container registry, image push is required.
     registryUrl=${registryUsername}.azurecr.io
-    bash push-images.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -a ${diagEvtHubNs} -b ${diagEvtHubNa} -c ${diagEvtHubKey} -d ${diagEvtHubEntPa} -e ${diagEvtHubPartNum} -f ${diagEvtHubThreadWait}
+    bash push-images.sh -r '${registryUrl}' -u '${registryUsername}' -p '${registryPassword}' -a '${diagEvtHubNs}' -b '${diagEvtHubNa}' -c '${diagEvtHubKey}' -d '${diagEvtHubEntPa}' -e '${diagEvtHubPartNum}' -f '${diagEvtHubThreadWait}'
 
     cd ../helm-charts
-    bash start-elk.sh -r ${registryUrl} -u ${registryUsername} -p ${registryPassword} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku} -a ${masterUsername} -b ${masterPassword}
+    bash start-elk.sh -r '${registryUrl}' -u '${registryUsername}' -p '${registryPassword}' -d '${storageAccount}' -l '${resourceLocation}' -s '${storageAccountSku}' -a '${masterUsername}' -b '${masterPassword}'
 
 else
     log "install helm charts and start elk cluster"
     # install helm charts
     cd ../helm-charts
-    bash start-elk.sh -r ${registryUrl} -d ${storageAccount} -l ${resourceLocation} -s ${storageAccountSku} -a ${masterUsername} -b ${masterPassword}
+    bash start-elk.sh -r '${registryUrl}' -d '${storageAccount}' -l '${resourceLocation}' -s '${storageAccountSku}' -a '${masterUsername}' -b '${masterPassword}'
 
 fi
 log "exit scripts/run.sh"

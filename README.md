@@ -3,7 +3,7 @@
 This repository contains tools and helm charts to help deploy the [ELK stack](https://www.elastic.co/products) on [Kubernetes](https://kubernetes.io/) in [Azure Container Service (ACS)](https://docs.microsoft.com/azure/container-service/).
 
 ## Elastic Stack on Kubernetes Architecture
-![Elastic Stack on Kubernetes Architecture](/elk-acs-kube-arch.png)
+![Elastic Stack on Kubernetes Architecture](image/elk-acs-kube-arch.png)
 
 ## Prerequesites
 
@@ -14,13 +14,19 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 ## Instructions
 1. Follow [Create Azure Service Principal using Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal) to create an Azure Service Principal and add give access to your subscription.
 
-    Set the `Sign-on URL` to [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com](#). This URL will be used your Kubernetes dashboard host name, it should be global unqiue. The `<resource-location>` is the region where you will deploy your ELK. Also note the `dns-prefix` which will be used later.
+    Set the `Sign-on URL` to [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com](#). This URL will be used your Kubernetes dashboard host name. The `dns-prefix` should be global unique, note it and it will be used later. The `<resource-location>` is the region where you will deploy your ELK.
 
     > Note: not all **VM sizes** and **ACS** are supported across all regions. You can check it at [Azure products available by region](https://azure.microsoft.com/en-us/regions/services/)
 
     After the successed creation, note the `Application ID`, `Password` and `Tenant ID`.
 
-1. Grand your Service Principal access: Go to your `Service princial`-> `Settings` ->  `Required permissions`, tick `Access the directory as the signed-in user`, `Read all users' basic profiles` and `Sign in and read user profile`, then save it, then click `Grant Permissions`.
+1. Grand your Service Principal access: Go to your `Service princial`-> `Settings` ->  `Required permissions`, tick `Access the directory as the signed-in user`, `Read all users' basic profiles` and `Sign in and read user profile`.
+
+   ![Add Azure Service Principal access](image/elk-acs-kube-aad-access.png)
+
+1. Set the redirect URL for your Azure Service Principal: Go to your `Service pricipal` -> `Settings` -> `Reply URLs`, add URL `http://<dns-prefix>control.<resource-location>.cloudapp.azure.com/callback`.
+
+   ![Add Azure Service Principal redirect URL](image/elk-acs-kube-aad-redirect.png)
 
 1. Go to Azure Marketplace and find `Elastic Stack on Kubernetes` solution template and click `Create`.
 
@@ -31,17 +37,12 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 
 1. In `Common Settings` panel, provide the following:
    * `Dns prefix` - The DNS name prefix of your Kubernetes controller. It should be the same as the `dns prefix` you specific in your Azure Service Principal.
-   <!-- * `Dns prefix` - e.g. "contoso12345"
-     * Create an app in Azure Active Directory. Go to `Azure Active Directory` -> `App registrations` -> `New application registration`. Provide the following:
-       * `Name` - e.g. "contoso12345app"
-       * `Application Type` - Web app / API
-       * `Sign-on URL` - it's to be: http://<`Dns prefix`>control.<`Location`>.cloudapp.azure.com. e.g. http://contoso12345control.eastus.cloudapp.azure.com
-     * Go to `Settings` -> `API ACCESS` -> `Required permissions` and tick `Access the directory as the signed-in user`, `Read all users' basic profiles` and `Sign in and read user profile` and click `Grant Permissions`. -->
+
    * `Registry url`- If using public registry e.g. Docker Hub. The solution will automatically create an Azure Container Registry to host image if it is empty.
-   * `Event hub namespace` - e.g. "myeventhub".
-   * `Event hub key name` - event hub `SETTINGS` find `Shared access policies` e.g. "RootManageSharedAccessKey".
-   * `Event hub key value` - SAS policy key value.
-   * `List of event hubs` - event hub `ENTITIES` find `Event Hubs` list the event hubs from which you'd pull events e.g. "insights-logs-networksecuritygroupevent,insights-logs-networksecuritygrouprulecounter".
+   * `Event hub namespace` - e.g. "myeventhub". If using log stash, keep it `undefined`.
+   * `Event hub key name` - event hub `SETTINGS` find `Shared access policies` e.g. "RootManageSharedAccessKey".  If use log stash, keep it `undefined`.
+   * `Event hub key value` - SAS policy key value.  If using log stash, keep it `undefined`.
+   * `List of event hubs` - event hub `ENTITIES` find `Event Hubs` list the event hubs from which you'd pull events e.g. "insights-logs-networksecuritygroupevent,insights-logs-networksecuritygrouprulecounter".  If using log stash, keep it `undefined`.
    * `Event hub partition count` - partition count of event hubs (all listed event hubs must have the same partition count).
    * `Thread wait interval(s)` - logstash event hub plugin thread wait interval in seconds.
    * `Data node storage account sku` - storage account sku used by Elasticsearch data node.
@@ -72,8 +73,10 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 
 ## Acccess your ELK on Kubernetes
 After the deployment succeeds, you can find the Kubernetes dashboard and kibana/elasticsearch/logstash endpoints
-* You can access your kubernetes dashboar at:  
+* You can access your kubernetes dashboar at:   
   [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard/#!/overview?namespace=elk-cluster-ns](#)
+
+  The namespace is `elk-cluster-ns`.
 
 * Find kibana/elasticsearch/logstash endpoints at `Discovery and Load Balancing` -> `Services` on your Kubernetes dashboard.
 
@@ -81,7 +84,7 @@ After the deployment succeeds, you can find the Kubernetes dashboard and kibana/
 
 ## Troubleshooting
 * For resource deployment failure, you can find more information from Azure Portal.
-* For solution template failure, you can extract logs by ssh to `controllervm`. Deployment log is at `/tmp/outputl.log`.
+* For solution template failure, you can extract logs by ssh to `controllervm`. Deployment log is at `/tmp/output.log`.
 
 ## License
   This project is under MIT license.
