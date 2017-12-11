@@ -202,7 +202,8 @@
         "controlTemplate": {
             "true": "/ARM-template/components/controllorAzureRegistry.json",
             "false": "/ARM-tempalte/components/controllerCustomRegistry.json"
-        }
+        },
+        "singleQuote": "'"
     },
     "resources": [
         {
@@ -271,7 +272,7 @@
                             ]
                         },
                         "protectedSettings": {
-                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p \"', parameters('adminPassword'), '\" -k ', variables('basedPrivateKey'), ' -r ', parameters('registryUrl'), ' -j ', parameters('eventHubNamespace'), ' -q ', parameters('eventHubKeyName'), ' -m ', parameters('eventHubKey'), ' -n ', parameters('eventHubEntityPath'), ' -o ', parameters('eventHubPartitionnumber'), ' -v ', parameters('eventHubThreadWaitSec'), ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'), ' -g ', parameters('authenticationMode'), ' -h ', parameters('azureAdClientId'), ' -i ', parameters('azureAdClientSecret'), ' -t ', parameters('tenant'), ' -w ', parameters('servicePrincipalClientId'), ' -x ', parameters('servicePrincipalClientSecret'), ' -y ', subscription().tenantId, ' -z ', subscription().subscriptionId, ' -R ', resourceGroup().name))]"
+                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', variables('singleQuote'), parameters('adminPassword'), variables('singleQuote'), ' -k ', variables('basedPrivateKey'), ' -r ', parameters('registryUrl'), ' -j ', parameters('eventHubNamespace'), ' -q ', parameters('eventHubKeyName'), ' -m ', parameters('eventHubKey'), ' -n ', parameters('eventHubEntityPath'), ' -o ', parameters('eventHubPartitionnumber'), ' -v ', parameters('eventHubThreadWaitSec'), ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'), ' -g ', parameters('authenticationMode'), ' -h ', parameters('azureAdClientId'), ' -i ', parameters('azureAdClientSecret'), ' -t ', parameters('tenant'), ' -w ', parameters('servicePrincipalClientId'), ' -x ', parameters('servicePrincipalClientSecret'), ' -y ', subscription().tenantId, ' -z ', subscription().subscriptionId, ' -R ', resourceGroup().name))]"
                         }
                     }
                 }
