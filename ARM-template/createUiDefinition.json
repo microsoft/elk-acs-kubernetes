@@ -146,18 +146,6 @@
                                     "value": "Standard_LRS"
                                 },
                                 {
-                                    "label": "Standard geo-redundant storage(Standard_GRS)",
-                                    "value": "Standard_GRS"
-                                },
-                                {
-                                    "label": "Standard read-access geo-redundant storage(Standard_RAGRS)",
-                                    "value": "Standard_RAGRS"
-                                },
-                                {
-                                    "label": "Standard zone-redundant storage(Standard_ZRS)",
-                                    "value": "Standard_ZRS"
-                                },
-                                {
                                     "label": "Premium locally-redundant storage(Premium_LRS)",
                                     "value": "Premium_LRS"
                                 }
