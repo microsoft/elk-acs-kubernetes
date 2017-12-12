@@ -22,7 +22,7 @@ kibana:
   replicaCount: 1
   env:
     USERNAME: ${USERNAME}
-    PASSWORD: ${PASSWORD}
+    PASSWORD: '${PASSWORD}'
 
 logstash:
   image:
