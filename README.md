@@ -37,7 +37,7 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
     > `Resource Group` should be a new or an empty one to create your Kubernetes.
 
 1. In `Common Settings` panel, provide the following:
-   * `Dns prefix` - The DNS name prefix of your Kubernetes controller. It should be the same as the `dns prefix` you specific in your Azure Service Principal.
+   * `Dns prefix` - The DNS name prefix of your Kubernetes controller. It should be the same as the `dns prefix` you specified in your Azure Service Principal.
 
    * `Registry url`- If using public registry e.g. Docker Hub. The solution will automatically create an Azure Container Registry to host image if it is empty. Ensure it can pull `elasticsearch `, `kibana` and `logstash` image from this public registry.
    * `Event hub namespace` - e.g. "myeventhub".
