@@ -12,7 +12,7 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 * Login to your [Azure portal](https://portal.azure.com).
 
 ## Instructions
-1. <a href='create-sp'></a>Follow tutorial [Create Azure Service Principal using Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal) to create an Azure Service Principal and assign it `Contributor` role access to your subscription.
+1. <a id='create-sp'></a>Follow tutorial [Create Azure Service Principal using Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal) to create an Azure Service Principal and assign it `Contributor` role access to your subscription.
 
     * Assign application a contributor role to your subscription. The subsciption is the one where you will deploy the ELK.
     * Set the `Sign-on URL` to [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com](#). This URL will be used as your Kubernetes dashboard host name. The `dns-prefix` should be global unique, and it will be used later. The `<resource-location>` is the region where you will deploy your ELK.
