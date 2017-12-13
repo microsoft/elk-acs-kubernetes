@@ -12,24 +12,24 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 * Login to your [Azure portal](https://portal.azure.com).
 
 ## Instructions
-1. <a href='create-sp'/>Follow [Create Azure Service Principal using Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal) to create an Azure Service Principal and assign `Contributor` role access to your subscription.
+1. <a href='create-sp'></a>Follow tutorial [Create Azure Service Principal using Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal) to create an Azure Service Principal and assign it `Contributor` role access to your subscription.
 
-    * Set the `Sign-on URL` to [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com](#). This URL will be used your Kubernetes dashboard host name. The `dns-prefix` should be global unique, note it and it will be used later. The `<resource-location>` is the region where you will deploy your ELK.
     * Assign application a contributor role to your subscription. The subsciption is the one where you will deploy the ELK.
+    * Set the `Sign-on URL` to [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com](#). This URL will be used as your Kubernetes dashboard host name. The `dns-prefix` should be global unique, and it will be used later. The `<resource-location>` is the region where you will deploy your ELK.
 
     > Note: not all **VM sizes** and **ACS** are supported across all regions. You can check it at [Azure products available by region](https://azure.microsoft.com/en-us/regions/services/)
 
-    After the successed creation, note the `Application ID`, `Password` and `Tenant ID`.
+    After the successful creation, note the `Application ID`, `Password` and `Tenant ID`.
 
-1. Grand your Service Principal access: Go to your `Service princial`-> `Settings` ->  `Required permissions`, tick `Access the directory as the signed-in user`, `Read all users' basic profiles` and `Sign in and read user profile`.
+1. Grant your Service Principal access: Go to your `Service princial`-> `Settings` ->  `Required permissions`, tick `Access the directory as the signed-in user`, `Read all users' basic profiles` and `Sign in and read user profile`. Click `Save`.
 
    ![Add Azure Service Principal access](image/elk-acs-kube-aad-access.png)
 
-1. Set the redirect URL for your Azure Service Principal: Go to your `Service pricipal` -> `Settings` -> `Reply URLs`, add URL `http://<dns-prefix>control.<resource-location>.cloudapp.azure.com/callback`.
+1. Set the redirect URL for your Azure Service Principal: Go to your `Service pricipal` -> `Settings` -> `Reply URLs`, add URL `http://<dns-prefix>control.<resource-location>.cloudapp.azure.com/callback` as the first redirect URL. Click `Save`.
 
    ![Add Azure Service Principal redirect URL](image/elk-acs-kube-aad-redirect.png)
 
-1. Go to Azure Marketplace and find `Elastic Stack on Kubernetes` solution template and click `Create`.
+1. Go to Azure Marketplace, find `Elastic Stack on Kubernetes` solution template and click `Create`.
 
 1. In `Basics` panel, `Controller Username` and `Controller Password` need to be valid Ubuntu credential and will be used to access Kibana.
     > Password must be at least 12 characters long and contain at least one lower case, upper case, digit and special character. 
@@ -39,7 +39,7 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 1. In `Common Settings` panel, provide the following:
    * `Dns prefix` - The DNS name prefix of your Kubernetes controller. It should be the same as the `dns prefix` you specific in your Azure Service Principal.
 
-   * `Registry url`- If using public registry e.g. Docker Hub. The solution will automatically create an Azure Container Registry to host image if it is empty.
+   * `Registry url`- If using public registry e.g. Docker Hub. The solution will automatically create an Azure Container Registry to host image if it is empty. Ensure it can pull `elasticsearch `, `kibana` and `logstash` image from this public registry.
    * `Event hub namespace` - e.g. "myeventhub".
    * `Event hub key name` - event hub `SETTINGS` find `Shared access policies` e.g. "RootManageSharedAccessKey".
    * `Event hub key value` - SAS policy key value.
@@ -47,9 +47,9 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
    * `Event hub partition count` - partition count of event hubs (all listed event hubs must have the same partition count).
    * `Thread wait interval(s)` - logstash event hub plugin thread wait interval in seconds.
   
-    > If the logstash get logs from log shipper instead of Azure Event hub, keep the Event hub namespace/key name/key value as `undefined`.
+    > If the logstash get logs from log shipper instead of Azure Event hub, keep the `Event hub namespace`/`key name`/`key value` as `undefined`.
    
-    > The Event hub namespace, key name, key value and event hubs can format the event hub's connection string: `Endpoint=sb://<namespace>.servicebus.windows.net/;SharedAccessKeyName=<key-name>;SharedAccessKey=<key-value>;EntityPath=<eventhub-name>`. The key should be grant access with `listen`.
+    > The Event hub namespace, key name, key value and event hubs can format the event hub's connection string: `Endpoint=sb://<namespace>.servicebus.windows.net/;SharedAccessKeyName=<key-name>;SharedAccessKey=<key-value>;EntityPath=<eventhub-name>`. The key should be given access with `listen`.
 
    * `Data node storage account sku` - storage account sku used by Elasticsearch data node.
    * `Authentication Mode` - authentication mode for accessing Kubernetes dashboard.
@@ -82,7 +82,7 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 
 ## Acccess your ELK on Kubernetes
 After the deployment succeeds, you can find the Kubernetes dashboard and kibana/elasticsearch/logstash endpoints
-* You can access your kubernetes dashboar at:   
+* You can access your kubernetes dashboard at:   
   [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard/#!/overview?namespace=elk-cluster-ns](#)
 
   The namespace is `elk-cluster-ns`.
@@ -91,7 +91,7 @@ After the deployment succeeds, you can find the Kubernetes dashboard and kibana/
 
   > kibana dashboard's credential is the same as controller you specific in Basic Setting.
 
-* To manage the Kubernetes, you can use `kubectl` on controllervm. You can use SSH login to the controllervm, the username/password is specific in Basic Setting.
+* To manage the Kubernetes, you can use `kubectl` on controllervm. The  SSH username/password is specific in Basic Setting.
 
 ## Troubleshooting
 * For resource deployment failure, you can find more information from Azure Portal.
