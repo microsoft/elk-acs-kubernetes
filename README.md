@@ -12,7 +12,7 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 * Login to your [Azure portal](https://portal.azure.com).
 
 ## Instructions
-1. <a href='create-sp'></a>Follow tutorial [Create Azure Service Principal using Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal) to create an Azure Service Principal and assign it `Contributor` role access to your subscription.
+1. <a id='create-sp'></a>Follow tutorial [Create Azure Service Principal using Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal) to create an Azure Service Principal and assign it `Contributor` role access to your subscription.
 
     * Assign application a contributor role to your subscription. The subsciption is the one where you will deploy the ELK.
     * Set the `Sign-on URL` to [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com](#). This URL will be used as your Kubernetes dashboard host name. The `dns-prefix` should be global unique, and it will be used later. The `<resource-location>` is the region where you will deploy your ELK.
@@ -21,7 +21,7 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 
     After the successful creation, note the `Application ID`, `Password` and `Tenant ID`.
 
-1. Grant your Service Principal access: Go to your `Service princial`-> `Settings` ->  `Required permissions`, tick `Read all users' basic profiles` and `Sign in and read user profile`. Click `Save`. Click `Grant Permissions` and click `yes`.
+1. Grant your Service Principal access: Go to your registered app in [step 1](#create-sp)'s Settings page -> `Required permissions` -> `Windows Azure Active Directory`, tick `Read all users' basic profiles` and `Sign in and read user profile`. Click `Save`. Click `Grant Permissions` and click `yes`.
 
    ![Add Azure Service Principal access](image/elk-acs-kube-aad-access.png)
 
@@ -37,9 +37,9 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
     > `Resource Group` should be a new or an empty one to create your Kubernetes.
 
 1. In `Common Settings` panel, provide the following:
-   * `Dns prefix` - The DNS name prefix of your Kubernetes controller. It should be the same as the `dns prefix` you specific in your Azure Service Principal.
+   * `Dns prefix` - The DNS name prefix of your Kubernetes controller. It should be the same as the `dns prefix` you specified in your Azure Service Principal.
 
-   * `Registry url`- If using public registry e.g. Docker Hub. The solution will automatically create an Azure Container Registry to host image if it is empty. Ensure it can pull `elasticsearch `, `kibana` and `logstash` image from this public registry.
+   * `Registry url`- A public registry url who hosts `elasticsearch `, `kibana` and `logstash` images. If keep this field empty, the solution will automatically create an Azure Container Registry to host images.
    * `Event hub namespace` - e.g. "myeventhub".
    * `Event hub key name` - event hub `SETTINGS` find `Shared access policies` e.g. "RootManageSharedAccessKey".
    * `Event hub key value` - SAS policy key value.
