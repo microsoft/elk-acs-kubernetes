@@ -21,7 +21,7 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 
     After the successful creation, note the `Application ID`, `Password` and `Tenant ID`.
 
-1. Grant your Service Principal access: Go to your `Service princial`-> `Settings` ->  `Required permissions`, tick `Access the directory as the signed-in user`, `Read all users' basic profiles` and `Sign in and read user profile`. Click `Save`.
+1. Grant your Service Principal access: Go to your `Service princial`-> `Settings` ->  `Required permissions`, tick `Read all users' basic profiles` and `Sign in and read user profile`. Click `Save`. Click `Grant Permissions` and click `yes`.
 
    ![Add Azure Service Principal access](image/elk-acs-kube-aad-access.png)
 
