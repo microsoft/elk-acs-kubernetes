@@ -39,7 +39,7 @@ This repository contains tools and helm charts to help deploy the [ELK stack](ht
 1. In `Common Settings` panel, provide the following:
    * `Dns prefix` - The DNS name prefix of your Kubernetes controller. It should be the same as the `dns prefix` you specified in your Azure Service Principal.
 
-   * `Registry url`- If using public registry e.g. Docker Hub. The solution will automatically create an Azure Container Registry to host image if it is empty. Ensure it can pull `elasticsearch `, `kibana` and `logstash` image from this public registry.
+   * `Registry url`- A public registry url who hosts `elasticsearch `, `kibana` and `logstash` images. If keep this field empty, the solution will automatically create an Azure Container Registry to host images.
    * `Event hub namespace` - e.g. "myeventhub".
    * `Event hub key name` - event hub `SETTINGS` find `Shared access policies` e.g. "RootManageSharedAccessKey".
    * `Event hub key value` - SAS policy key value.
