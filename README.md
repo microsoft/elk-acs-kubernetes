@@ -11,7 +11,7 @@ This repository contains tools and helm charts to help deploy the [Elastck stack
     * Username / Password
     * [Azure Active Directory OAuth 2.0](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-protocols-oauth-code)
 * Deploy a Azure Container Registry if no public registry is provided.
-* Build docker images for Elastic Stack and push images to user specified public registry or the Azure Container Register.
+* Build docker images for Elastic Stack and push images to the Azure Container Register. If public registry that stores docker images for Elastic Stack is provided, this step is skipped.
 * Install Elastic Stack defined as Helm Charts on Kubernetes.
 
 ## Elastic Stack on Kubernetes Architecture
