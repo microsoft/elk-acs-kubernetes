@@ -97,7 +97,7 @@
         },
         "baseTemplateUrl": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/",
+            "defaultValue": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/logstash-eventhub-aztable/",
             "metadata": {
                 "description": "base URL of templates, typically a repository for configuraions"
             }
