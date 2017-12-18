@@ -117,6 +117,16 @@ if [ "${authenticationMode}" = "AzureAD" ]; then
     fi
 fi
 
+log "==================="
+log " "
+log "Re-deploy solution using Azure Container Registry:"
+log "run.sh -d ${masterDns} -l ${resourceLocation} -u ${masterUsername} -p ${masterPassword} -k ${privateKey} -a ${registryUsername} -b ${registryPassword} -j ${diagEvtHubNs} -q ${diagEvtHubNa} -m ${diagEvtHubKey} -n ${diagEvtHubEntPa} -o ${diagEvtHubPartNum} -v ${diagEvtHubThreadWait} -s ${storageAccount} -c ${storageAccountSku} -e ${repositoryUrl} -f ${directoryName} -g ${authenticationMode} -h ${clientId} -i ${clientSecret} -t ${tenant} -w ${azureCliendId} -x ${azurePwd} -y ${azureTenant} -z ${subscriptionId} -R ${resourceGroup}"
+log " "
+log "Re-deploy solution using Custom Registry:"
+log "run.sh -d ${masterDns} -l ${resourceLocation} -u ${masterUsername} -p ${masterPassword} -k ${privateKey} -r ${registryUrl} -j ${diagEvtHubNs} -q ${diagEvtHubNa} -m ${diagEvtHubKey} -n ${diagEvtHubEntPa} -o ${diagEvtHubPartNum} -v ${diagEvtHubThreadWait} -s ${storageAccount} -c ${storageAccountSku} -e ${repositoryUrl} -f ${directoryName} -g ${authenticationMode} -h ${clientId} -i ${clientSecret} -t ${tenant}  -w ${azureCliendId} -x ${azurePwd} -y ${azureTenant} -z ${subscriptionId} -R ${resourceGroup}"
+log " "
+log "==================="
+
 privateKeyFile='private_key'
 
 masterUrl=${masterDns}.${resourceLocation}.cloudapp.azure.com
@@ -225,13 +235,4 @@ else
 
 fi
 log "exit scripts/run.sh"
-log "==================="
-log " "
-log "Re-deploy solution using Azure Container Registry:"
-log "run.sh -d ${masterDns} -l ${resourceLocation} -u ${masterUsername} -p ${masterPassword} -k ${privateKey} -a ${registryUsername} -b ${registryPassword} -j ${diagEvtHubNs} -q ${diagEvtHubNa} -m ${diagEvtHubKey} -n ${diagEvtHubEntPa} -o ${diagEvtHubPartNum} -v ${diagEvtHubThreadWait} -s ${storageAccount} -c ${storageAccountSku} -e ${repositoryUrl} -f ${directoryName} -g ${authenticationMode} -h ${clientId} -i ${clientSecret} -t ${tenant} -w ${azureCliendId} -x ${azurePwd} -y ${azureTenant} -z ${subscriptionId} -R ${resourceGroup}"
-log " "
-log "Re-deploy solution using Custom Registry:"
-log "run.sh -d ${masterDns} -l ${resourceLocation} -u ${masterUsername} -p ${masterPassword} -k ${privateKey} -r ${registryUrl} -j ${diagEvtHubNs} -q ${diagEvtHubNa} -m ${diagEvtHubKey} -n ${diagEvtHubEntPa} -o ${diagEvtHubPartNum} -v ${diagEvtHubThreadWait} -s ${storageAccount} -c ${storageAccountSku} -e ${repositoryUrl} -f ${directoryName} -g ${authenticationMode} -h ${clientId} -i ${clientSecret} -t ${tenant}  -w ${azureCliendId} -x ${azurePwd} -y ${azureTenant} -z ${subscriptionId} -R ${resourceGroup}"
-log " "
-log "==================="
 exit 0

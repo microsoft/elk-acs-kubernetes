@@ -27,19 +27,11 @@ This repository contains tools and helm charts to help deploy the [Elastck stack
 1. <a id='create-sp'></a>Follow tutorial [Create Azure Service Principal using Azure portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal) to create an Azure Service Principal and assign it `Contributor` role access to your subscription.
 
     * Assign application a contributor role to your subscription. The subsciption is the one where you will deploy the Elastic Stack.
-    * Set the `Sign-on URL` to [http://\<dns-prefix>control.\<resource-location>.cloudapp.azure.com](#). This URL will be used to access your Kubernetes dashboard. The `dns-prefix` must be globally unique and will be used in later stages of the deployment. The `<resource-location>` is the region where you Elastic Stack deployment exists.
-
-    > Note: not all **VM sizes** and **ACS** are supported across all regions. You can check product availabilities from [Azure products available by region](https://azure.microsoft.com/en-us/regions/services/)
-
     > Note: `Application ID`, `Password` and `Tenant ID` will be used in later stages of the deployment.
 
 1. Grant your Service Principal permissions: Go to your registered app in [step 1](#create-sp)'s Settings page -> `Required permissions` -> `Windows Azure Active Directory`, tick `Read all users' basic profiles` and `Sign in and read user profile`. Click `Save` in `Enable Access` pane then `Grant Permissions` in `Required permissions` pane. Click `Yes` to confirm the action.
 
    ![Add Azure Service Principal access](image/elk-acs-kube-aad-access.png)
-
-1. Set the redirect URL for your Azure Service Principal: Go to your `Service pricipal` -> `Settings` -> `Reply URLs`, add URL `http://<dns-prefix>control.<resource-location>.cloudapp.azure.com/callback` as the first redirect URL. Click `Save`.
-
-   ![Add Azure Service Principal redirect URL](image/elk-acs-kube-aad-redirect.png)
 
 1. Go to Azure Marketplace, find `Elastic Stack on Kubernetes` solution template and click `Create`.
 
@@ -48,51 +40,73 @@ This repository contains tools and helm charts to help deploy the [Elastck stack
 
     > `Resource Group` should be a new or an empty one to create your Kubernetes.
 
-1. In `Common Settings` panel, provide the following:
-   * `Dns prefix` - The DNS name prefix of your Kubernetes controller. It should be the same as the `dns prefix` you specified in your Azure Service Principal.
+    > Note: not all **VM sizes** and **ACS** are supported across all regions. You can check product availabilities from [Azure products available by region](https://azure.microsoft.com/en-us/regions/services/)
 
-   * `Registry url`- The URL of a public registry that will host `elasticsearch `, `kibana` and `logstash` docker images. If this field is empty, the solution will automatically create an Azure Container Registry instance.
+
+1. In `Common Settings` panel, provide the following:
+   * `Dns prefix` - The DNS name prefix of your Kubernetes controller. The `dns prefix` and region location will format your Kubernetes dashboard host name. So the `dns prefix` and `location` pair must be globally unique.
+
+   * `Registry url`- The URL of a public registry that hosts `elasticsearch `, `kibana` and `logstash` docker images. If this field is empty, the solution will automatically create an Azure Container Registry instance.
+
+    > In the following field, you need to enter your Azure Event Hub connect information. If you want the logstash to get logs from log shipper instead of Azure Event hub, keep the `Event hub namespace`/`key name`/`key value` as `undefined`.
+
+    > The Event hub namespace, key name, key value and event hubs can format the event hub's connection string: `Endpoint=sb://<namespace>.servicebus.windows.net/;SharedAccessKeyName=<key-name>;SharedAccessKey=<key-value>;EntityPath=<eventhub-name>`. The key should be given access with `listen`.
+
    * `Event hub namespace` - e.g. "myeventhub".
    * `Event hub key name` - event hub `SETTINGS` find `Shared access policies` e.g. "RootManageSharedAccessKey".
    * `Event hub key value` - SAS policy key value.
    * `List of event hubs` - event hub `ENTITIES` find `Event Hubs` and list the event hubs from which you'd pull events e.g. "insights-logs-networksecuritygroupevent,insights-logs-networksecuritygrouprulecounter". Event hubs in the list must be existed and are comma seperated.
-   * `Event hub partition count` - partition count of event hubs (all listed event hubs must have the same partition count).
-   * `Thread wait interval(s)` - logstash event hub plugin thread wait interval in seconds.
-
-    > If the logstash get logs from log shipper instead of Azure Event hub, keep the `Event hub namespace`/`key name`/`key value` as `undefined`.
-
-    > The Event hub namespace, key name, key value and event hubs can format the event hub's connection string: `Endpoint=sb://<namespace>.servicebus.windows.net/;SharedAccessKeyName=<key-name>;SharedAccessKey=<key-value>;EntityPath=<eventhub-name>`. The key should be given access with `listen`.
 
     > If you are pulling events out of various event hubs with different partition counts, you are advised to deploy multiple instances of the solution.
+
+   * `Event hub partition count` - partition count of event hubs (all listed event hubs must have the same partition count).
+   * `Thread wait interval(s)` - logstash event hub plugin thread wait interval in seconds.
 
    * `Data node storage account sku` - storage account sku used by Elasticsearch data node.
    * `Authentication Mode` - authentication mode for accessing Kubernetes dashboard.
       * `Basic Authentication` mode uses `Controller Username` and `Controller Password`.
-      * `Azure Active Directory` mode uses Azure AD service principal for authentication. You need to provide your service principal information which you get at [Step 1](#create-sp):
+      * <a id='aad-login'></a>`Azure Active Directory` mode uses Azure AD service principal for authentication. You need to provide your service principal information which you get at [Step 1](#create-sp):
 
         * `Azure AD client ID` - [Application ID](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#get-application-id-and-authentication-key)
         * `Azure AD client secret` - [Your generated key](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#get-application-id-and-authentication-key)
         * `Azure AD tenant` - [Tenant ID](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#get-tenant-id)
 
 1. In `Kubernetes Cluster Settings` panel, provide the following:
-     * `Agent Count` - number of agent nodes of Kubernetes cluster
-     * `Agent Node Size`
-     * `Master Count` - number of masters of Kubernetes cluster
+   * `Agent Count` - number of agent nodes of Kubernetes cluster
+   * `Agent Node Size`
+   * `Master Count` - number of masters of Kubernetes cluster
 
 1. In `Security Settings` panel, provide the following:
-     * `SSH public key` - ssh public key for controller node to talk to Kubernetes cluster
-     * `Base64 encoded SSH private key` - base64 encoded ssh private key
 
-      > You can generate the SSH public key/private key pair using [js-keygen](https://microsoft.github.io/elk-acs-kubernetes/)
+   > You can generate the SSH public key/private key pair using [js-keygen](https://microsoft.github.io/elk-acs-kubernetes/)
 
-     * `Service principal client ID` - Application ID
-     * `Service principal client secret` - Your generated key
+   * `SSH public key` - ssh public key for controller node to talk to Kubernetes cluster
+   * `Base64 encoded SSH private key` - base64 encoded ssh private key
 
-      > The `Sercive principal client ID` and `Service principal client secret` are used to create and manage the Kubernetes cluster, they can be the client id and secret you get from [Step 1](#create-sp). Ensure the Service principal used here has contributor access to your subscription and in the same AAD tenant as your subscription.
+   > The `Sercive principal client ID` and `Service principal client secret` are used to create and manage the Kubernetes cluster, they can be the client id and secret you get from [Step 1](#create-sp). Ensure the Service principal used here has contributor access to your subscription and in the same AAD tenant as your subscription.
+
+   * `Service principal client ID` - Application ID
+   * `Service principal client secret` - Your generated key
+
 
 1. Click OK in Summary panel and create the solution.
 
-> The creation may cost around half an hour.
+   > The creation may cost around half an hour.
+
+1. If you choose the AAD mode to login your Kubernetes dashboard in [step 5](#aad-login), You need to set the redirect information in Azure Service Principal you created in [step 1](#create-sp).
+
+   1. Go to your Azure Service Principal: Click `Azure Active Directory` -> `App registrations`, search your Service Princial name and click it.
+
+   1. Spell out your Kubernetes dashboard host name and note it as `<host-name>`. The format should be `http://<dns-prefix>control.<resource-location>.cloudapp.azure.com`.
+      > Both `dns-prefix` and `resource-location` are set in `Basic Panel`.
+      > `dns-prefix` is specified in `Basic Settings`, `resource-location` is the region where you deploy your Elastic Stack.
+
+   1. Set the Sign-on URL: In the `Settings` page, click `Properties`, set the `Home page URL` to `<host-name>` you spelled out. Click `Save`.  
+
+   1. Set the redirect URL: In the `Settings` page, click `Reply URLs`, remove the exiting URL, add URL `<host-name>/callback`. Click `Save`.
+    
+
+       ![Add Azure Service Principal redirect URL](image/elk-acs-kube-aad-redirect.png)
 
 ## Acccess your Elastic Stack on Kubernetes
 
