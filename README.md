@@ -29,10 +29,6 @@ This repository contains tools and helm charts to help deploy the [Elastck stack
     * Assign application a contributor role to your subscription. The subsciption is the one where you will deploy the Elastic Stack.
     > Note: `Application ID`, `Password` and `Tenant ID` will be used in later stages of the deployment.
 
-1. Grant your Service Principal permissions: Go to your registered app in [step 1](#create-sp)'s Settings page -> `Required permissions` -> `Windows Azure Active Directory`, tick `Read all users' basic profiles` and `Sign in and read user profile`. Click `Save` in `Enable Access` pane then `Grant Permissions` in `Required permissions` pane. Click `Yes` to confirm the action.
-
-   ![Add Azure Service Principal access](image/elk-acs-kube-aad-access.png)
-
 1. Go to Azure Marketplace, find `Elastic Stack on Kubernetes` solution template and click `Create`.
 
 1. In `Basics` panel, `Controller Username` and `Controller Password` need to be valid Ubuntu credential and will be used to access Kibana.
@@ -91,9 +87,9 @@ This repository contains tools and helm charts to help deploy the [Elastck stack
 
 1. Click OK in Summary panel and create the solution.
 
-   > The creation may cost around half an hour.
+   > The creation may cost around half an hour. You can continue the next step while the creation.
 
-1. If you choose the AAD mode to login your Kubernetes dashboard in [step 5](#aad-login), You need to set the redirect information in Azure Service Principal you created in [step 1](#create-sp).
+1. If you choose the AAD mode to login your Kubernetes dashboard in [step 4](#aad-login), You need to set the redirect information in Azure Service Principal you created in [step 1](#create-sp).
 
    1. Go to your Azure Service Principal: Click `Azure Active Directory` -> `App registrations`, search your Service Princial name and click it.
 
@@ -103,10 +99,13 @@ This repository contains tools and helm charts to help deploy the [Elastck stack
 
    1. Set the Sign-on URL: In the `Settings` page, click `Properties`, set the `Home page URL` to `<host-name>` you spelled out. Click `Save`.  
 
-   1. Set the redirect URL: In the `Settings` page, click `Reply URLs`, remove the exiting URL, add URL `<host-name>/callback`. Click `Save`.
-    
+   1. Set the redirect URL: In the `Settings` page, click `Reply URLs`, remove the exiting URL, add URL `<host-name>/callback`. Click `Save`.    
 
        ![Add Azure Service Principal redirect URL](image/elk-acs-kube-aad-redirect.png)
+   
+   1. Grant your Service Principal permissions: In the `Settings` page, click `Required permissions` -> `Windows Azure Active Directory`, tick `Read all users' basic profiles` and `Sign in and read user profile`. Click `Save` in `Enable Access` pane then `Grant Permissions` in `Required permissions` pane. Click `Yes` to confirm the action.
+
+      ![Add Azure Service Principal access](image/elk-acs-kube-aad-access.png)
 
 ## Acccess your Elastic Stack on Kubernetes
 
