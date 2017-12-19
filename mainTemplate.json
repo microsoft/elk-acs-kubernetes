@@ -243,7 +243,7 @@
     }
   },
   "variables": {
-    "baseTemplateUrl": "[uri(deployment().properties.templateLink.uri)]",
+    "baseTemplateUrl": "[uri(deployment().properties.templateLink.uri, '.')]",
     "archiveUrl": "[uri(deployment().properties.templateLink.uri, 'solution.zip')]",
     "directoryName": "",
     "adminUsername": "[parameters('linuxAdminUsername')]",

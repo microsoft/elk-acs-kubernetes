@@ -97,7 +97,7 @@
         },
         "baseTemplateUrl": {
             "type": "string",
-            "defaultValue": "[uri(deployment().properties.templateLink.uri)]",
+            "defaultValue": "[uri(deployment().properties.templateLink.uri, '.')]",
             "metadata": {
                 "description": "base URL of templates, typically a repository for configuraions"
             }
