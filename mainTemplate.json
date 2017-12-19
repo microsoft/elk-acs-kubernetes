@@ -209,27 +209,6 @@
         "description": "Storage account sku to be used as Elasticsearch data node"
       }
     },
-    "baseTemplateUrl": {
-      "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/logstash-eventhub-aztable/",
-      "metadata": {
-        "description": "Base URL of templates, typically a repository for configuraions"
-      }
-    },
-    "archiveUrl": {
-      "type": "string",
-      "defaultValue": "https://github.com/Microsoft/elk-acs-kubernetes/archive/logstash-eventhub-aztable.zip",
-      "metadata": {
-        "description": "Archive URL of all contents."
-      }
-    },
-    "directoryName": {
-      "type": "string",
-      "defaultValue": "elk-acs-kubernetes-logstash-eventhub-aztable/",
-      "metadata": {
-        "description": "Directory in archive."
-      }
-    },
     "authenticationMode": {
       "type": "string",
       "defaultValue": "BasicAuth",
@@ -264,6 +243,9 @@
     }
   },
   "variables": {
+    "baseTemplateUrl": "[uri(deployment().properties.templateLink.uri)]",
+    "archiveUrl": "[uri(deployment().properties.templateLink.uri, 'solution.zip')]",
+    "directoryName": "",
     "adminUsername": "[parameters('linuxAdminUsername')]",
     "agentCount": "[parameters('agentCount')]",
     "agentsEndpointDNSNamePrefix": "[concat(parameters('dnsNamePrefix'), 'agents')]",
@@ -295,7 +277,7 @@
     "registryName": "[concat(uniquestring(resourceGroup().id), 'registry')]",
     "registryDisk": "[concat(uniquestring(resourceGroup().id), 'elkimage')]",
     "basedPrivateKey": "[parameters('privateKey')]",
-    "baseUrl": "[concat(parameters('baseTemplateUrl'), '/ARM-template/components/')]",
+    "baseUrl": "[concat(variables('baseTemplateUrl'), '/ARM-template/components/')]",
     "registryTemplates": {
       "True": "containerRegistry.json",
       "False": "emptyTemplate.json"
@@ -437,16 +419,16 @@
             "value": "[parameters('eventHubThreadWaitSec')]"
           },
           "baseTemplateUrl": {
-            "value": "[parameters('baseTemplateUrl')]"
+            "value": "[variables('baseTemplateUrl')]"
           },
           "storageAccountSku": {
             "value": "[parameters('storageAccountSku')]"
           },
           "archiveUrl": {
-            "value": "[parameters('archiveUrl')]"
+            "value": "[variables('archiveUrl')]"
           },
           "directoryName": {
-            "value": "[parameters('directoryName')]"
+            "value": "[variables('directoryName')]"
           },
           "authenticationMode": {
             "value": "[parameters('authenticationMode')]"

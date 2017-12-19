@@ -97,7 +97,7 @@
         },
         "baseTemplateUrl": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/",
+            "defaultValue": "[uri(deployment().properties.templateLink.uri)]",
             "metadata": {
                 "description": "base URL of templates, typically a repository for configuraions"
             }
@@ -118,14 +118,14 @@
         },
         "archiveUrl": {
             "type": "string",
-            "defaultValue": "https://github.com/Microsoft/elk-acs-kubernetes/archive/logstash-eventhub-aztable.zip",
+            "defaultValue": "[uri(deployment().properties.templateLink.uri, 'solution.zip')]",
             "metadata": {
                 "description": "Archive URL of all contents."
             }
         },
         "directoryName": {
             "type": "string",
-            "defaultValue": "elk-acs-kubernetes-logstash-eventhub-aztable/",
+            "defaultValue": "",
             "metadata": {
                 "description": "Directory in archive."
             }

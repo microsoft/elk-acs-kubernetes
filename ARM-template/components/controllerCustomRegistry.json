@@ -97,7 +97,7 @@
         },
         "baseTemplateUrl": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/Microsoft/elk-acs-kubernetes/rc/",
+            "defaultValue": "[uri(deployment().properties.templateLink.uri)]",
             "metadata": {
                 "description": "base URL of templates, typically a repository for configuraions"
             }
@@ -118,14 +118,14 @@
         },
         "archiveUrl": {
             "type": "string",
-            "defaultValue": "https://github.com/Microsoft/elk-acs-kubernetes/archive/logstash-eventhub-aztable.zip",
+            "defaultValue": "[uri(deployment().properties.templateLink.uri, 'solution.zip')]",
             "metadata": {
                 "description": "Archive URL of all contents."
             }
         },
         "directoryName": {
             "type": "string",
-            "defaultValue": "elk-acs-kubernetes-rc/",
+            "defaultValue": "",
             "metadata": {
                 "description": "Directory in archive."
             }
@@ -199,10 +199,6 @@
         "registryName": "[concat(uniquestring(resourceGroup().id), 'registry')]",
         "basedPrivateKey": "[parameters('privateKey')]",
         "baseUrl": "[parameters('baseTemplateUrl')]",
-        "controlTemplate": {
-            "true": "/ARM-template/components/controllorAzureRegistry.json",
-            "false": "/ARM-tempalte/components/controllerCustomRegistry.json"
-        },
         "singleQuote": "'"
     },
     "resources": [
@@ -272,7 +268,7 @@
                             ]
                         },
                         "protectedSettings": {
-                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', variables('singleQuote'), parameters('adminPassword'), variables('singleQuote'), ' -k ', variables('basedPrivateKey'), ' -r ', parameters('registryUrl'), ' -j ', parameters('eventHubNamespace'), ' -q ', parameters('eventHubKeyName'), ' -m ', parameters('eventHubKey'), ' -n ', parameters('eventHubEntityPath'), ' -o ', parameters('eventHubPartitionnumber'), ' -v ', parameters('eventHubThreadWaitSec'), ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', parameters('directoryName'), ' -g ', parameters('authenticationMode'), ' -h ', parameters('azureAdClientId'), ' -i ', parameters('azureAdClientSecret'), ' -t ', parameters('tenant'), ' -w ', parameters('servicePrincipalClientId'), ' -x ', parameters('servicePrincipalClientSecret'), ' -y ', subscription().tenantId, ' -z ', subscription().subscriptionId, ' -R ', resourceGroup().name))]"
+                            "commandToExecute": "[concat('bash run.sh -d ', variables('mastersEndpointDNSNamePrefix'), ' -l ', parameters('location'), ' -u ', parameters('linuxAdminUsername'), ' -p ', variables('singleQuote'), parameters('adminPassword'), variables('singleQuote'), ' -k ', variables('basedPrivateKey'), ' -r ', parameters('registryUrl'), ' -j ', parameters('eventHubNamespace'), ' -q ', parameters('eventHubKeyName'), ' -m ', parameters('eventHubKey'), ' -n ', parameters('eventHubEntityPath'), ' -o ', parameters('eventHubPartitionnumber'), ' -v ', parameters('eventHubThreadWaitSec'), ' -s ', variables('dataStorageAccountName'), ' -c ', parameters('storageAccountSku'), ' -e ', parameters('archiveUrl'), ' -f ', variables('singleQuote'), parameters('directoryName'), variables('singleQuote'), ' -g ', parameters('authenticationMode'), ' -h ', parameters('azureAdClientId'), ' -i ', parameters('azureAdClientSecret'), ' -t ', parameters('tenant'), ' -w ', parameters('servicePrincipalClientId'), ' -x ', parameters('servicePrincipalClientSecret'), ' -y ', subscription().tenantId, ' -z ', subscription().subscriptionId, ' -R ', resourceGroup().name))]"
                         }
                     }
                 }
