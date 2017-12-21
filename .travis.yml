@@ -6,13 +6,14 @@ install:
     # Set up git user name and tag this commit
   - git config --local user.name "Auto release"
   - git config --local user.email "vschinaauto@microsoft.com"
+  - export deploy_tag="$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
 script:
-  - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+  - git tag ${deploy_tag}
   - zip solution config docker helm-charts
-  - zip "elk-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)" solution.zip scripts ARM-template createUiDefinition.json mainTemplate.json
+  - zip "elk-${deploy_tag}" solution.zip scripts ARM-template createUiDefinition.json mainTemplate.json
 deploy:
   provider: releases
   api_key: ${github_token}
-  file: "elk-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1).zip"
+  file: "elk-${deploy_tag}.zip"
   on:
     branch: release
