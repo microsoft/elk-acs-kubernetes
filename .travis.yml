@@ -1,0 +1,20 @@
+language: javascript
+branches:
+  only:
+    - release
+install:
+    # Set up git user name and tag this commit
+  - git config --local user.name "Auto release"
+  - git config --local user.email "vschinaauto@microsoft.com"
+  - export deploy_tag="$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+script:
+  - git tag ${deploy_tag}
+  - zip solution -r config -r docker -r helm-charts
+  - zip "elk-${deploy_tag}" solution.zip -r scripts -r ARM-template createUiDefinition.json mainTemplate.json
+deploy:
+  provider: releases
+  api_key: ${github_token}
+  file: "elk-${deploy_tag}.zip"
+  skip_cleanup: true
+  on:
+    branch: release
