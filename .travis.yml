@@ -15,7 +15,4 @@ deploy:
   api_key: ${github_token}
   file: "elk-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1).zip"
   on:
-    repo: yuwzho/elk-acs-kubernetes
-    branches:    # ← new!
-      only:      # ← new!
-        - release # ← new!
+    branch: release
