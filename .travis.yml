@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - 6
+branches:
+  only:
+    - release
+before_deploy:
+  # Set up git user name and tag this commit
+  - git config --local user.name "Auto release"
+  - git config --local user.email "vschinaauto@microsoft.com"
+  - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+  - zip solution config docker helm-charts
+  - zip "elk-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)" solution.zip scripts ARM-template createUiDefinition.json mainTemplate.json
+deploy:
+  provider: releases
+  api_key: ${github_token}
+  file: "elk-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1).zip"
+  skip_cleanup: true
