@@ -2,10 +2,11 @@ language: javascript
 branches:
   only:
     - release
-before_deploy:
-  # Set up git user name and tag this commit
+install:
+    # Set up git user name and tag this commit
   - git config --local user.name "Auto release"
   - git config --local user.email "vschinaauto@microsoft.com"
+script:
   - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
   - zip solution config docker helm-charts
   - zip "elk-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)" solution.zip scripts ARM-template createUiDefinition.json mainTemplate.json
