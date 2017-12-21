@@ -1,3 +1,4 @@
+language: javascript
 branches:
   only:
     - release
