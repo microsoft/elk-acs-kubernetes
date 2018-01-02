@@ -155,9 +155,17 @@ az account set -s ${subscriptionId}
 
 # Add NSG rule
 # virtualNetwork:22 to Any:*
-nsg=$(az network nsg list -g ${resourceGroup} --output table | grep -o -e 'k8s-master-.*-nsg')
-ipAddress=$(az network public-ip show -n controllerip -g ${resourceGroup} --query [ipAddress] --output tsv)
-az network nsg rule create -n ssh --nsg-name ${nsg} --priority 102 -g ${resourceGroup} --protocol TCP --destination-port-range 22 --source-address-prefix ${ipAddress}
+nsgs=$(az network nsg list -g ${resourceGroup} --output table)
+k8sMasterRegex='k8s-master-.*-nsg'
+if [[ ${nsgs} =~ ${k8sMasterRegex} ]];
+then
+    nsg=$(echo ${nsgs} | grep -o -e ${k8sMasterRegex})
+    ipAddress=$(az network public-ip show -n controllerip -g ${resourceGroup} --query [ipAddress] --output tsv)
+    log "Add ${ipAddress} to ${nsg}"
+    az network nsg rule create -n ssh --nsg-name ${nsg} --priority 102 -g ${resourceGroup} --protocol TCP --destination-port-range 22 --source-address-prefix ${ipAddress}
+else
+    log "No k8s master security rule find: ${nsgs}"
+fi
 
 log "install kubectl"
 # install kubectl
