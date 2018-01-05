@@ -36,7 +36,7 @@ This repository contains tools and helm charts to help deploy the [Elastck stack
 
     > `Resource Group` should be a new or an empty one to create your Kubernetes.
 
-    > Note: not all **VM sizes** and **ACS** are supported across all regions. You can check product availabilities from [Azure products available by region](https://azure.microsoft.com/en-us/regions/services/)
+    > Note: Due to Azure Container Service - Kubernetes (AKS) in preview isn't available across all regions globally. Deployments in following regions have been verified: `East US`, `South Central US` and `West Europe`. More regions will be supported as AKS enters general availability. Not all **VM sizes** are supported across all regions. You can check product availabilities from [Azure products available by region](https://azure.microsoft.com/en-us/regions/services/)
 
 
 1. In `Common Settings` panel, provide the following:
@@ -95,14 +95,14 @@ This repository contains tools and helm charts to help deploy the [Elastck stack
 
    1. Spell out your Kubernetes dashboard host name and note it as `<host-name>`. The format should be `http://<dns-prefix>control.<resource-location>.cloudapp.azure.com`.
       > Both `dns-prefix` and `resource-location` are set in `Basic Panel`.
-      > `dns-prefix` is specified in `Basic Settings`, `resource-location` is the region where you deploy your Elastic Stack.
+      > `dns-prefix` is specified in `Basic Settings`, `resource-location` is the region where you deploy your Elastic Stack. Deployments in following regions have been verified: `East US`, `South Central US` and `West Europe`.
 
-   1. Set the Sign-on URL: In the `Settings` page, click `Properties`, set the `Home page URL` to `<host-name>` you spelled out. Click `Save`.  
+   1. Set the Sign-on URL: In the `Settings` page, click `Properties`, set the `Home page URL` to `<host-name>` you spelled out. Click `Save`.
 
-   1. Set the redirect URL: In the `Settings` page, click `Reply URLs`, remove the exiting URL, add URL `<host-name>/callback`. Click `Save`.    
+   1. Set the redirect URL: In the `Settings` page, click `Reply URLs`, remove the exiting URL, add URL `<host-name>/callback`. Click `Save`.
 
        ![Add Azure Service Principal redirect URL](image/elk-acs-kube-aad-redirect.png)
-   
+
    1. Grant your Service Principal permissions: In the `Settings` page, click `Required permissions` -> `Windows Azure Active Directory`, tick `Read all users' basic profiles` and `Sign in and read user profile`. Click `Save` in `Enable Access` pane then `Grant Permissions` in `Required permissions` pane. Click `Yes` to confirm the action.
 
       ![Add Azure Service Principal access](image/elk-acs-kube-aad-access.png)
@@ -126,7 +126,7 @@ After the deployment succeeds, you can find the Kubernetes dashboard and kibana/
 ## How the logs are consumed by your Elastic Stack
 
 The solution supports two ways to ship logs to Elastic Stack:
-* Ingest logs from event hub(s) by logstash input plugin for data from Event Hubs.
+* Ingest logs from event hub(s) by logstash input plugin for data from Event Hubs. You need to define index pattern **wad** in Kibana. [Index Patterns](https://www.elastic.co/guide/en/kibana/current/index-patterns.html). To learn more about [Logstash input plugin for data from Event Hubs](https://github.com/Azure/azure-diagnostics-tools/tree/master/Logstash/logstash-input-azureeventhub)
 * Log shippers e.g. [Filebeat](https://www.elastic.co/products/beats/filebeat)
 
 ## Troubleshooting
