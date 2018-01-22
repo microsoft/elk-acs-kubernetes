@@ -2,7 +2,7 @@
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://ms.portal.azure.com/#create/visualstudiochina.elk-on-kubepre-release)
 
-This repository contains tools and helm charts to help deploy the [Elastck stack](https://www.elastic.co/products) on [Kubernetes](https://kubernetes.io/) in [Azure Container Service (ACS)](https://docs.microsoft.com/azure/container-service/).
+This repository contains tools and helm charts to help deploy the [Elastck stack](https://www.elastic.co/products) on [Kubernetes](https://kubernetes.io/) in [Azure Container Service (ACS)](https://docs.microsoft.com/azure/container-service/). You can now try this solution template in region: `East US`, `South Central US` and `West Europe`
 
 ## How the solution works
 
