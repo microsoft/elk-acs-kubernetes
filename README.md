@@ -81,7 +81,7 @@ This repository contains tools and helm charts to help deploy the [Elastck stack
    * `SSH public key` - ssh public key for controller node to talk to Kubernetes cluster
    * `Base64 encoded SSH private key` - base64 encoded ssh private key
 
-   > The `Sercive principal client ID` and `Service principal client secret` are used to create and manage the Kubernetes cluster, they can be the client id and secret you get from [Step 1](#create-sp). Ensure the Service principal used here has contributor access to your subscription and in the same AAD tenant as your subscription.
+   > The `Service principal client ID` and `Service principal client secret` are used to create and manage the Kubernetes cluster, they can be the client id and secret you get from [Step 1](#create-sp). Ensure the Service principal used here has contributor access to your subscription and in the same AAD tenant as your subscription.
 
    * `Service principal client ID` - Application ID
    * `Service principal client secret` - Your generated key
