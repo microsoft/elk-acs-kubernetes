@@ -32,6 +32,29 @@
                     "validationMessage": "Password must be at least 12 characters long and contain at least one lower case, upper case, digit and special character."
                 },
                 "visible": true
+            },
+            {
+                "name": "location",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Location",
+                "toolTip": "The location of your ELK.",
+                "defaultValue": "eastus",
+                "constraints": {
+                    "allowedValues": [
+                        {
+                            "label": "East US",
+                            "value": "eastus"
+                        },
+                        {
+                            "label": "Southeast Asia",
+                            "value": "southeastasia"
+                        },
+                        {
+                            "label": "West Europe",
+                            "value": "westeurope"
+                        }
+                    ]
+                }
             }
         ],
         "steps": [
