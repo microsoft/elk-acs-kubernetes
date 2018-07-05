@@ -143,6 +143,7 @@ sudo apt-get -y install apt-transport-https
 sudo apt-get -y install software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 wget -qO - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
+curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 sudo add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 sudo add-apt-repository -y "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main"
 sudo apt-get update
