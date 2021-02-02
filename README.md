@@ -1,6 +1,8 @@
 # Deploy Elastic Stack on Kubernetes in Azure Container Service (ACS)
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://ms.portal.azure.com/#create/visualstudiochina.elk-on-kubepre-release)
+<!-- [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://ms.portal.azure.com/#create/visualstudiochina.elk-on-kubepre-release) -->
+
+> This repo is deprecated.
 
 This repository contains tools and helm charts to help deploy the [Elastck stack](https://www.elastic.co/products) on [Kubernetes](https://kubernetes.io/) in [Azure Container Service (ACS)](https://docs.microsoft.com/azure/container-service/). You can now try this solution template in region: `East US`, `South Central US` and `West Europe`
 
